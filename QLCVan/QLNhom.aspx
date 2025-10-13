@@ -189,7 +189,8 @@
 
     <!-- Modal thêm đơn vị -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
+
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="addModalLabel">Thêm đơn vị</h5>
@@ -209,7 +210,8 @@
 
     <!-- Modal Sửa đơn vị -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
+
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="editModalLabel">Sửa đơn vị</h5>
@@ -236,7 +238,8 @@
 
     <!-- Modal Xác nhận xoá -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
+
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa đơn vị</h5>
@@ -251,7 +254,7 @@
                         OnClick="btnConfirmDelete_Click" UseSubmitBehavior="false" />
           </div>
         </div>
-      </div>
+      </>
     </div>
 
     <!-- Bootstrap + script mở modal -->
