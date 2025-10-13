@@ -158,7 +158,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
   <div class="content-header">
-  <h2 class="content-header-title">NHẬP NỘI DUNG CÔNG VĂN</h2>
+  <h2 class="content-header-title">XEM CÔNG VĂN</h2>
 </div>
 
 <div class="welcome-bar">

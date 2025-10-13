@@ -52,7 +52,7 @@
 }
 
     /* Toolbar nhỏ gọn như ảnh */
-    .toolbar { width:48%; margin:0 auto 14px auto; }
+    .toolbar { width:70%; margin:0 auto 14px auto; }
     .toolbar .form-control{
       height:36px; border-radius:6px; padding:6px 10px; font-size:14px; border-color:#dee2e6;
     }
@@ -60,7 +60,7 @@
 
     /* Nút kính lúp đỏ */
     .btn-search-red{
-      width:60px; height:36px; border-radius:6px; background:#c00; border:1px solid #c00; display:inline-block;
+      width:80px; height:36px; border-radius:6px; background:#c00; border:1px solid #c00; display:inline-block;
       padding:0; cursor:pointer; text-indent:-9999px; overflow:hidden;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23ffffff' d='M500.3 443.7 382 325.4c28.4-34.9 45.5-79.4 45.5-127.4C427.5 88.1 339.4 0 231.8 0S36.1 88.1 36.1 197.9 124.2 395.7 231.8 395.7c48 0 92.5-17.1 127.4-45.5l118.3 118.3c7.5 7.5 19.8 7.5 27.3 0s7.5-19.8 0-27.3zM231.8 355.7c-87.1 0-157.9-70.8-157.9-157.9S144.7 39.9 231.8 39.9 389.7 110.7 389.7 197.8 318.9 355.7 231.8 355.7z'/%3E%3C/svg%3E");
       background-repeat:no-repeat; background-position:center; background-size:58% 58%;
@@ -76,6 +76,11 @@
     .pager a{color:#0f172a}
 
     .cv-head{ font-weight:700; }
+    .table {
+  width: 70% !important;    /* đồng nhất với toolbar */
+  margin: 0 auto;           /* căn giữa */
+}
+
   </style>
 </asp:Content>
 
@@ -113,10 +118,10 @@
       </div>
 
       <!-- Bảng -->
-      <asp:GridView ID="gvQLNhom" runat="server" AutoGenerateColumns="False"
+     <asp:GridView ID="gvQLNhom" runat="server" AutoGenerateColumns="False"
     CssClass="table table-bordered table-striped table-hover"
     HeaderStyle-CssClass="grid-header-red"
-    Width="48%" CellPadding="4" ForeColor="#333333"
+    Width="60%" CellPadding="4" ForeColor="#333333"
     DataKeyNames="MaDonVi"
     OnRowDeleting="rowDeleting"
     OnRowCancelingEdit="rowCancelingEdit"
@@ -126,6 +131,7 @@
     OnRowDataBound="gvQLNhom_RowDataBound"   
     AllowPaging="True" PageSize="5"
     OnPageIndexChanging="gvQLNhom_PageIndexChanging">
+
     <PagerSettings Mode="Numeric" Position="Bottom" PageButtonCount="5" />
     <PagerStyle CssClass="pager" HorizontalAlign="Center" />
     <Columns>
