@@ -15,54 +15,57 @@
 
     body { background:#fff; font-family:"Segoe UI", Arial, sans-serif; }
 
- .content-header {
-  background: transparent;
-  padding: 0;
-  border-bottom: none;
-  margin: 0 auto 6px auto;
-}
+    /* ===== Tiêu đề ===== */
+    .content-header {
+      background: transparent;
+      padding: 0;
+      border-bottom: none;
+      margin: 0 auto 6px auto;
+    }
+    .content-header-title {
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 20px;
+      color: #444;
+      margin: 0 0 6px 0;
+      letter-spacing: 0;
+    }
 
-.content-header-title {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 20px;
-  color: #444;
-  margin: 0 0 6px 0;
-  letter-spacing: 0;
-}
+    /* ===== Thanh chạy chữ ===== */
+    .welcome-bar {
+      background: #c00;
+      color: #fff;
+      border-radius: 4px;
+      padding: 8px 0;
+      margin: 0 auto 26px auto;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      overflow: hidden;
+    }
+    .welcome-bar marquee {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+    }
 
-
-/* ===== Thanh chạy chữ giống hình mẫu ===== */
-.welcome-bar {
-  background: #c00;                  /* nền đỏ đậm */
-  color: #fff;
-  border-radius: 4px;                /* bo góc mềm */
-  padding: 8px 0;                    /* cao vừa để chữ nằm giữa */
-  margin: 0 auto 26px auto;
-  font-weight: bold;                 /* in đậm */
-  text-align: center;
-  display: flex;
-  align-items: center;               /* căn giữa theo chiều cao */
-  justify-content: center;
-  height: 30px;                      /* chiều cao cố định để đều */
-  overflow: hidden;                  /* ẩn phần chữ thừa */
-}
-
-.welcome-bar marquee {
-  font-size: 16px;                   /* chữ lớn hơn chút */
-  font-weight: bold;
-  color: #fff;
-                
-}
-
-
-    /* ===== Phần còn lại của layout cũ giữ nguyên ===== */
+    /* ===== Thẻ công văn ===== */
     .cv-wrap{max-width:980px;margin:24px auto 48px auto;}
     .cv-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;}
     .cv-head{position:relative;padding:18px 22px 0 22px}
     .cv-title{font-weight:700;text-align:center;margin:0 0 14px}
-    .cv-badge{position:absolute;right:22px;top:14px;background:#ffe08a;color:#333;
-      border-radius:20px;padding:6px 12px;font-weight:600}
+    .cv-badge{
+      position:absolute;
+      right:22px;top:14px;
+      background:#f9b200;
+      color:#fff;
+      border-radius:20px;
+      padding:8px 16px;
+      font-weight:700;
+    }
     .cv-body{padding:18px 22px 22px}
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px}
     @media(max-width:768px){.grid2{grid-template-columns:1fr}}
@@ -72,38 +75,99 @@
     .row-full{grid-column:1/-1}
     .ipt,.sel,.ta{
       width:100%;box-sizing:border-box;height:38px;padding:6px 10px;border:1px solid #d1d5db;
-      border-radius:6px;background:#f8fafc;outline:none
+      border-radius:6px;background:#fff;outline:none
     }
     .ta{min-height:92px;height:auto;resize:none;padding-top:8px;line-height:1.4}
-    .ipt[readonly],.sel:disabled,.ta[readonly]{background:#f1f5f9;color:#111827}
-    .sel{appearance:none;background-image:
-      linear-gradient(45deg, transparent 50%, #6b7280 50%),
-      linear-gradient(135deg, #6b7280 50%, transparent 50%),
-      linear-gradient(to right, #e5e7eb, #e5e7eb);
-      background-position:
-      calc(100% - 18px) 16px, calc(100% - 12px) 16px, calc(100% - 36px) 0;
-      background-size:6px 6px,6px 6px,1px 100%; background-repeat:no-repeat}
-    .sel:disabled{opacity:.8}
-    .radio-wrap{display:flex;align-items:center;gap:14px}
-    .file-line i{font-style:italic}
-    .muted{color:#6b7280}
-    .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
-    .btn{border:none;border-radius:6px;padding:.5rem 1rem;cursor:pointer}
-    .btn-ghost{border:1px solid #cbd5e1;background:#f8fafc;color:#475569}
-    .btn-info{background:#0d6efd;color:#fff}
+    .ipt[readonly],.ta[readonly]{background:#f8fafc;color:#111827}
+
+    /* ===== Select hiển thị mũi tên chuẩn kể cả khi disabled ===== */
+    .select-wrap {
+      position: relative;
+    }
+    .select-wrap::after {
+      content: "";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,\
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%236b7280' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'>\
+          <path d='M4 6l4 4 4-4'/>\
+        </svg>");
+      background-repeat: no-repeat;
+      background-size: 14px 14px;
+    }
+
+    .sel {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: #fff;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      height: 38px;
+      width: 100%;
+      padding: 6px 40px 6px 10px;
+      color: #111827;
+    }
+    .sel:disabled {
+      background-color: #fff;
+      opacity: 1;
+      color: #111827;
+      cursor: default;
+    }
+
+    /* ===== Nút hành động ===== */
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .btn {
+      border: none;
+      border-radius: 6px;
+      padding: 0.45rem 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .btn-ghost {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+    }
+    .btn-ghost:hover { background: #e2e8f0; }
+    .btn-info {
+      background: #0dcaf0;  /* xanh nhạt */
+      color: #000;
+      border: 1px solid #0bb5d8;
+    }
+    .btn-info:hover { background: #31d2f2; }
+    .btn-primary {
+      background: #0d6efd;  /* xanh đậm */
+      color: #fff;
+      border: 1px solid #0b5ed7;
+    }
+    .btn-primary:hover { background: #0b5ed7; }
+
   </style>
 
+  <!-- ===== Tiêu đề + Thanh chạy chữ ===== -->
   <div class="content-header">
-  <h2 class="content-header-title">NHẬP NỘI DUNG CÔNG VĂN</h2>
-</div>
+    <h2 class="content-header-title">NHẬP NỘI DUNG CÔNG VĂN</h2>
+  </div>
 
-<div class="welcome-bar">
-  <marquee behavior="scroll" direction="left" scrollamount="6">
-    Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.
-  </marquee>
-</div>
+  <div class="welcome-bar">
+    <marquee behavior="scroll" direction="left" scrollamount="6">
+      Chào mừng bạn đến với hệ thống Quản lý Công Văn điện tử.
+    </marquee>
+  </div>
 
-  <!-- ===== Phần nội dung chi tiết công văn (giữ nguyên) ===== -->
+  <!-- ===== Nội dung công văn ===== -->
   <div class="cv-wrap">
     <div class="cv-card">
       <div class="cv-head">
@@ -125,7 +189,7 @@
 
           <div class="field">
             <div class="lbl">Loại công văn:</div>
-            <div class="ctl">
+            <div class="ctl select-wrap">
               <select class="sel" disabled>
                 <option selected>Chiến lược</option>
                 <option>Hành chính</option>
@@ -145,29 +209,37 @@
 
           <div class="field">
             <div class="lbl">Cơ quan ban hành:</div>
-            <div class="ctl">
-              <select class="sel" disabled><option selected>Tiểu đoàn 2</option></select>
+            <div class="ctl select-wrap">
+              <select class="sel" disabled>
+                <option selected>Tiểu đoàn 2</option>
+              </select>
             </div>
           </div>
 
           <div class="field">
             <div class="lbl">Đơn vị nhận:</div>
-            <div class="ctl">
-              <select class="sel" disabled><option selected>Ban giám hiệu</option></select>
+            <div class="ctl select-wrap">
+              <select class="sel" disabled>
+                <option selected>Ban giám hiệu</option>
+              </select>
             </div>
           </div>
+<div class="field">
+  <div class="lbl">Người ký:</div>
+  <div class="ctl">
+    <select class="sel no-arrow" disabled>
+      <option selected>Tiểu đoàn trưởng</option>
+    </select>
+  </div>
+</div>
 
-          <div class="field">
-            <div class="lbl">Người ký:</div>
-            <div class="ctl">
-              <select class="sel" disabled><option selected>Tiểu đoàn trưởng</option></select>
-            </div>
-          </div>
 
           <div class="field">
             <div class="lbl">Người nhận:</div>
-            <div class="ctl">
-              <select class="sel" disabled><option selected>Dương Anh Tuấn</option></select>
+            <div class="ctl select-wrap">
+              <select class="sel" disabled>
+                <option selected>Dương Anh Tuấn</option>
+              </select>
             </div>
           </div>
 
@@ -202,12 +274,13 @@
           </div>
         </div>
 
+        <!-- Nút hành động -->
         <div class="actions">
           <button type="button" class="btn btn-ghost">Quay lại</button>
-          <button type="button" class="btn btn-info">Chỉnh sửa</button>
+          
+          <button type="button" class="btn btn-primary">Chỉnh sửa</button>
         </div>
       </div>
     </div>
   </div>
-
 </asp:Content>
