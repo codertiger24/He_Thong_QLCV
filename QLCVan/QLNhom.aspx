@@ -10,10 +10,46 @@
     .section-title{font-size:26px;font-weight:700;color:#0f172a;text-align:center;margin-bottom:20px}
     .grid-header-red th{background-color:#c00!important;color:#fff!important;text-align:center}
 
-    /* Thanh thông báo đỏ chạy */
-    .marquee-red{ background:#c00; color:#fff; height:36px; display:flex; align-items:center; overflow:hidden; padding:0 8px; margin:10px 0 16px; }
-    .marquee-red span{ display:inline-block; white-space:nowrap; padding-left:100%; animation:scroll-left 15s linear infinite; font-weight:600; }
-    @keyframes scroll-left{ 0%{transform:translateX(0)} 100%{transform:translateX(-100%)} }
+   /* ===== Phần tiêu đề + thanh chạy chữ ===== */
+.content-header {
+  background: transparent;
+  padding: 0;
+  border-bottom: none;
+  margin: 0 auto 6px auto;
+}
+
+.content-header-title {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 20px;
+  color: #444;
+  margin: 0 0 6px 0;
+  letter-spacing: 0;
+}
+
+
+/* ===== Thanh chạy chữ giống hình mẫu ===== */
+.welcome-bar {
+  background: #c00;                  /* nền đỏ đậm */
+  color: #fff;
+  border-radius: 4px;                /* bo góc mềm */
+  padding: 8px 0;                    /* cao vừa để chữ nằm giữa */
+  margin: 0 auto 26px auto;
+  font-weight: bold;                 /* in đậm */
+  text-align: center;
+  display: flex;
+  align-items: center;               /* căn giữa theo chiều cao */
+  justify-content: center;
+  height: 30px;                      /* chiều cao cố định để đều */
+  overflow: hidden;                  /* ẩn phần chữ thừa */
+}
+
+.welcome-bar marquee {
+  font-size: 16px;                   /* chữ lớn hơn chút */
+  font-weight: bold;
+  color: #fff;
+                
+}
 
     /* Toolbar nhỏ gọn như ảnh */
     .toolbar { width:48%; margin:0 auto 14px auto; }
@@ -44,13 +80,16 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-  <div class="cv">
-    <div class="cv-head">QUẢN LÝ NHÓM</div>
+  
+      <div class="content-header">
+  <h2 class="content-header-title">QUẢN LÝ NHÓM</h2>
+</div>
 
-    <!-- Thông báo đỏ chạy -->
-    <div class="marquee-red">
-      <span>Chào mừng bạn đến với hệ thống Quản lý Công Văn điện tử.</span>
-    </div>
+<div class="welcome-bar">
+  <marquee behavior="scroll" direction="left" scrollamount="6">
+    Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.
+  </marquee>
+</div>
 
     <center>
       <h3 class="section-title"><b>DANH SÁCH ĐƠN VỊ</b></h3>

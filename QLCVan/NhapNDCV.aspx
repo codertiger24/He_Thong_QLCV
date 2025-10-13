@@ -7,11 +7,57 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style type="text/css">
         /* Reset cơ bản và font */
-        body {
-            font-family: Arial, sans-serif;
-            color: #333;
-            background-color: #f0f2f5;
-        }
+      :root {
+  --ink: #0f172a;
+  --red: #c00000;
+  --blue: #0d6efd;
+  --line: #e5e7eb;
+}
+
+
+
+/* ===== Phần tiêu đề + thanh chạy chữ ===== */
+.content-header {
+  background: transparent;
+  padding: 0;
+  border-bottom: none;
+  margin: 0 auto 6px auto;
+}
+
+.content-header-title {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 20px;
+  color: #444;
+  margin: 0 0 6px 0;
+  letter-spacing: 0;
+}
+
+
+/* ===== Thanh chạy chữ giống hình mẫu ===== */
+.welcome-bar {
+  background: #c00;                  /* nền đỏ đậm */
+  color: #fff;
+  border-radius: 4px;                /* bo góc mềm */
+  padding: 8px 0;                    /* cao vừa để chữ nằm giữa */
+  margin: 0 auto 26px auto;
+  font-weight: bold;                 /* in đậm */
+  text-align: center;
+  display: flex;
+  align-items: center;               /* căn giữa theo chiều cao */
+  justify-content: center;
+  height: 15px;                      /* chiều cao cố định để đều */
+  overflow: hidden;                  /* ẩn phần chữ thừa */
+}
+
+.welcome-bar marquee {
+  font-size: 16px;                   /* chữ lớn hơn chút */
+  font-weight: bold;
+  color: #fff;
+                
+}
+
+      
 
         /* Container chính của form */
         .form-container {
@@ -229,31 +275,7 @@
             margin-top: 5px;
         }
 
-        .content-header {
-            width: 90%;
-            margin: 0 auto 10px auto;
-            background-color: #ffffff;
-            padding: 10px 20px;
-            box-sizing: border-box;
-            border-bottom: 1px solid #eee;
-        }
-
-        .content-header-title {
-            color: #007bff;
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0;
-        }
-
-        .welcome-bar {
-            width: 90%;
-            margin: 0 auto 25px auto;
-            background-color: #c00000;
-            color: white;
-            padding: 8px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
+     
         /* Tệp đính kèm */
         .file-list-full-width {
             grid-column: 1 / -1;
@@ -277,11 +299,7 @@
             width: 100%;
             height: 100px;
         }
-
-
-
-        /* Styles cho phần TẤT CẢ CÁC CÔNG VĂN (giữ nguyên) */
-        /* ... Các style của grid cũ ... */
+    
     </style>
 
     <script src="Scripts/datepicker/jquery-1.10.2.js" type="text/javascript"></script>
@@ -305,12 +323,16 @@
         });
     </script>
 
-    <div class="content-header">
-        <h2 class="content-header-title">NHẬP NỘI DUNG CÔNG VĂN </h2>
-    </div>
-    <div class="welcome-bar">
-        <marquee behavior="scroll" direction="left">Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.</marquee>
-    </div>
+  <div class="content-header">
+  <h2 class="content-header-title">NHẬP NỘI DUNG CÔNG VĂN</h2>
+</div>
+
+<div class="welcome-bar">
+  <marquee behavior="scroll" direction="left" scrollamount="6">
+    Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.
+  </marquee>
+</div>
+
 
 
     <div class="form-container">

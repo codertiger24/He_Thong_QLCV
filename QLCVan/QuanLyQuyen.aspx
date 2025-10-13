@@ -22,14 +22,45 @@
     margin-bottom: 5px;
   }
 
-  .marquee {
-    background: #c00;
-    color: #fff;
-    padding: 5px 10px;
-    font-weight: 600;
-    border-radius: 2px;
-    margin-bottom: 10px;
-  }
+  .content-header {
+  background: transparent;
+  padding: 0;
+  border-bottom: none;
+  margin: 0 auto 6px auto;
+}
+
+.content-header-title {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 20px;
+  color: #444;
+  margin: 0 0 6px 0;
+  letter-spacing: 0;
+}
+
+
+/* ===== Thanh chạy chữ giống hình mẫu ===== */
+.welcome-bar {
+  background: #c00;                  /* nền đỏ đậm */
+  color: #fff;
+  border-radius: 4px;                /* bo góc mềm */
+  padding: 8px 0;                    /* cao vừa để chữ nằm giữa */
+  margin: 0 auto 26px auto;
+  font-weight: bold;                 /* in đậm */
+  text-align: center;
+  display: flex;
+  align-items: center;               /* căn giữa theo chiều cao */
+  justify-content: center;
+  height: 13px;                      /* chiều cao cố định để đều */
+  overflow: hidden;                  /* ẩn phần chữ thừa */
+}
+
+.welcome-bar marquee {
+  font-size: 16px;                   /* chữ lớn hơn chút */
+  font-weight: bold;
+  color: #fff;
+                
+}
 
   .page-title {
     font-size: 20px;
@@ -150,13 +181,15 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
   <div class="page">
-    <div class="main-title">QUẢN LÝ QUYỀN</div>
+    <div class="content-header">
+  <h2 class="content-header-title">QUẢN LÝ QUYỀN</h2>
+</div>
 
-    <div class="marquee">
-      <marquee behavior="scroll" direction="left" scrollamount="6">
-        Chào mừng bạn đến với hệ thống Quản lý Công Văn điện tử.
-      </marquee>
-    </div>
+<div class="welcome-bar">
+  <marquee behavior="scroll" direction="left" scrollamount="6">
+    Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.
+  </marquee>
+</div>
 
     <h3 class="page-title">DANH SÁCH QUYỀN</h3>
 

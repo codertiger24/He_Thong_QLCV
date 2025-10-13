@@ -19,7 +19,7 @@
         <center>
         <div id="frame">
             <div id="header">
-               <div id="banner" style="display: flex; align-items: center; justify-content: center; padding : 10px;background-color: #2E4E1E;">
+               <div id="banner" style="display: flex; align-items: center; justify-content: center; padding : 10px;/*background-color: #2E4E1E;*/">
     <!-- Logo bên trái -->
     <div style="margin-right: 15px;">
         <img src="Images/Anhlogo.png" height="200" />
@@ -27,17 +27,17 @@
 
     <!-- Chữ bên phải -->
     <div >
-        <div style="font-size: 28px; font-weight: bold; color: #C9A341; margin:0;">
+        <div style="font-size: 28px; font-weight: bold; /*color: #C9A341*/color: #003366; margin:0;">
             TRƯỜNG QUÂN SỰ QUÂN KHU 2
         </div>
-        <div style="font-size: 20px; font-style: italic; color: #C9A341; margin:0 ;padding-left:30px;">
+        <div style="font-size: 20px; font-style: italic; /*color: #C9A341*/color: #555; margin:0 ;padding-left:30px;">
             MILITARY SCHOOL OF MILITARY REGION 2
         </div>
     </div>
 </div>
                 <div id="login">
                 <asp:LinkButton ID="lbtLogIn" runat="server" onclick="lbtLogIn_Click">Đăng nhập</asp:LinkButton>
-                    <asp:Label ID="lblWelcome" runat="server" Font-Bold="True" ForeColor="#ffffff" Text="Xin chào: "></asp:Label>
+                    <asp:Label ID="lblWelcome" runat="server" Font-Bold="True" ForeColor="#006600" Text="Xin chào: "></asp:Label>
                     &nbsp;
                     <asp:LinkButton ID="lbtLogOut" runat="server" OnClick="lbtLogOut_Click">Thoát</asp:LinkButton>
                 </div>
@@ -82,7 +82,7 @@
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
-            <div id="footer" style="background-color: #2E4E1E;">
+            <div id="footer" <%--style="background-color: #2E4E1E;--%>">
                 <div id="footermenu">
                     <div style="text-align:center">
                     <ul >

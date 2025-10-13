@@ -26,19 +26,28 @@
           letter-spacing: 0;
         }
 
-        /* Thanh chạy chữ */
-        .welcome-bar{
-          background: #c00;         
-          color: #fff;
-          border-radius: 3px;
-          padding: 4px 8px;
-          margin: 0 auto 26px auto; 
-          font-weight: 600;
-        }
-        .welcome-bar marquee{
-          font-size: 15px;
-          font-weight: 600;
-        }
+        /* ===== Thanh chạy chữ giống hình mẫu ===== */
+.welcome-bar {
+  background: #c00;                  /* nền đỏ đậm */
+  color: #fff;
+  border-radius: 4px;                /* bo góc mềm */
+  padding: 8px 0;                    /* cao vừa để chữ nằm giữa */
+  margin: 0 auto 26px auto;
+  font-weight: bold;                 /* in đậm */
+  text-align: center;
+  display: flex;
+  align-items: center;               /* căn giữa theo chiều cao */
+  justify-content: center;
+  height: 15px;                      /* chiều cao cố định để đều */
+  overflow: hidden;                  /* ẩn phần chữ thừa */
+}
+
+.welcome-bar marquee {
+  font-size: 16px;                   /* chữ lớn hơn chút */
+  font-weight: bold;
+  color: #fff;
+                
+}
 
         /* Tiêu đề trang */
         .page-title { 

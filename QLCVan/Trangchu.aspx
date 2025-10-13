@@ -10,8 +10,7 @@
         }
         body{background:var(--bg); color:var(--ink); font-family:Arial, sans-serif}
         .cv{max-width:1800px; margin:0 auto; padding:12px}
-        .cv-head{font-size:20px; font-weight:bold; color:#003366; margin:6px 0 10px;}
-        .cv-headbar{height:12px; background:var(--red); margin:8px 0 14px; border-radius:2px}
+      
         /* ===== ĐỒNG BỘ CHIỀU RỘNG SEARCH + BẢNG + TIÊU ĐỀ ===== */
         .cv-box,
 .gridwrap,
@@ -28,16 +27,45 @@
   margin:12px 0 8px; letter-spacing:.6px;
 }
 
-        /* banner chữ chạy */
-        .cv-banner{
-            background:var(--red); color:#fff; font-weight:700; padding:8px 12px;
-            border-radius:3px; margin-bottom:12px; overflow:hidden; position:relative;
-            height:15px; display:flex; align-items:center;
-        }
-        .cv-banner .marquee{display:inline-block; white-space:nowrap; will-change:transform;
-            animation:scroll-left 12s linear infinite; font-size:16px;}
-        .cv-banner:hover .marquee{animation-play-state:paused}
-        @keyframes scroll-left{0%{transform:translateX(100%);}100%{transform:translateX(-100%);}}
+ .content-header {
+  background: transparent;
+  padding: 0;
+  border-bottom: none;
+  margin: 0 auto 6px auto;
+}
+
+.content-header-title {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 20px;
+  color: #444;
+  margin: 0 0 6px 0;
+  letter-spacing: 0;
+}
+
+
+/* ===== Thanh chạy chữ giống hình mẫu ===== */
+.welcome-bar {
+  background: #c00;                  /* nền đỏ đậm */
+  color: #fff;
+  border-radius: 4px;                /* bo góc mềm */
+  padding: 8px 0;                    /* cao vừa để chữ nằm giữa */
+  margin: 0 auto 26px auto;
+  font-weight: bold;                 /* in đậm */
+  text-align: center;
+  display: flex;
+  align-items: center;               /* căn giữa theo chiều cao */
+  justify-content: center;
+  height: 13px;                      /* chiều cao cố định để đều */
+  overflow: hidden;                  /* ẩn phần chữ thừa */
+}
+
+.welcome-bar marquee {
+  font-size: 16px;                   /* chữ lớn hơn chút */
+  font-weight: bold;
+  color: #fff;
+                
+}
 
         /* TÌM KIẾM – đồng bộ chiều rộng với bảng */
 .cv-box{
@@ -129,10 +157,15 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="cv">
-        <div class="cv-head">XEM CÔNG VĂN</div>
+  <div class="content-header">
+  <h2 class="content-header-title">NHẬP NỘI DUNG CÔNG VĂN</h2>
+</div>
 
-        <div class="cv-banner"><div class="marquee">Chào mừng bạn đến với hệ thống Quản lý Công Văn điện tử.</div></div>
+<div class="welcome-bar">
+  <marquee behavior="scroll" direction="left" scrollamount="6">
+    Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.
+  </marquee>
+</div>
 
         <!-- TÌM KIẾM VĂN BẢN -->
         <div class="cv-box">
