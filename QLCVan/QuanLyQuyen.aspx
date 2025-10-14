@@ -182,7 +182,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
   <div class="page">
     <div class="content-header">
-  <h2 class="content-header-title">QUẢN LÝ QUYỀN</h2>
+  <h2 class="content-header-title">QUẢN LÝ NGƯỜI DÙNG</h2>
 </div>
 
 <div class="welcome-bar">
@@ -205,7 +205,7 @@
 
     <!-- ✅ Bảng danh sách -->
     <div class="table-wrapper">
- <asp:GridView ID="gvQuyen" runat="server" AutoGenerateColumns="False"
+ <asp:GridView ID="gvQuyentbl" runat="server" AutoGenerateColumns="False"
   CssClass="table"
   AllowPaging="True" PageSize="5"
   OnPageIndexChanging="gvQuyen_PageIndexChanging"
@@ -215,11 +215,7 @@
   <Columns>
     <asp:BoundField DataField="MaQuyen" HeaderText="Mã quyền" />
     <asp:BoundField DataField="TenQuyen" HeaderText="Tên quyền" />
-    <asp:TemplateField HeaderText="Thao tác">
-      <ItemTemplate>
-        <!-- Thao tác -->
-      </ItemTemplate>
-    </asp:TemplateField>
+    <asp:BoundField DataField="MoTa" HeaderText="Thao tác" />
   </Columns>
 </asp:GridView>
 

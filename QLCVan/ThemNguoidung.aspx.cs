@@ -4,7 +4,9 @@ namespace QLCVan
 {
     public partial class ThemNguoiDung : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e) { }
+        protected void Page_Load(object sender, EventArgs e) {
+        
+        }
 
         protected void btnThem_Click(object sender, EventArgs e)
         {
