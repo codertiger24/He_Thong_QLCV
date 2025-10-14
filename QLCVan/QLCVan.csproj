@@ -124,6 +124,7 @@
     <Content Include="QLEmail.aspx" />
     <Content Include="QLnguoidung.aspx" />
     <Content Include="ChucVu.aspx" />
+    <Content Include="SuaCongVan.aspx" />
     <Content Include="ThemCVKoDuyet.aspx" />
     <Content Include="QLNhom.aspx" />
     <Content Include="QLNhomQuyen.aspx" />
@@ -275,6 +276,13 @@
     </Compile>
     <Compile Include="ChucVu.aspx.designer.cs">
       <DependentUpon>ChucVu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuaCongVan.aspx.cs">
+      <DependentUpon>SuaCongVan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuaCongVan.aspx.designer.cs">
+      <DependentUpon>SuaCongVan.aspx</DependentUpon>
     </Compile>
     <Compile Include="ThemCVKoDuyet.aspx.cs">
       <DependentUpon>ThemCVKoDuyet.aspx</DependentUpon>
