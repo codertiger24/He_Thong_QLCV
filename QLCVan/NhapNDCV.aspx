@@ -474,7 +474,7 @@
         </div>
     </div>
 
-    <div class="grid-wrap">
+  <!--  <div class="grid-wrap">
         <div class="grid-title">TẤT CẢ CÁC CÔNG VĂN</div>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true">
             <ContentTemplate>
@@ -557,5 +557,5 @@
                 <asp:AsyncPostBackTrigger ControlID="gvnhapcnden" EventName="PageIndexChanging" />
             </Triggers>
         </asp:UpdatePanel>
-    </div>
+    </div>-->
 </asp:Content>
