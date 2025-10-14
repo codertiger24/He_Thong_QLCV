@@ -11,8 +11,17 @@ namespace QLCVan
 {
 
 
-    public partial class QuanLyQuyen
+    public partial class GanQuyen
     {
+
+        /// <summary>
+        /// lblTenNhom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTenNhom;
 
         /// <summary>
         /// txtTenQuyen control.
@@ -42,12 +51,21 @@ namespace QLCVan
         protected global::System.Web.UI.WebControls.LinkButton btnSearch;
 
         /// <summary>
-        /// gvQuyentbl control.
+        /// hdfMaNhom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvQuyentbl;
+        protected global::System.Web.UI.WebControls.HiddenField hdfMaNhom;
+
+        /// <summary>
+        /// gvGanQuyen control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvGanQuyen;
     }
 }

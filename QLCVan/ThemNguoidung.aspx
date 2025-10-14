@@ -2,7 +2,7 @@
     AutoEventWireup="true" CodeBehind="ThemNguoiDung.aspx.cs" Inherits="QLCVan.ThemNguoiDung" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body { background:#f3f4f6; }
 
@@ -210,7 +210,7 @@
 
         <div class="form-row">
           <label>Chức vụ:</label>
-          <asp:DropDownList ID="ddlChucVu" runat="server" CssClass="form-select">
+          <asp:DropDownList ID="ddlChucVu" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlChucVu_SelectedIndexChanged">
             <asp:ListItem Text="Chức vụ" />
             <asp:ListItem Text="Giáo viên" />
             <asp:ListItem Text="Trợ giảng" />

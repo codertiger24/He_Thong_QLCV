@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Quản lý Loại Công văn" Language="C#" MasterPageFile="~/QLCV.Master" AutoEventWireup="true"
+﻿
+<%@ Page Title="Quản lý Loại Công văn" Language="C#" MasterPageFile="~/QLCV.Master" AutoEventWireup="true"
     CodeBehind="LoaiCV.aspx.cs" Inherits="QLCVan.LoaiCV" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
@@ -84,6 +85,7 @@
             background-color: var(--red); color: white; border: none; border-radius: 12px; /* bo to hơn */
             cursor: pointer; font-size: 15px;
             transition: filter .15s;
+            text-decoration: none; /* Thêm dòng này để xóa gạch chân */
         }
         .btn-search:hover { filter: brightness(.95); }
 
@@ -267,9 +269,13 @@
                     <ItemTemplate><asp:Label ID="lblTenLoai" runat="server" Text='<%# Eval("TenLoaiCV") %>'></asp:Label></ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Phê duyệt">
-                    <ItemTemplate><asp:Label ID="lblPheDuyet" runat="server" Text='<%# ((GridViewRow)Container).RowIndex % 2 == 0 ? "Có" : "Không" %>'></asp:Label></ItemTemplate>
-                </asp:TemplateField>
+               <asp:TemplateField HeaderText="Phê duyệt">
+    <ItemTemplate>
+        <asp:Label ID="lblPheDuyet" runat="server" 
+            Text='<%# Eval("PheDuyet") != null && Eval("PheDuyet").ToString() == "1" ? "Có" : "Không" %>'>
+        </asp:Label>
+    </ItemTemplate>
+</asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Thao tác">
                     <ItemTemplate>

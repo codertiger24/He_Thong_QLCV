@@ -67,16 +67,33 @@
       margin:18px 0 12px 0;
     }
 
-    /* Nút thêm người dùng */
-    .btn-add {
-      background:#0d6efd;
-      color:#fff;
-      border:none;
-      padding:8px 18px;
-      font-weight:600;
-      border-radius:6px;
-    }
-    .btn-add:hover { background:#0948a0; }
+   /* Nút thêm người dùng – nhẹ nhàng khi hover */
+.btn-add {
+  background: #0d6efd;         /* xanh primary */
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color .2s ease, box-shadow .2s ease, transform .05s ease;
+}
+
+.btn-add:hover {
+  background: #2b6fe8;         /* đổi màu NHẸ hơn (ít chênh) */
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+.btn-add:active {
+  transform: translateY(1px);  /* nhấn xuống rất nhẹ */
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+.btn-add:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25); /* viền focus nhẹ */
+}
+
 
 .search-bar, .table-wrapper {
   max-width: 1200px;
@@ -145,14 +162,16 @@
 
     /* Bảng */
     .table thead {
-      background:#c00;
-      color:#fff;
+     background:#C62828 !important; color:#fff !important;
       text-align:center;
     }
+    .table th { background:#C62828; color:#fff; text-align:center; }
+
     .table td, .table th {
       vertical-align:middle;
       text-align:center;
     }
+ 
 
     /* Trạng thái */
     .badge-status {
@@ -263,7 +282,7 @@
 <!-- Bảng -->
 <div class="table-wrapper">
   <asp:GridView ID="gvNguoiDung" runat="server" AutoGenerateColumns="False"
-    CssClass="table table-bordered table-hover"
+    CssClass="table table-bordered "
     HeaderStyle-CssClass="table-danger"
     DataKeyNames="TenDangNhap"
     OnRowDeleting="rowDeleting"
@@ -282,12 +301,14 @@
       <asp:BoundField DataField="DonVi" HeaderText="Đơn vị" />
       <asp:BoundField DataField="ChucVu" HeaderText="Chức vụ" />
       <asp:TemplateField HeaderText="Trạng thái">
-        <ItemTemplate>
-          <%# (bool)Eval("DangKichHoat")
-              ? "<span class='badge-status badge-active'>Đang kích hoạt</span>"
-              : "<span class='badge-status badge-locked'>Đã khóa</span>" %>
-        </ItemTemplate>
-      </asp:TemplateField>
+  <ItemTemplate>
+    <asp:Literal ID="litStatus" runat="server" Mode="PassThrough"
+      Text='<%# Convert.ToBoolean(Eval("DangKichHoat") ?? false)
+            ? "<span class=\"badge-status badge-active\">Đang kích hoạt</span>"
+            : "<span class=\"badge-status badge-locked\">Đã khóa</span>" %>' />
+  </ItemTemplate>
+</asp:TemplateField>
+
       <asp:TemplateField HeaderText="Thao tác">
             <ItemTemplate>
               <a href='<%# "SuaNguoiDung.aspx?TenDangNhap=" + Eval("TenDangNhap") %>' class="btn-action" title="Sửa">

@@ -77,6 +77,8 @@
     <Content Include="DaDuyetCTCV_Duyet.aspx" />
     <Content Include="Dangnhap.aspx" />
     <Content Include="DanhBaEmail.aspx" />
+    <Content Include="GanNhomQuyen.aspx" />
+    <Content Include="GanQuyen.aspx" />
     <Content Include="GanQuyenTruongKhoa.aspx" />
     <Content Include="Gioithieu.aspx" />
     <Content Include="Images\94471c42569cdcc2858d.jpg" />
@@ -118,11 +120,14 @@
     <Content Include="LoaiCV.aspx" />
     <Content Include="Main.css" />
     <Content Include="NhapNDCV.aspx" />
+    <Content Include="QLChucVu.aspx" />
     <Content Include="QLEmail.aspx" />
     <Content Include="QLnguoidung.aspx" />
     <Content Include="ChucVu.aspx" />
+    <Content Include="SuaCongVan.aspx" />
     <Content Include="ThemCVKoDuyet.aspx" />
     <Content Include="QLNhom.aspx" />
+    <Content Include="QLNhomQuyen.aspx" />
     <Content Include="QuanLyQuyen.aspx" />
     <Content Include="Scripts\datepicker\jquery-1.10.2.js" />
     <Content Include="Scripts\datepicker\jquery-ui.css" />
@@ -191,6 +196,20 @@
     <Compile Include="DanhBaEmail.aspx.designer.cs">
       <DependentUpon>DanhBaEmail.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GanNhomQuyen.aspx.cs">
+      <DependentUpon>GanNhomQuyen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GanNhomQuyen.aspx.designer.cs">
+      <DependentUpon>GanNhomQuyen.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GanQuyen.aspx.cs">
+      <DependentUpon>GanQuyen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GanQuyen.aspx.designer.cs">
+      <DependentUpon>GanQuyen.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Gioithieu.aspx.cs">
       <DependentUpon>Gioithieu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -209,9 +228,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Info.dbml</DependentUpon>
     </Compile>
-    <Compile Include="KoDuyetCTCV_Duyet.aspx.cs">
-      <DependentUpon>KoDuyetCTCV_Duyet.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="InfoDataContext.partial.cs" />
     <Compile Include="LoaiCV.aspx.cs">
       <DependentUpon>LoaiCV.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -227,6 +244,13 @@
       <DependentUpon>NhapNDCV.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QLChucVu.aspx.cs">
+      <DependentUpon>QLChucVu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QLChucVu.aspx.designer.cs">
+      <DependentUpon>QLChucVu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="QLCV.Master.cs">
       <DependentUpon>QLCV.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -255,6 +279,13 @@
     <Compile Include="ChucVu.aspx.designer.cs">
       <DependentUpon>ChucVu.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SuaCongVan.aspx.cs">
+      <DependentUpon>SuaCongVan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuaCongVan.aspx.designer.cs">
+      <DependentUpon>SuaCongVan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ThemCVKoDuyet.aspx.cs">
       <DependentUpon>ThemCVKoDuyet.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -268,6 +299,13 @@
     </Compile>
     <Compile Include="QLNhom.aspx.designer.cs">
       <DependentUpon>QLNhom.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="QLNhomQuyen.aspx.cs">
+      <DependentUpon>QLNhomQuyen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QLNhomQuyen.aspx.designer.cs">
+      <DependentUpon>QLNhomQuyen.aspx</DependentUpon>
     </Compile>
     <Compile Include="QuanLyQuyen.aspx.cs">
       <DependentUpon>QuanLyQuyen.aspx</DependentUpon>

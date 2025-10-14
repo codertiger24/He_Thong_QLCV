@@ -15,6 +15,11 @@ namespace QLCVan
             public string DonVi { get; set; }
             public string ChucVu { get; set; }
             public bool DangKichHoat { get; set; }
+
+            // === Thêm mới để khớp với SuaNguoiDung.aspx ===
+            public string HoTen { get; set; }          // dùng cho txtHoTen
+            public string MaNguoiDung { get; set; }
+
         }
 
         private List<NguoiDung> GetDanhSachNguoiDung()
@@ -44,23 +49,23 @@ namespace QLCVan
             gvNguoiDung.DataBind();
         }
 
-       public static void ThemNguoiDungMoi(string ten, string email, string donvi, string chucvu, bool kichHoat)
-{
-    var ds = (List<NguoiDung>)System.Web.HttpContext.Current.Session["DanhSachNguoiDung"];
-    if (ds == null)
-        ds = new List<NguoiDung>();
+        public static void ThemNguoiDungMoi(string ten, string email, string donvi, string chucvu, bool kichHoat)
+        {
+            var ds = (List<NguoiDung>)System.Web.HttpContext.Current.Session["DanhSachNguoiDung"];
+            if (ds == null)
+                ds = new List<NguoiDung>();
 
-    ds.Add(new NguoiDung
-    {
-        TenDangNhap = ten,
-        Email = email,
-        DonVi = donvi,
-        ChucVu = chucvu,
-        DangKichHoat = kichHoat
-    });
+            ds.Add(new NguoiDung
+            {
+                TenDangNhap = ten,
+                Email = email,
+                DonVi = donvi,
+                ChucVu = chucvu,
+                DangKichHoat = kichHoat
+            });
 
-    System.Web.HttpContext.Current.Session["DanhSachNguoiDung"] = ds;
-}
+            System.Web.HttpContext.Current.Session["DanhSachNguoiDung"] = ds;
+        }
 
 
         protected void btnSearch_Click(object sender, EventArgs e)
