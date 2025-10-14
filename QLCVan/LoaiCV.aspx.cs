@@ -1,4 +1,5 @@
-﻿using System;
+﻿.cs
+using System;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -82,11 +83,21 @@ namespace QLCVan
                 var loaiCV = db.tblLoaiCVs.SingleOrDefault(p => p.MaLoaiCV == maLoaiCV);
                 if (loaiCV != null)
                 {
-                    // SỬA LẠI TÊN CONTROL TỪ lblEditMaLoai THÀNH txtEditMaLoai
                     txtEditMaLoai.Text = loaiCV.MaLoaiCV.ToString();
                     txtEditTenLoaiCV.Text = loaiCV.TenLoaiCV;
 
-                    rbEditPheDuyetCo.Checked = true;
+                    // ĐÃ SỬA: Đọc giá trị PheDuyet từ DB và gán vào RadioButton SỬA
+                    if (loaiCV.PheDuyet == "1")
+                    {
+                        rbEditPheDuyetCo.Checked = true;
+                        rbEditPheDuyetKhong.Checked = false;
+                    }
+                    else
+                    {
+                        rbEditPheDuyetCo.Checked = false;
+                        rbEditPheDuyetKhong.Checked = true;
+                    }
+
                     mpeEdit.Show();
                 }
             }
@@ -106,6 +117,10 @@ namespace QLCVan
                 if (loaiCV != null)
                 {
                     loaiCV.TenLoaiCV = txtEditTenLoaiCV.Text.Trim();
+
+                    // ĐÃ SỬA: CẬP NHẬT GIÁ TRỊ PHÊ DUYỆT KHI BẤM NÚT SỬA
+                    loaiCV.PheDuyet = rbEditPheDuyetCo.Checked ? "1" : "0";
+
                     db.SubmitChanges();
                     load_LoaiCV();
                     mpeEdit.Hide();
@@ -146,11 +161,16 @@ namespace QLCVan
                         var checkTrung = db.tblLoaiCVs.Any(p => p.MaLoaiCV == maLoai);
                         if (!checkTrung)
                         {
+                            // Logic Thêm mới: Lấy giá trị từ RadioButton. "1" = Có, "0" = Không
+                            string pheDuyetValue = rbPheDuyetCo.Checked ? "1" : "0";
+
                             tblLoaiCV pr = new tblLoaiCV
                             {
                                 MaLoaiCV = maLoai,
-                                TenLoaiCV = ten
+                                TenLoaiCV = ten,
+                                PheDuyet = pheDuyetValue // GÁN GIÁ TRỊ PHÊ DUYỆT
                             };
+
                             db.tblLoaiCVs.InsertOnSubmit(pr);
                             db.SubmitChanges();
                             ScriptManager.RegisterStartupScript(this, this.GetType(), "ok", "alert('Đã thêm thành công'); closeAddModal();", true);
