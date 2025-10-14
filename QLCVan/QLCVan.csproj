@@ -180,6 +180,8 @@
     <Compile Include="CTCV.aspx.designer.cs">
       <DependentUpon>CTCV.aspx</DependentUpon>
     </Compile>
+    <Content Include="CTCVKhongDuyetDaGui.aspx" />
+    <Content Include="CTCVKhongDuyet.aspx" />
     <Compile Include="Dangnhap.aspx.cs">
       <DependentUpon>Dangnhap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
