@@ -57,6 +57,18 @@ namespace QLCVan
 
             // 4) Đổ menu theo vai trò
             BindMenuByRole(role);
+            // Loại bỏ mục "Danh bạ email" và "Tìm kiếm công văn" khỏi menu
+            rptMenu.DataSource = db.tblMenus
+           .Where(c => c.MenuID.ToString() == "1" || c.MenuID.ToString() == "7" ||
+                       c.MenuID.ToString() == "6" || c.MenuID.ToString() == "4" ||
+                       c.MenuID.ToString() == "5" || c.MenuID.ToString() == "2" ||
+                       c.MenuID.ToString() == "3")
+           .Where(c => !c.MenuName.ToLower().Contains("giới thiệu")
+                    && c.MenuName != "Danh bạ email"
+                    && c.MenuName != "Tìm kiếm công văn");
+            rptMenu.DataBind();
+
+
         }
 
         private void BindMenuByRole(string role)
