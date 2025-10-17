@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.UI;
@@ -12,6 +13,8 @@ namespace QLCVan
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
             if (Session["TenDN"] == null)
             {
                 Response.Redirect("Dangnhap.aspx");
@@ -21,6 +24,7 @@ namespace QLCVan
             {
                 LoadData();
             }
+           
         }
 
         private void LoadData()

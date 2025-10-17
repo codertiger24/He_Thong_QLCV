@@ -240,6 +240,7 @@
     <Compile Include="NhapNDCV.aspx.designer.cs">
       <DependentUpon>NhapNDCV.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PermissionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QLChucVu.aspx.cs">
       <DependentUpon>QLChucVu.aspx</DependentUpon>

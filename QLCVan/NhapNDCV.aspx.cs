@@ -14,16 +14,14 @@ namespace QLCVan
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (!(Session["TenDN"] != null))
+            if ((Session["TenDN"] == null))
             {
-                Response.Redirect("Gioithieu.aspx");
+                Response.Redirect("Dangnhap.aspx");
             }
-            if (Session["QuyenHan"].ToString().Trim() == "User")
+            if (!PermissionHelper.HasPermission("Q002"))
             {
-                Response.Write("<script type='text/javascript'>");
-                Response.Write("alert('Bạn không có quyền truy cập trang này !');");
-                Response.Write("document.location.href='Trangchu.aspx';");
-                Response.Write("</script>");
+                Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
+                Response.End();
             }
 
             if (!Page.IsPostBack)
