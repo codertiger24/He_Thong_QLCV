@@ -53,7 +53,6 @@
     margin: 0 auto 20px auto;  /* cách dưới */
     font-weight: bold;
     text-align: center;
-      height: 1300px;
     overflow: hidden;
 }
 

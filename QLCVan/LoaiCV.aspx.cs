@@ -20,7 +20,12 @@ namespace QLCVan
             {
                 Response.Redirect("Dangnhap.aspx");
             }
-
+            //CheckQuyen
+            if (!PermissionHelper.HasPermission("Q006"))
+            {
+                Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
+                Response.End();
+            }
             if (Session["QuyenHan"] != null && Session["QuyenHan"].ToString().Trim() == "User")
             {
                 Response.Write("<script>alert('Bạn không có quyền truy cập trang này!');document.location.href='Trangchu.aspx';</script>");
