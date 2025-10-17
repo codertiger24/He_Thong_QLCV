@@ -20,7 +20,7 @@ namespace QLCVan
 
         protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
         {
-            // Không dùng control Login1, logic đặt ở btnLogin_Click
+
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -30,8 +30,28 @@ namespace QLCVan
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                lbThongbaoLoi.Text = "Vui lòng nhập đầy đủ Tài khoản và Mật khẩu.";
-                return;
+                Session["MaNguoiDung"] = acc.MaNguoiDung;
+                Session["TenDN"] = Username.Text;
+                Session["Matkhau"] = (Password.Text);
+                Session["QuyenHan"] = acc.QuyenHan.ToString();
+                /// Lấy danh sách quyền 
+                var listQuyen = (
+                    from nd in db.tblNguoiDungs
+                    join cv in db.tblChucVus on nd.MaChucVu equals cv.MaChucVu
+                    join cvnq in db.tblChucVu_tblNhomQuyens on cv.MaChucVu equals cvnq.MaChucVu
+                    join nq in db.tblNhomQuyens on cvnq.MaNhomQuyen equals nq.MaNhomQuyen
+                    join nqq in db.tblNhomQuyen_tblQuyens on nq.MaNhomQuyen equals nqq.MaNhomQuyen
+                    join q in db.tblQuyens on nqq.MaQuyen equals q.MaQuyen
+                    where nd.MaNguoiDung == acc.MaNguoiDung
+                    select q.MaQuyen
+
+                    ).Distinct().ToList();
+
+                /// nạp danh sách quyền của user vào list 
+                Session["ListQuyen"] = listQuyen;
+                Response.Redirect("Trangchu.aspx");
+
+
             }
 
             // NOTE: hiện tại so sánh plain-text theo DB demo.
