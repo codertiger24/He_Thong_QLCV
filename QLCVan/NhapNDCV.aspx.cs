@@ -105,34 +105,11 @@ namespace QLCVan
         }
         protected void lnk_Sua_Click(object sender, EventArgs e)
         {
-            if (Request.QueryString["macv"] != null)
-            {
-                tblNoiDungCV cv1 = db.tblNoiDungCVs.SingleOrDefault(t => t.MaCV.ToString() == (Request.QueryString["macv"].ToString()));
-
-                if (cv1 != null)
-                {
-
-                    txttieude.Text = cv1.TieuDeCV;
-                    txtngaybanhanh.Text = cv1.NgayGui.ToString();
-                    txtngaygui.Text = cv1.NgayBanHanh.ToString();
-                    txtcqbh.Text = cv1.CoQuanBanHanh;
-                    txtsocv.Text = cv1.SoCV;
-                    txttrichyeu.Text = cv1.TrichYeuND;
-                    // btnthem.Visible = false;
-                    // btnsua.Visible = true;
-                    ListBox1.DataTextField = "TenFile";
-                    ListBox1.DataSource = cv1.tblFileDinhKems;
-                    ListBox1.DataBind();
-                    RadioButtonList1.SelectedIndex = (int)cv1.GuiHayNhan;
-
-                }
-            }
-
-            LinkButton lnk = (sender) as LinkButton;
-            string str = lnk.CommandArgument;
-            Response.Redirect("~/NhapNDCV.aspx?MaCV=" + str);
-
+            LinkButton lnk = (LinkButton)sender;
+            string maCV = lnk.CommandArgument;
+            Response.Redirect("~/SuaCongVan.aspx?macv=" + maCV);
         }
+
 
         protected void lnk_Xoa_Click(object sender, EventArgs e)
         {

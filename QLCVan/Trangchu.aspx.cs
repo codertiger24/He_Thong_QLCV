@@ -54,6 +54,8 @@ namespace QLCVan
 
             GridView1.DataSource = data;
             GridView1.DataBind();
+           
+
         }
 
         protected void lnk_Xoa_Click(object sender, EventArgs e)
@@ -95,7 +97,8 @@ namespace QLCVan
         // - true  -> "Đã gửi" (xanh đặc)
         // - false + GuiHayNhan = 0 -> "Không duyệt" (đỏ viền)
         // - false + GuiHayNhan != 0 -> "Đang trình" (cam viền)
-        public string GetTrangThai(object oTrangThai, object oGuiHayNhan)
+        // TRẠNG THÁI HIỂN THỊ DẠNG BADGE
+        protected string GetTrangThai(object oTrangThai, object oGuiHayNhan)
         {
             bool trangThai = false;
             int guiHayNhan = -1;
@@ -172,6 +175,9 @@ namespace QLCVan
 
             GridView1.DataSource = data;
             GridView1.DataBind();
+            
+
         }
+
     }
 }

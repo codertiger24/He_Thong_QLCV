@@ -1,65 +1,58 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/QLCV.Master" AutoEventWireup="true"
-    CodeBehind="NhapNDCV.aspx.cs" Inherits="QLCVan.NhapNDCV" %>
+    CodeBehind="SuaCongVan.aspx.cs" Inherits="QLCVan.SuaCongVan" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <style type="text/css">
-        /* Reset cơ bản và font */
-      :root {
-  --ink: #0f172a;
-  --red: #c00000;
-  --blue: #0d6efd;
-  --line: #e5e7eb;
-}
+        :root {
+            --ink: #0f172a;
+            --red: #c00000;
+            --blue: #0d6efd;
+            --line: #e5e7eb;
+        }
 
+        .content-header {
+            background: transparent;
+            padding: 0;
+            border-bottom: none;
+            margin: 0 auto 6px auto;
+        }
 
+        .content-header-title {
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 20px;
+            color: #444;
+            margin: 0 0 6px 0;
+            letter-spacing: 0;
+        }
 
-/* ===== Phần tiêu đề + thanh chạy chữ ===== */
-.content-header {
-  background: transparent;
-  padding: 0;
-  border-bottom: none;
-  margin: 0 auto 6px auto;
-}
+        .welcome-bar {
+            background: #c00;
+            color: #fff;
+            border-radius: 4px;
+            padding: 8px 0;
+            margin: 0 auto 26px auto;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 15px;
+            overflow: hidden;
+        }
 
-.content-header-title {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 20px;
-  color: #444;
-  margin: 0 0 6px 0;
-  letter-spacing: 0;
-}
+        .welcome-bar marquee {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+        }
 
-
-/* ===== Thanh chạy chữ giống hình mẫu ===== */
-.welcome-bar {
-  background: #c00;                  /* nền đỏ đậm */
-  color: #fff;
-  border-radius: 4px;                /* bo góc mềm */
-  padding: 8px 0;                    /* cao vừa để chữ nằm giữa */
-  margin: 0 auto 26px auto;
-  font-weight: bold;                 /* in đậm */
-  text-align: center;
-  display: flex;
-  align-items: center;               /* căn giữa theo chiều cao */
-  justify-content: center;
-  height: 15px;                      /* chiều cao cố định để đều */
-  overflow: hidden;                  /* ẩn phần chữ thừa */
-}
-
-.welcome-bar marquee {
-  font-size: 16px;                   /* chữ lớn hơn chút */
-  font-weight: bold;
-  color: #fff;
-                
-}
-
-      
-
-        /* Container chính của form */
         .form-container {
             margin: 40px auto;
             padding: 30px;
@@ -77,40 +70,35 @@
             color: #222;
         }
 
-        /* Bố cục form sử dụng Grid */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px 30px;
         }
 
-        /* Các trường nhập liệu */
         .form-field {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        /* Trường chiếm toàn bộ chiều rộng */
         .form-field-full-width {
             grid-column: 1 / -1;
         }
 
-            /* Container cho các trường full-width */
-            .form-field-full-width .form-field-inner {
-                display: flex;
-                align-items: center;
-                width: 100%;
-                gap: 15px;
-            }
+        .form-field-full-width .form-field-inner {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 15px;
+        }
 
-            .form-field-full-width .form-label {
-                width: 120px;
-                flex-shrink: 0;
-                text-align: right;
-            }
+        .form-field-full-width .form-label {
+            width: 120px;
+            flex-shrink: 0;
+            text-align: right;
+        }
 
-        /* Label */
         .form-label {
             font-weight: 600;
             color: #555;
@@ -119,7 +107,6 @@
             text-align: right;
         }
 
-        /* Input và Select */
         .form-input-control {
             flex-grow: 1;
             display: flex;
@@ -139,21 +126,20 @@
             transition: all 0.2s ease-in-out;
         }
 
-            .form-input:focus,
-            .form-select:focus,
-            .form-textarea:focus {
-                outline: none;
-                border-color: #0b57d0;
-                box-shadow: 0 0 0 2px rgba(11, 87, 208, 0.2);
-                background: #fff;
-            }
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #0b57d0;
+            box-shadow: 0 0 0 2px rgba(11, 87, 208, 0.2);
+            background: #fff;
+        }
 
         .form-textarea {
             resize: vertical;
             min-height: 100px;
         }
 
-        /* DropDownList mặc định */
         .form-select {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -163,7 +149,6 @@
             background-position: right 14px center;
         }
 
-        /* Radio buttons */
         .radio-group {
             display: flex;
             align-items: center;
@@ -179,7 +164,6 @@
             margin-right: 20px;
         }
 
-        /* File upload */
         .file-upload-row {
             display: flex;
             align-items: center;
@@ -201,35 +185,33 @@
             background-color: #f9f9f9;
         }
 
-            .file-upload-custom input[type="file"] {
-                display: none;
-            }
+        .file-upload-custom input[type="file"] {
+            display: none;
+        }
 
-            .file-upload-custom label {
-                background-color: #e8e8e8;
-                color: #202124;
-                border-right: 1px solid #dcdcdc;
-                padding: 8px 16px;
-                border-radius: 8px 0 0 8px;
-                cursor: pointer;
-                font-weight: 600;
-            }
+        .file-upload-custom label {
+            background-color: #e8e8e8;
+            color: #202124;
+            border-right: 1px solid #dcdcdc;
+            padding: 8px 16px;
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
 
-                .file-upload-custom label:hover {
-                    background-color: #d4d4d4;
-                }
+        .file-upload-custom label:hover {
+            background-color: #d4d4d4;
+        }
 
         .file-chosen-text {
             padding: 0 12px;
             color: #777;
         }
 
-        /* Tệp đính kèm */
         .file-list-full-width {
             grid-column: 1 / -1;
         }
 
-        /* Nút */
         .btn {
             display: inline-block;
             padding: 10px 24px;
@@ -247,20 +229,19 @@
             color: #fff;
         }
 
-            .btn-primary:hover {
-                background-color: #0949ae;
-            }
+        .btn-primary:hover {
+            background-color: #0949ae;
+        }
 
         .btn-quaylai {
             background-color: #dadce0;
             color: #202124;
         }
 
-            .btn-quaylai:hover {
-                background-color: #c0c4c8;
-            }
+        .btn-quaylai:hover {
+            background-color: #c0c4c8;
+        }
 
-        /* Hàng nút form chính */
         .form-buttons {
             grid-column: 1 / -1;
             display: flex;
@@ -273,12 +254,6 @@
             color: #d32f2f;
             font-size: 12px;
             margin-top: 5px;
-        }
-
-     
-        /* Tệp đính kèm */
-        .file-list-full-width {
-            grid-column: 1 / -1;
         }
 
         .file-list-row {
@@ -299,7 +274,6 @@
             width: 100%;
             height: 100px;
         }
-    
     </style>
 
     <script src="Scripts/datepicker/jquery-1.10.2.js" type="text/javascript"></script>
@@ -315,7 +289,7 @@
                 dayNames: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
                 dayNamesShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
                 dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-                weekHeader: 'Tu', dateFormat: 'dd/mm/yy', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: ''
+                weekHeader: 'Tu', dateFormat: 'dd/mm/yy', firstDay: 0
             };
             $.datepicker.setDefaults($.datepicker.regional['vi']);
             $('#<%= txtngaybanhanh.ClientID %>').datepicker({ changeMonth: true, changeYear: true, yearRange: '2000:2040' });
@@ -323,23 +297,21 @@
         });
     </script>
 
-  <div class="content-header">
-  <h2 class="content-header-title">NHẬP NỘI DUNG CÔNG VĂN</h2>
-</div>
+    <div class="content-header">
+        <h2 class="content-header-title">SỬA CÔNG VĂN</h2>
+    </div>
 
-<div class="welcome-bar">
-  <marquee behavior="scroll" direction="left" scrollamount="6">
-    Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.
-  </marquee>
-</div>
-
-
+    <div class="welcome-bar">
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+            Cập nhật thông tin công văn trong hệ thống Quản lý Công văn điện tử.
+        </marquee>
+    </div>
 
     <div class="form-container">
-        <h3 class="form-title">THÊM MỚI CÔNG VĂN</h3>
+        <h3 class="form-title">CHỈNH SỬA CÔNG VĂN</h3>
 
         <div class="form-grid">
-            <div class="form-field-full-width">
+                       <div class="form-field-full-width">
                 <div class="form-field-inner">
                     <asp:Label ID="lblTieuDe" runat="server" Text="Tiêu đề:" CssClass="form-label"></asp:Label>
                     <div class="form-input-control">
@@ -468,94 +440,10 @@
             </div>
 
             <div class="form-buttons">
-                <asp:Button ID="btnsua" runat="server" CssClass="btn btn-quaylai" Text="Quay lại" OnClick="btnlammoi_Click" CausesValidation="False" />
-                <asp:Button ID="btnthem" runat="server" CssClass="btn btn-primary" Text="Thêm" OnClick="btnthem_Click" CausesValidation="True" />
+                <asp:Button ID="btnQuayLai" runat="server" CssClass="btn btn-quaylai" Text="Quay lại" OnClick="btnQuayLai_Click" CausesValidation="False" />
+                <asp:Button ID="btnCapNhat" runat="server" CssClass="btn btn-primary" Text="Cập nhật" OnClick="btnCapNhat_Click" CausesValidation="True" />
             </div>
         </div>
     </div>
 
-  <!--  <div class="grid-wrap">
-        <div class="grid-title">TẤT CẢ CÁC CÔNG VĂN</div>
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true">
-            <ContentTemplate>
-                <asp:GridView ID="gvnhapcnden" runat="server"
-                    AutoGenerateColumns="False"
-                    CssClass="vb-table"
-                    CellPadding="4"
-                    Width="100%"
-                    AllowPaging="True"
-                    PageSize="4"
-                    OnPageIndexChanging="gvnhapcnden_PageIndexChanging"
-                    OnSelectedIndexChanged="gvnhapcnden_SelectedIndexChanged"
-                    GridLines="None">
-
-                    <AlternatingRowStyle BackColor="White" />
-
-                    <Columns>
-                        <asp:TemplateField HeaderText="Số công văn">
-                            <ItemTemplate>
-                                <%# Eval("SOCV") %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Tiêu đề">
-                            <ItemTemplate>
-                                <%# Eval("TieudeCV") %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Loại công văn">
-                            <ItemTemplate>
-                                <%# Eval("TenLoaiCV") %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Ngày ban hành">
-                            <ItemTemplate>
-                                <%# Eval("NgayGui", "{0:dd/MM/yyyy}") %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Trích yếu ND">
-                            <ItemTemplate>
-                                <div class="vb-summary"><%# Eval("TrichYeuND") %></div>
-                                <div class="vb-attach">
-                                    <i class="fa fa-file-pdf-o"></i>
-                                    <a href="#">Tài liệu đính kèm</a>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Sửa" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="70px">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="lnk_Sua" runat="server"
-                                    CausesValidation="False"
-                                    OnClick="lnk_Sua_Click"
-                                    CommandArgument='<%# Eval("MaCV") %>'>
-                            Sửa
-                                </asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Xóa" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="70px">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="lnk_Xoa" runat="server"
-                                    CausesValidation="False"
-                                    OnClick="lnk_Xoa_Click"
-                                    OnClientClick="return confirm('Bạn có chắc chắn muốn xóa công văn này không?')"
-                                    CommandArgument='<%# Eval("MaCV") %>'>
-                            Xóa
-                                </asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-
-                </asp:GridView>
-            </ContentTemplate>
-
-            <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="gvnhapcnden" EventName="PageIndexChanging" />
-            </Triggers>
-        </asp:UpdatePanel>
-    </div>-->
 </asp:Content>

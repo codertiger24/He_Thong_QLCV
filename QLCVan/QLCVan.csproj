@@ -77,6 +77,7 @@
     <Content Include="DaDuyetCTCV_Duyet.aspx" />
     <Content Include="Dangnhap.aspx" />
     <Content Include="DanhBaEmail.aspx" />
+    <Content Include="file1.aspx" />
     <Content Include="GanNhomQuyen.aspx" />
     <Content Include="GanQuyen.aspx" />
     <Content Include="GanQuyenTruongKhoa.aspx" />
@@ -124,6 +125,7 @@
     <Content Include="QLEmail.aspx" />
     <Content Include="QLnguoidung.aspx" />
     <Content Include="ChucVu.aspx" />
+    <Content Include="SuaCongVan.aspx" />
     <Content Include="ThemCVKoDuyet.aspx" />
     <Content Include="QLNhom.aspx" />
     <Content Include="QLNhomQuyen.aspx" />
@@ -179,6 +181,8 @@
     <Compile Include="CTCV.aspx.designer.cs">
       <DependentUpon>CTCV.aspx</DependentUpon>
     </Compile>
+    <Content Include="CTCVKhongDuyetDaGui.aspx" />
+    <Content Include="CTCVKhongDuyet.aspx" />
     <Compile Include="Dangnhap.aspx.cs">
       <DependentUpon>Dangnhap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -192,6 +196,13 @@
     </Compile>
     <Compile Include="DanhBaEmail.aspx.designer.cs">
       <DependentUpon>DanhBaEmail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="file1.aspx.cs">
+      <DependentUpon>file1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="file1.aspx.designer.cs">
+      <DependentUpon>file1.aspx</DependentUpon>
     </Compile>
     <Compile Include="GanNhomQuyen.aspx.cs">
       <DependentUpon>GanNhomQuyen.aspx</DependentUpon>
@@ -276,6 +287,13 @@
     </Compile>
     <Compile Include="ChucVu.aspx.designer.cs">
       <DependentUpon>ChucVu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuaCongVan.aspx.cs">
+      <DependentUpon>SuaCongVan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuaCongVan.aspx.designer.cs">
+      <DependentUpon>SuaCongVan.aspx</DependentUpon>
     </Compile>
     <Compile Include="ThemCVKoDuyet.aspx.cs">
       <DependentUpon>ThemCVKoDuyet.aspx</DependentUpon>

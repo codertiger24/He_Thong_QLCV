@@ -8,7 +8,7 @@ namespace QLCVan
 {
     public partial class InfoDataContext 
     {
-        public InfoDataContext() : base(ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString2"].ConnectionString)
+        public InfoDataContext() : base(ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString1"].ConnectionString)
         {
             OnCreated();
         }

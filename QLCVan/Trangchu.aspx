@@ -153,6 +153,115 @@
             color:#0066cc; text-decoration:none; border:1px solid transparent;}
         .pager a:hover{border:1px solid var(--red); color:var(--red)}
         .pager span{border:1px solid var(--red); background:var(--red); color:#fff; font-weight:bold}
+        /* 1) Kéo ô chứa nút "Tìm kiếm" xuống cùng hàng với "Từ ngày / Đến ngày" */
+.cv-box .cv-form > .field:nth-child(6){
+  grid-area: actions;          /* giữ nguyên vị trí trong grid */
+  align-self: end;             /* bám đáy hàng thứ 2 */
+  display: flex;
+  align-items: flex-end;       /* nút bám sát cạnh dưới ô */
+  justify-content: flex-start; /* canh trái giống các ô khác */
+}
+
+/* Trong ô action, nút bám đáy kể cả khi có label rỗng */
+.cv-box .cv-form > .field:nth-child(6) .btn,
+.cv-box .cv-form > .field:nth-child(6) input.btn{
+  margin-top: auto;
+}
+
+/* 2) Đổi màu chữ Xem/Sửa/Xóa trong các nút thao tác thành trắng (#FFFFFF) */
+.actions .action-pill,
+.actions .action-pill:link,
+.actions .action-pill:visited,
+.actions .action-pill:hover,
+.actions .action-pill:active,
+.actions .action-del,            /* LinkButton (server control) */
+.actions .action-del:link,
+.actions .action-del:visited,
+.actions .action-del:hover,
+.actions .action-del:active{
+  color: #ffffff !important;
+}
+
+/* (Tuỳ chọn) Giữ màu trắng cho icon/child bên trong nếu có */
+.actions .action-pill *{
+  color: inherit !important;
+}
+
+/* Đưa nút "Tìm kiếm" vào giữa cột 3 (dưới "Loại công văn"), chiếm 2 hàng */
+.cv-box .cv-form > .field:nth-child(6){
+  grid-area: auto !important;        /* bỏ grid-area cũ */
+  grid-column: 3 !important;          /* cột 3 = cột "Loại công văn" */
+  grid-row: 1 / span 2 !important;    /* chiếm cả 2 hàng -> nằm giữa theo chiều dọc */
+  display: flex !important;
+  align-items: center !important;      /* căn giữa dọc */
+  justify-content: center !important;  /* căn giữa ngang */
+  align-self: stretch !important;      /* cao bằng 2 hàng */
+}
+
+/* Ẩn label rỗng để ô không bị đội cao */
+.cv-box .cv-form > .field:nth-child(6) > label{
+  display: none !important;
+}
+
+
+/* Làm chữ nút "Tìm kiếm" đậm/to hơn (không đổi font) */
+.cv-box .cv-form .btn,
+.cv-box .cv-form input.btn,
+.cv-box .cv-form input[type="submit"].btn,
+.cv-box .cv-form input[type="submit"][id$="Button1"]{
+  font-family: inherit !important; /* giữ nguyên phông */
+  font-weight: 700 !important;     /* đậm hơn */
+  font-size: 18px !important;      /* to hơn một chút */
+  padding: 10px 18px !important;   /* đệm lớn hơn cho cân đối */
+  height: 44px !important;         /* cao hơn để dễ bấm */
+  border-radius: 8px !important;   /* bo góc mềm */
+}
+
+
+/* —— Trả bảng về full chiều rộng khung để THẲNG với "TÌM KIẾM VĂN BẢN" —— */
+.gridwrap{
+  display:block !important;
+  max-width:var(--content-w) !important;
+  margin:0 auto !important;
+  padding:16px 18px !important;   /* cùng padding với .cv-box */
+}
+
+.gridwrap .gridview{
+  width:100% !important;          /* full bề rộng khung */
+  margin:0 !important;            /* bỏ căn giữa */
+  box-sizing:border-box;
+}
+
+/* (tuỳ chọn) Tiêu đề danh sách vẫn căn giữa, nhưng mép trong khớp với khung */
+.cv-list-title{
+  max-width:var(--content-w) !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  padding:16px 18px !important;
+}
+/* Badge cùng kích thước: căn giữa + tối thiểu bằng "Đang trình" */
+.badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:6px 12px; line-height:1; font-weight:700;
+  min-width: 96px;                 /* đủ cho "Đang trình" */
+  text-align:center; border:1px solid transparent;
+}
+
+/* "Đã gửi" – chữ xanh, nền trắng, viền xanh */
+.badge--success{
+  background:#fff !important;
+  color:#22c55e !important;        /* xanh lá */
+  border-color:#22c55e !important;
+}
+
+/* (Giữ nguyên "Đang trình") */
+.badge--warning{
+  background:#fff;
+  color:#d97706;
+  border-color:#f59e0b;
+}
+
+
     </style>
 </asp:Content>
 
@@ -239,14 +348,14 @@
                             </asp:TemplateField>
 
                             <%-- TRẠNG THÁI (120px – cố định) --%>
-                            <asp:TemplateField HeaderText="Trạng thái">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litTrangThai" runat="server"
-                                        Text='<%# GetTrangThai(Eval("TrangThai"), Eval("GuiHayNhan")) %>' />
-                                </ItemTemplate>
-                                <HeaderStyle Width="120px" />
-                                <ItemStyle CssClass="status-cell" Width="120px" HorizontalAlign="Center" />
-                            </asp:TemplateField>
+                         <asp:TemplateField HeaderText="Trạng thái">
+    <ItemTemplate>
+        <%# GetTrangThai(Eval("TrangThai"), Eval("GuiHayNhan")) %>
+    </ItemTemplate>
+    <HeaderStyle Width="120px" />
+    <ItemStyle CssClass="status-cell" Width="120px" HorizontalAlign="Center" />
+</asp:TemplateField>
+
 
                             <%-- Thao tác (200px) --%>
                             <asp:TemplateField HeaderText="Thao tác">
