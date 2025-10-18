@@ -53,7 +53,7 @@
     margin: 0 auto 20px auto;  /* cách dưới */
     font-weight: bold;
     text-align: center;
-      height: 1300px;
+      height: 30px;
     overflow: hidden;
 }
 
@@ -66,7 +66,7 @@
         .page-title {
             font-size: 20px;
             font-weight: bold;
-            text-align: start;
+            text-align: center;
             color: #111;
             margin: 25px 0 20px 0;
         }
@@ -112,6 +112,11 @@
             .btn-search:hover {
                 background: #a00;
             }
+            .btn-search,
+.btn-search i {
+  text-decoration: none !important;   /* xoá gạch chân */
+  outline: none !important;           /* bỏ viền khi focus */
+}
 
 
         /* ✅ Bảng danh sách */

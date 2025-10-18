@@ -29,7 +29,7 @@
         .search-bar { display: flex; align-items: center; justify-content: center; gap: 30px; margin: 0 auto 25px auto; }
         .search-bar label { font-weight: 600; color: #111; margin-right: 10px; }
         .search-bar input { border: 1px solid #ccc; border-radius: 4px; padding: 8px 10px; height: 34px; width: 280px; font-size: 14px; }
-        .btn-search { background: #c00; color: #fff; border: none; height: 36px; width: 36px; cursor: pointer; border-radius: 4px;
+        .btn-search { background: #c00; color: #fff; border: none!important; height: 36px; width: 36px; cursor: pointer; border-radius: 4px;
                       display: flex; align-items: center; justify-content: center; font-size: 16px; }
         .btn-search:hover { background: #a00; }
         .table-wrapper { width: 70%; margin: 0 auto; background: #fff; }
@@ -41,6 +41,14 @@
                                           color: #111; text-decoration: none; transition: all 0.2s ease; }
         .grid-pager a:hover { color: #c00; }
         .grid-pager span { background: #c00; color: #fff; }
+        /* Nếu dùng <asp:LinkButton> thì thêm rule này để chắc chắn không bị gạch chân */
+.btn-search:link,
+.btn-search:visited,
+.btn-search:active,
+.btn-search:hover {
+  text-decoration: none !important;
+  color: #fff !important;     /* luôn trắng */
+}
     </style>
 </asp:Content>
 
@@ -63,7 +71,7 @@
 
         <!-- Thanh tìm kiếm -->
         <div class="search-bar">
-            <label>Tìm kiếm:</label>
+            <label>Tìm kiếm</label>
             <asp:TextBox ID="txtTenQuyen" runat="server" placeholder="Nhập tên nhóm quyền" />
             <asp:TextBox ID="txtMaQuyen" runat="server" placeholder="Nhập mã nhóm quyền" />
             <asp:LinkButton ID="btnSearch" runat="server" CssClass="btn-search" OnClick="btnSearch_Click">

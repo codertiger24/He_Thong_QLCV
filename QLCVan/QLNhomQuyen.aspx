@@ -95,23 +95,43 @@
                 font-size: 14px;
             }
 
-        .btn-search {
-            background: #c00;
-            color: #fff;
-            border: none;
-            height: 36px;
-            width: 36px;
-            cursor: pointer;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
+/* ✅ Bỏ gạch chân dưới icon tìm kiếm */
+.btn-search,
+.btn-search i {
+  text-decoration: none !important;   /* xoá gạch chân */
+  outline: none !important;           /* bỏ viền khi focus */
+}
 
-            .btn-search:hover {
-                background: #a00;
-            }
+/* Giữ nguyên màu và hiệu ứng như cũ */
+.btn-search {
+  background: #C62828;        
+  color: #fff;
+  border: none;
+  height: 36px;
+  width: 36px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: background-color .25s ease, transform .1s ease;
+}
+
+.btn-search:hover {
+  background: #BB0000;           /* đỏ khi hover */
+
+}
+
+/* Nếu dùng <asp:LinkButton> thì thêm rule này để chắc chắn không bị gạch chân */
+.btn-search:link,
+.btn-search:visited,
+.btn-search:active,
+.btn-search:hover {
+  text-decoration: none !important;
+  color: #fff !important;     /* luôn trắng */
+}
+
 
 
         /* ✅ Bảng danh sách */
@@ -175,6 +195,79 @@
                 background: #c00; /* 🔹 trang hiện tại tô đỏ */
                 color: #fff;
             }
+            /* ===== Chỉ sửa bằng CSS (fix cho GridView) ===== */
+
+/* 1) Ép layout cố định cột */
+.table { table-layout: fixed !important; width: 100%; }
+
+/* 2) Hai cột ngoài bằng nhau; dùng tr thay vì thead/tbody để chắc chắn match GridView */
+/*.table tr th, .table tr td { box-sizing: border-box; }*/
+
+/* Cột 1: Mã chức vụ */
+.table tr th:nth-child(1),
+.table tr td:nth-child(1) {
+  width: 20% !important;
+  text-align: center;
+}
+
+/* Cột 2: Chức vụ (ăn phần còn lại, dài nhất) */
+.table tr th:nth-child(2),
+.table tr td:nth-child(2) {
+  width: auto !important;
+  text-align: center;
+  padding-left: 14px;
+}
+
+/* Cột 3: Thao tác */
+.table tr th:nth-child(3),
+.table tr td:nth-child(3) {
+  width: 27% !important;
+  text-align: center;
+  white-space: nowrap;      /* giữ 1 dòng */
+  overflow: hidden;         /* tránh đẩy nở bảng nếu cần */
+}
+
+/* 3) Nút trong cột Thao tác: cách đều & kích thước ổn định */
+.table tr td:nth-child(3) > a,
+.table tr td:nth-child(3) > button,
+.table tr td:nth-child(3) > span > a,
+.table tr td:nth-child(3) > span > button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  margin: 0 6px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid transparent;
+  line-height: 1;
+}
+
+/* Gán quyền (nút chữ xanh) */
+.table tr td:nth-child(3) > *:first-child {
+  min-width: 88px;
+  padding: 0 12px;
+  background: #0d6efd; color: #fff; border-color: #0d6efd;
+}
+.table tr td:nth-child(3) > *:first-child:hover { background:#0b5ed7; }
+
+/* Sửa (icon viền xám) */
+.table tr td:nth-child(3) > *:nth-child(2) {
+  width: 30px; padding: 0;
+  background:#fff; color:#0B57D0; border-color:#d1d5db;
+}
+.table tr td:nth-child(3) > *:nth-child(2):hover { background:#f3f4f6; }
+
+/* Xóa (icon viền đỏ) */
+.table tr td:nth-child(3) > *:last-child {
+  width: 30px; padding: 0;
+  background:#fff; color:#DC2626; border-color:#d1d5db;
+}
+.table tr td:nth-child(3) > *:last-child:hover { background:#fee2e2; }
+
+/* Header đỏ giữ nguyên nhưng thêm !important để thắng Bootstrap */
+.table tr th { background-color:#c00 !important; color:#fff !important; }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -196,7 +289,7 @@
 
         <!-- ✅ Thanh tìm kiếm bên trái -->
         <div class="search-bar">
-            <label>Tìm kiếm:</label>
+            <label>Tìm kiếm</label>
             <asp:TextBox ID="txtTenQuyenSR" runat="server" placeholder="Nhập tên quyền" />
             <asp:TextBox ID="txtMaQuyenSR" runat="server" placeholder="Nhập mã quyền" />
             <asp:LinkButton ID="btnSearch" runat="server" CssClass="btn-search" OnClick="btnSearch_Click">
@@ -225,28 +318,29 @@
                     <asp:BoundField DataField="TenNhomQuyen" HeaderText="Tên nhóm quyền" />
                     <asp:TemplateField HeaderText="Thao Tác">
                         <ItemTemplate>
-                                <a type="button" class="btn btn-primary"
+                                <a type="button" class="btn btn-primary btn-sm"
                                     href="<%# "GanQuyen.aspx?ma=" +Eval("MaNhomQuyen")+"&ten=" + Eval("TenNhomQuyen") %>"
                                     >
                                     Gán Quyền
                                 </a>
                             <button
                                 type="button"
-                                class="fa fa-pencil btn btn-light"
-                                style="font-size: 26px; color: blue; border: none;"
+                                class="btn btn-warning btn-sm"
+                               
                                 data-bs-toggle="modal"
                                 data-bs-target="#editModal"
                                 data-ma='<%# Eval("MaNhomQuyen") %>'
                                 data-ten="<%# Eval("TenNhomQuyen") %>">
+                                 <i class="fa fa-pen"></i>
                             </button>
                             <button
                                 type="button"
-                                class="fa fa-trash btn btn-light"
-                                aria-hidden="true"
-                                style="font-size: 26px; color: red; border: none;"
+                                class="btn btn-danger btn-sm"
+                                aria-hidden="true"                            
                                 data-bs-toggle="modal"
                                 data-bs-target="#deleteModal"
                                 data-id='<%#Eval("MaNhomQuyen") %>'>
+                                <i class="fa fa-trash"></i>
                             </button>
                         </ItemTemplate>
 
