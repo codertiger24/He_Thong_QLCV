@@ -8,8 +8,16 @@ namespace QLCVan
 {
     public partial class QLnguoidung : System.Web.UI.Page
     {
+
+        string maQuyenYeuCau = "Q011";
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!PermissionHelper.HasPermission(maQuyenYeuCau))
+            {
+                Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
+                Response.End();
+            }
+
             if (!IsPostBack)
             {
                 BindDropdowns();
@@ -75,7 +83,7 @@ namespace QLCVan
     internal static class UserRepository
     {
         private static readonly string CS =
-            ConfigurationManager.ConnectionStrings["QLCVDb"].ConnectionString;
+            ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString1"].ConnectionString;
 
         public static DataTable GetUsers(string tenDN, string email, string maDonVi, string maChucVu)
         {

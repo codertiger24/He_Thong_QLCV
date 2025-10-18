@@ -93,8 +93,17 @@ namespace QLCVan
                 var item = db.tblChucVus.FirstOrDefault(x => x.MaChucVu == ma);
                 if (item != null)
                 {
-                    db.tblChucVus.DeleteOnSubmit(item);
-                    db.SubmitChanges();
+                    try
+                    {
+                        db.tblChucVus.DeleteOnSubmit(item);
+                        db.SubmitChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        ScriptManager.RegisterStartupScript(this, GetType(), "alert",
+     "alert('Không thể xóa chức vụ vì vẫn còn người dùng được gán.');", true);
+                    }
+
                 }
                 LoadData();
             }

@@ -86,6 +86,7 @@ namespace QLCVan
                 }
                 db.SubmitChanges();
                 LoadData(maNhom);
+                PermissionHelper.ReSyncPermission();
             }
         }
 
