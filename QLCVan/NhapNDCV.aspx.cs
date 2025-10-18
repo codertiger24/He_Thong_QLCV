@@ -18,12 +18,14 @@ namespace QLCVan
             {
                 Response.Redirect("Dangnhap.aspx");
             }
-            if (!PermissionHelper.HasPermission("Q002"))
+
+            /// check quyền bằng mã nhá , nếu user ko có mã quyền thì ko vào dc
+       /*     if (!PermissionHelper.HasPermission("Q002"))
             {
                 Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
                 Response.End();
             }
-
+*/
             if (!Page.IsPostBack)
             {
                 // Dòng này đã được loại bỏ vì nút btnsua không còn tồn tại

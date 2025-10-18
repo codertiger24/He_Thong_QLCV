@@ -24,24 +24,6 @@ namespace QLCVan
         protected global::System.Web.UI.WebControls.TextBox txtMaNguoiDung;
 
         /// <summary>
-        /// txtTenDN control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTenDN;
-
-        /// <summary>
-        /// txtMatKhau control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMatKhau;
-
-        /// <summary>
         /// txtHoTen control.
         /// </summary>
         /// <remarks>
@@ -60,15 +42,6 @@ namespace QLCVan
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
-        /// ddlQuyenHan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlQuyenHan;
-
-        /// <summary>
         /// ddlDonVi control.
         /// </summary>
         /// <remarks>
@@ -76,15 +49,6 @@ namespace QLCVan
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDonVi;
-
-        /// <summary>
-        /// ddlChucVu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlChucVu;
 
         /// <summary>
         /// rdoKichHoat control.
@@ -103,6 +67,42 @@ namespace QLCVan
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton rdoKhongKichHoat;
+
+        /// <summary>
+        /// txtTenDN control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTenDN;
+
+        /// <summary>
+        /// txtMatKhau control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMatKhau;
+
+        /// <summary>
+        /// txtXacNhanMK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtXacNhanMK;
+
+        /// <summary>
+        /// ddlChucVu control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlChucVu;
 
         /// <summary>
         /// btnQuayLai control.

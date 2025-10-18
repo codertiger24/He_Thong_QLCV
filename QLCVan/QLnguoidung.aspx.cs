@@ -19,15 +19,13 @@ namespace QLCVan
 
         private void BindDropdowns()
         {
-            // Đơn vị (Nhóm)
-            var tbNhom = UserRepository.GetAllNhom();
-            ddlDonVi.DataSource = tbNhom;
-            ddlDonVi.DataTextField = "MoTa";
-            ddlDonVi.DataValueField = "MaNhom";
+            var tbDonVi = UserRepository.GetAllDonVi();
+            ddlDonVi.DataSource = tbDonVi;
+            ddlDonVi.DataTextField = "TenDonVi"; // hoặc "TenDonVi" theo column
+            ddlDonVi.DataValueField = "MaDonVi";
             ddlDonVi.DataBind();
             ddlDonVi.Items.Insert(0, new ListItem("Đơn vị", ""));
 
-            // Chức vụ
             var tbCV = UserRepository.GetAllChucVu();
             ddlChucVu.DataSource = tbCV;
             ddlChucVu.DataTextField = "TenChucVu";
@@ -36,21 +34,23 @@ namespace QLCVan
             ddlChucVu.Items.Insert(0, new ListItem("Chức vụ", ""));
         }
 
+
         private void LoadNguoiDung()
         {
-            int? maNhom = string.IsNullOrWhiteSpace(ddlDonVi.SelectedValue) ? (int?)null : int.Parse(ddlDonVi.SelectedValue);
-            int? maCV = string.IsNullOrWhiteSpace(ddlChucVu.SelectedValue) ? (int?)null : int.Parse(ddlChucVu.SelectedValue);
+            string maDonVi = string.IsNullOrWhiteSpace(ddlDonVi.SelectedValue) ? null : ddlDonVi.SelectedValue;
+            string maCV = string.IsNullOrWhiteSpace(ddlChucVu.SelectedValue) ? null : ddlChucVu.SelectedValue;
 
             var tb = UserRepository.GetUsers(
                 txtSearchTenDN.Text.Trim(),
                 txtSearchEmail.Text.Trim(),
-                maNhom,
+                maDonVi,
                 maCV
             );
 
             gvNguoiDung.DataSource = tb;
             gvNguoiDung.DataBind();
         }
+
 
         protected void btnSearch_Click(object sender, EventArgs e) => LoadNguoiDung();
 
@@ -77,7 +77,7 @@ namespace QLCVan
         private static readonly string CS =
             ConfigurationManager.ConnectionStrings["QLCVDb"].ConnectionString;
 
-        public static DataTable GetUsers(string tenDN, string email, int? maNhom, int? maChucVu)
+        public static DataTable GetUsers(string tenDN, string email, string maDonVi, string maChucVu)
         {
             using (var con = new SqlConnection(CS))
             using (var cmd = new SqlCommand(@"
@@ -88,22 +88,24 @@ SELECT
     u.HoTen,
     u.QuyenHan,
     u.TrangThai,
-    u.MaNhom,
-    n.MoTa AS TenNhom,
+    u.MaDonVi,
+    u.MaDonVi AS MaNhom,        -- alias cho những chỗ còn dùng MaNhom
+    dv.TenDonVi AS TenDonVi,
+    dv.TenDonVi AS TenNhom,     -- alias để GridView (TenNhom) không lỗi
     u.MaChucVu,
     cv.TenChucVu
 FROM dbo.tblNguoiDung u
-LEFT JOIN dbo.tblNhom n    ON n.MaNhom    = u.MaNhom
+LEFT JOIN dbo.tblDonVi dv ON dv.MaDonVi = u.MaDonVi
 LEFT JOIN dbo.tblChucVu cv ON cv.MaChucVu = u.MaChucVu
 WHERE (@TenDN  IS NULL OR u.TenDN  LIKE '%'+@TenDN+'%')
   AND (@Email  IS NULL OR u.Email  LIKE '%'+@Email+'%')
-  AND (@MaNhom IS NULL OR u.MaNhom = @MaNhom)
+  AND (@MaDonVi IS NULL OR u.MaDonVi = @MaDonVi)
   AND (@MaCV   IS NULL OR u.MaChucVu = @MaCV)
 ORDER BY u.TenDN", con))
             {
                 cmd.Parameters.AddWithValue("@TenDN", (object)(string.IsNullOrWhiteSpace(tenDN) ? null : tenDN) ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@Email", (object)(string.IsNullOrWhiteSpace(email) ? null : email) ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@MaNhom", (object)maNhom ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MaDonVi", (object)maDonVi ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@MaCV", (object)maChucVu ?? DBNull.Value);
 
                 var tb = new DataTable();
@@ -112,14 +114,18 @@ ORDER BY u.TenDN", con))
             }
         }
 
-        public static DataTable GetAllNhom()
+
+
+
+        public static DataTable GetAllDonVi()
         {
             using (var con = new SqlConnection(CS))
-            using (var da = new SqlDataAdapter("SELECT MaNhom, MoTa FROM dbo.tblNhom ORDER BY MoTa", con))
+            using (var da = new SqlDataAdapter("SELECT MaDonVi, TenDonVi FROM dbo.tblDonVi ORDER BY TenDonVi", con))
             {
                 var tb = new DataTable(); da.Fill(tb); return tb;
             }
         }
+
 
         public static DataTable GetAllChucVu()
         {
@@ -142,12 +148,13 @@ ORDER BY u.TenDN", con))
 
         /* Thêm/sửa — dùng cho các trang Them/Sua nếu cần */
         public static int InsertUser(string tenDN, string matKhau, string hoTen, string email,
-                                     string quyenHan, bool trangThai, int maNhom, int maChucVu)
+                               string quyenHan, bool trangThai, string maDonVi, string maChucVu)
         {
             using (var con = new SqlConnection(CS))
             using (var cmd = new SqlCommand(@"
-INSERT INTO dbo.tblNguoiDung (MaNguoiDung, TenDN, MatKhau, HoTen, Email, QuyenHan, TrangThai, MaNhom, MaChucVu)
-VALUES (@Id, @TenDN, @MatKhau, @HoTen, @Email, @QuyenHan, @TrangThai, @MaNhom, @MaChucVu)", con))
+INSERT INTO dbo.tblNguoiDung
+(MaNguoiDung, Email, TenDN, MatKhau, QuyenHan, TrangThai, HoTen, MaDonVi, MaChucVu)
+VALUES (@Id, @Email, @TenDN, @MatKhau, @QuyenHan, @TrangThai, @HoTen, @MaDonVi, @MaChucVu)", con))
             {
                 cmd.Parameters.AddWithValue("@Id", Guid.NewGuid().ToString());
                 cmd.Parameters.AddWithValue("@TenDN", tenDN);
@@ -156,21 +163,22 @@ VALUES (@Id, @TenDN, @MatKhau, @HoTen, @Email, @QuyenHan, @TrangThai, @MaNhom, @
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@QuyenHan", quyenHan);
                 cmd.Parameters.AddWithValue("@TrangThai", trangThai);
-                cmd.Parameters.AddWithValue("@MaNhom", maNhom);
-                cmd.Parameters.AddWithValue("@MaChucVu", maChucVu);
+                cmd.Parameters.AddWithValue("@MaDonVi", (object)maDonVi ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MaChucVu", (object)maChucVu ?? DBNull.Value);
                 con.Open(); return cmd.ExecuteNonQuery();
             }
         }
 
+
         public static int UpdateUser(string id, string tenDN, string matKhau, string hoTen,
-                                     string email, string quyenHan, bool trangThai,
-                                     int maNhom, int maChucVu)
+                              string email, string quyenHan, bool trangThai,
+                              string maDonVi, string maChucVu)
         {
             using (var con = new SqlConnection(CS))
             using (var cmd = new SqlCommand(@"
 UPDATE dbo.tblNguoiDung
 SET TenDN=@TenDN, MatKhau=@MatKhau, HoTen=@HoTen, Email=@Email,
-    QuyenHan=@QuyenHan, TrangThai=@TrangThai, MaNhom=@MaNhom, MaChucVu=@MaChucVu
+    QuyenHan=@QuyenHan, TrangThai=@TrangThai, MaDonVi=@MaDonVi, MaChucVu=@MaChucVu
 WHERE MaNguoiDung=@Id", con))
             {
                 cmd.Parameters.AddWithValue("@Id", id);
@@ -180,10 +188,11 @@ WHERE MaNguoiDung=@Id", con))
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@QuyenHan", quyenHan);
                 cmd.Parameters.AddWithValue("@TrangThai", trangThai);
-                cmd.Parameters.AddWithValue("@MaNhom", maNhom);
-                cmd.Parameters.AddWithValue("@MaChucVu", maChucVu);
+                cmd.Parameters.AddWithValue("@MaDonVi", (object)maDonVi ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MaChucVu", (object)maChucVu ?? DBNull.Value);
                 con.Open(); return cmd.ExecuteNonQuery();
             }
         }
+
     }
 }
