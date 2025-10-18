@@ -75,12 +75,13 @@
             justify-content: center;
             gap: 30px;
             margin: 0 auto 25px auto;
+            
         }
 
             .search-bar label {
                 font-weight: 600;
                 color: #111;
-                margin-right: 10px;
+                
             }
 
             .search-bar input {
@@ -93,7 +94,7 @@
             }
 
         .btn-search {
-            background: #c00;
+            background: #c00!important;
             color: #fff;
             border: none;
             height: 36px;
@@ -107,7 +108,7 @@
         }
 
             .btn-search:hover {
-                background: #a00;
+                background: #a00!important;
             }
 
         .table-wrapper {
@@ -176,6 +177,82 @@
   text-decoration: none;
   transition: background-color .2s ease, box-shadow .2s ease, transform .05s ease;
             }
+          
+
+/* ===== Chỉ sửa bằng CSS (fix cho GridView) ===== */
+
+/* 1) Ép layout cố định cột */
+.table { table-layout: fixed !important; width: 100%; }
+
+/* 2) Hai cột ngoài bằng nhau; dùng tr thay vì thead/tbody để chắc chắn match GridView */
+/*.table tr th, .table tr td { box-sizing: border-box; }*/
+
+/* Cột 1: Mã chức vụ */
+.table tr th:nth-child(1),
+.table tr td:nth-child(1) {
+  width: 20% !important;
+  text-align: center;
+}
+
+/* Cột 2: Chức vụ (ăn phần còn lại, dài nhất) */
+.table tr th:nth-child(2),
+.table tr td:nth-child(2) {
+  width: auto !important;
+  text-align: center;
+  padding-left: 14px;
+}
+
+/* Cột 3: Thao tác */
+.table tr th:nth-child(3),
+.table tr td:nth-child(3) {
+  width: 27% !important;
+  text-align: center;
+  white-space: nowrap;      /* giữ 1 dòng */
+  overflow: hidden;         /* tránh đẩy nở bảng nếu cần */
+}
+
+/* 3) Nút trong cột Thao tác: cách đều & kích thước ổn định */
+.table tr td:nth-child(3) > a,
+.table tr td:nth-child(3) > button,
+.table tr td:nth-child(3) > span > a,
+.table tr td:nth-child(3) > span > button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  margin: 0 6px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid transparent;
+  line-height: 1;
+}
+
+/* Gán quyền (nút chữ xanh) */
+.table tr td:nth-child(3) > *:first-child {
+  min-width: 88px;
+  padding: 0 12px;
+  background: #0d6efd; color: #fff; border-color: #0d6efd;
+}
+.table tr td:nth-child(3) > *:first-child:hover { background:#0b5ed7; }
+
+/* Sửa (icon viền xám) */
+.table tr td:nth-child(3) > *:nth-child(2) {
+  width: 30px; padding: 0;
+  background:#fff; color:#0B57D0; border-color:#d1d5db;
+}
+.table tr td:nth-child(3) > *:nth-child(2):hover { background:#f3f4f6; }
+
+/* Xóa (icon viền đỏ) */
+.table tr td:nth-child(3) > *:last-child {
+  width: 30px; padding: 0;
+  background:#fff; color:#DC2626; border-color:#d1d5db;
+}
+.table tr td:nth-child(3) > *:last-child:hover { background:#fee2e2; }
+
+/* Header đỏ giữ nguyên nhưng thêm !important để thắng Bootstrap */
+.table tr th { background-color:#c00 !important; color:#fff !important; }
+
     </style>
 </asp:Content>
 
@@ -195,7 +272,7 @@
 
         <!-- ✅ Thanh tìm kiếm -->
         <div class="search-bar">
-            <label>Tìm kiếm:</label>
+            <label>Tìm kiếm</label>
             <asp:TextBox ID="txtTenChucVuSR" runat="server" placeholder="Nhập tên chức vụ" />
             <asp:TextBox ID="txtMaChucVuSR" runat="server" placeholder="Nhập mã chức vụ" />
             <asp:LinkButton ID="btnSearch" runat="server" CssClass="btn-search" OnClick="btnSearch_Click">
@@ -236,7 +313,7 @@
                 data-bs-target="#editModal"
                 data-ma='<%# Eval("MaChucVu") %>'
                 data-ten="<%# Eval("TenChucVu") %>">
-            <i class="fa fa-edit"></i>
+            <i class="fa fa-pen"></i>
         </button>
 
         <!-- Nút xóa -->
