@@ -8,7 +8,7 @@ namespace QLCVan
 {
     public partial class SuaNguoiDung : System.Web.UI.Page
     {
-        private static string CS => ConfigurationManager.ConnectionStrings["QLCVDb"].ConnectionString;
+        private static string CS => ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString1"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -152,8 +152,9 @@ WHERE MaNguoiDung = @Id;", con))
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
-
+            PermissionHelper.ReSyncPermission();
             Response.Redirect("QLNguoiDung.aspx");
+
         }
 
         protected void btnQuayLai_Click(object sender, EventArgs e)

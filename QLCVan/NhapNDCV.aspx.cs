@@ -10,6 +10,7 @@ namespace QLCVan
 {
     public partial class NhapNDCV : System.Web.UI.Page
     {
+        String maQuyenYeuCau = "Q002";
         InfoDataContext db = new InfoDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,12 +21,12 @@ namespace QLCVan
             }
 
             /// check quyền bằng mã nhá , nếu user ko có mã quyền thì ko vào dc
-       /*     if (!PermissionHelper.HasPermission("Q002"))
+            if (!PermissionHelper.HasPermission(maQuyenYeuCau))
             {
                 Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
                 Response.End();
             }
-*/
+
             if (!Page.IsPostBack)
             {
                 // Dòng này đã được loại bỏ vì nút btnsua không còn tồn tại

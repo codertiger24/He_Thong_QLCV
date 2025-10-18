@@ -12,6 +12,7 @@ namespace QLCVan
 {
     public partial class QLNhom : Page
     {
+        string maQuyenYeuCau = "Q007";
         // ===== Model =====
         public class DonVi
         {
@@ -19,7 +20,7 @@ namespace QLCVan
             public string TenDonVi { get; set; }
         }
 
-        private string ConnStr => ConfigurationManager.ConnectionStrings["QLCVDb"].ConnectionString;
+        private string ConnStr => ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString1"].ConnectionString;
 
         // Lưu tiêu chí tìm kiếm để phân trang không mất filter
         private string FilterMa
@@ -35,6 +36,11 @@ namespace QLCVan
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!PermissionHelper.HasPermission(maQuyenYeuCau))
+            {
+                Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
+                Response.End();
+            }
             if (!IsPostBack)
             {
                 BindGrid(); // load tất cả

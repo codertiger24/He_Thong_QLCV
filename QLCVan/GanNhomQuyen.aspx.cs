@@ -89,6 +89,7 @@ namespace QLCVan
 
                 db.SubmitChanges();
                 LoadData(maChucVu);
+                PermissionHelper.ReSyncPermission();
             }
         }
 
