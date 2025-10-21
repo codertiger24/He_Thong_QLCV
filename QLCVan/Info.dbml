@@ -37,11 +37,14 @@
   </Table>
   <Table Name="dbo.tblGuiNhan" Member="tblGuiNhans">
     <Type Name="tblGuiNhan">
-      <Column Name="MaCV" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="MaNguoiDung" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MaGuiNhan" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" AutoSync="OnInsert" />
+      <Column Name="MaCV" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
+      <Column Name="MaNguoiDung" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
+	    <Column Name="MaNguoiNhan" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
+      <Column Name="TrangThaiNhan" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
       <Association Name="tblNoiDungCV_tblGuiNhan" Member="tblNoiDungCV" ThisKey="MaCV" OtherKey="MaCV" Type="tblNoiDungCV" IsForeignKey="true" />
     </Type>
-  </Table>
+  </Table>-
   <Table Name="dbo.tblLoaiCV" Member="tblLoaiCVs">
     <Type Name="tblLoaiCV">
       <Column Name="MaLoaiCV" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -63,7 +66,7 @@
       <Column Name="TenDN" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="MatKhau" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="QuyenHan" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
-      <Column Name="TrangThai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="HoTen" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="MaNhom" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="MaChucVu" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />

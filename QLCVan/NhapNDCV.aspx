@@ -15,7 +15,6 @@
 }
 
 
-
 /* ===== Phần tiêu đề + thanh chạy chữ ===== */
 .content-header {
   background: transparent;
@@ -356,10 +355,12 @@
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txtsocv" ErrorMessage="* Nhập số công văn" CssClass="note-red" />
                 </div>
             </div>
+
             <div class="form-field">
                 <asp:Label ID="lblLoaiCV" runat="server" Text="Loại công văn:" CssClass="form-label"></asp:Label>
                 <div class="form-input-control">
-                    <asp:DropDownList ID="ddlLoaiCV" runat="server" AutoPostBack="True" CssClass="form-select">
+                    <asp:DropDownList ID="ddlLoaiCV" runat="server" AutoPostBack="True"
+                        OnSelectedIndexChanged="ddlLoaiCV_SelectedIndexChanged" CssClass="form-select">
                         <asp:ListItem Text="-- Chọn loại công văn  --" Value="" />
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="ddlLoaiCV" InitialValue="" ErrorMessage="* Chọn công văn" CssClass="note-red" />
@@ -415,14 +416,13 @@
                 </div>
             </div>
 
-            <div class="form-field">
+            <asp:Panel ID="pnlNguoiDuyet" runat="server" CssClass="form-field" Visible="false">
                 <asp:Label ID="lblNguoiDuyet" runat="server" Text="Người duyệt:" CssClass="form-label"></asp:Label>
                 <div class="form-input-control">
                     <asp:TextBox ID="txtNguoiDuyet" CssClass="form-input" runat="server" placeholder="Chọn người duyệt" />
                 </div>
-            </div>
-            <div class="form-field">
-            </div>
+            </asp:Panel>
+
 
             <div class="form-field-full-width">
                 <div class="form-field-inner">
@@ -474,7 +474,7 @@
         </div>
     </div>
 
-  <!--  <div class="grid-wrap">
+<!-- <div class="grid-wrap">
         <div class="grid-title">TẤT CẢ CÁC CÔNG VĂN</div>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true">
             <ContentTemplate>
@@ -557,5 +557,5 @@
                 <asp:AsyncPostBackTrigger ControlID="gvnhapcnden" EventName="PageIndexChanging" />
             </Triggers>
         </asp:UpdatePanel>
-    </div>-->
+    </div> -->
 </asp:Content>

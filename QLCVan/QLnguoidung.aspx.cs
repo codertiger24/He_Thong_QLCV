@@ -12,11 +12,11 @@ namespace QLCVan
         string maQuyenYeuCau = "Q011";
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!PermissionHelper.HasPermission(maQuyenYeuCau))
+           /* if (!PermissionHelper.HasPermission(maQuyenYeuCau))
             {
                 Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
                 Response.End();
-            }
+            }*/
 
             if (!IsPostBack)
             {

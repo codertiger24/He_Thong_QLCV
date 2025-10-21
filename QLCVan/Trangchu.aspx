@@ -102,7 +102,7 @@
         }
 
         .cv-note{color:#ef4444; font-size:13px; margin:6px 0}
-        .cv-list-title{text-align:center; font-weight:700; font-size:20px; color:#0f172a; margin:12px 0 8px; letter-spacing:.6px;}
+        .cv-list-title{text-align:center; font-weight:700; font-size:20px; color:#0f172a; margin:12px 150px 8px; letter-spacing:.6px;}
         @media (max-width:640px){.cv-list-title{font-size:18px;}}
 
         /* Bảng danh sách – cùng chiều rộng với khối tìm kiếm */
@@ -241,8 +241,7 @@
                             <%-- TRẠNG THÁI (120px – cố định) --%>
                             <asp:TemplateField HeaderText="Trạng thái">
                                 <ItemTemplate>
-                                    <asp:Literal ID="litTrangThai" runat="server"
-                                        Text='<%# GetTrangThai(Eval("TrangThai"), Eval("GuiHayNhan")) %>' />
+                                    <%# Eval("TrangThai") %>
                                 </ItemTemplate>
                                 <HeaderStyle Width="120px" />
                                 <ItemStyle CssClass="status-cell" Width="120px" HorizontalAlign="Center" />

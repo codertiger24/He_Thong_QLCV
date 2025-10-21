@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Threading;
 
 namespace QLCVan
 {
     public partial class NhapNDCV : System.Web.UI.Page
     {
-        String maQuyenYeuCau = "Q002";
         InfoDataContext db = new InfoDataContext();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,30 +23,35 @@ namespace QLCVan
             }
 
             /// check quyền bằng mã nhá , nếu user ko có mã quyền thì ko vào dc
-            if (!PermissionHelper.HasPermission(maQuyenYeuCau))
+       /*     if (!PermissionHelper.HasPermission("Q002"))
             {
                 Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
                 Response.End();
             }
-
+*/
             if (!Page.IsPostBack)
             {
-                // Dòng này đã được loại bỏ vì nút btnsua không còn tồn tại
-                // btnsua.Visible = false;
+                LoadLoaiCV();
+                LoadDonViNhan();
+                pnlNguoiDuyet.Visible = false;
 
-                // Thêm các trường mới vào dropdownlist nếu cần
-                var cboLoaiCongvans = from d in db.tblLoaiCVs
-                                      where d.MaLoaiCV.ToString() != null
-                                      select d.TenLoaiCV;
+                // BỎ HOÀN TOÀN ĐOẠN NÀY (VÌ SAI):
+                //var cboLoaiCongvans = from d in db.tblLoaiCVs
+                //                      where d.MaLoaiCV.ToString() != null
+                //                      select d.TenLoaiCV;
+                //ddlLoaiCV.DataSource = cboLoaiCongvans;
+                //ddlLoaiCV.DataBind();
 
-                ddlLoaiCV.DataSource = cboLoaiCongvans;
+                // ✅ Dùng đoạn đúng 1 lần duy nhất:
+                ddlLoaiCV.DataSource = db.tblLoaiCVs.ToList();
+                ddlLoaiCV.DataTextField = "TenLoaiCV";
+                ddlLoaiCV.DataValueField = "MaLoaiCV";
                 ddlLoaiCV.DataBind();
-                var cbNguoiki = (from d in db.tblNoiDungCVs
-                                 where d.MaLoaiCV.ToString() != null
-                                 select d.NguoiKy).Distinct();
+                ddlLoaiCV.Items.Insert(0, new ListItem("-- Chọn loại công văn --", ""));
+
+                // ✅ Phần GridView giữ nguyên
                 var gv1 = from g in db.tblNoiDungCVs
-                          from h in db.tblLoaiCVs
-                          where g.MaLoaiCV == h.MaLoaiCV
+                          join h in db.tblLoaiCVs on g.MaLoaiCV equals h.MaLoaiCV
                           orderby g.NgayGui descending
                           select new
                           {
@@ -60,19 +67,15 @@ namespace QLCVan
                               g.NoiNhan,
                               TrichYeuND = g.TrichYeuND.Substring(0, 250) + " ... ",
                               g.TrangThai
-
                           };
 
                 gvnhapcnden.DataSource = gv1;
                 gvnhapcnden.DataBind();
-                ddlLoaiCV.DataSource = db.tblLoaiCVs;
-                ddlLoaiCV.DataTextField = "TenLoaiCV";
-                ddlLoaiCV.DataValueField = "MaLoaiCV";
-                ddlLoaiCV.DataBind();
 
-                // Cập nhật tên TextBox cho Datepicker
+                // Placeholder cho date
                 txtngaybanhanh.Attributes["placeholder"] = "dd/mm/yyyy";
                 txtngaygui.Attributes["placeholder"] = "dd/mm/yyyy";
+
 
 
                 if (Request.QueryString["macv"] != null)
@@ -106,6 +109,93 @@ namespace QLCVan
 
             }
         }
+        private void LoadDonViNhan()
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string query = "SELECT MaDonVi, TenDonVi FROM tblDonVi ORDER BY TenDonVi";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    ddlDonViNhan.DataSource = reader;
+                    ddlDonViNhan.DataTextField = "MaDonVi";   // Cột hiển thị
+                    ddlDonViNhan.DataValueField = "MaDonVi";   // Cột lưu giá trị
+                    ddlDonViNhan.DataBind();
+                }
+            }
+
+            ddlDonViNhan.Items.Insert(0, new ListItem("-- Chọn đơn vị nhận --", ""));
+        }
+        private void LoadLoaiCV()
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string query = "SELECT MaLoaiCV, TenLoaiCV, PheDuyet FROM tblLoaiCV ORDER BY TenLoaiCV";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    ddlLoaiCV.DataSource = reader;
+                    //ddlLoaiCV.DataTextField = "TenLoaiCV";   // Hiển thị
+                    //ddlLoaiCV.DataValueField = "MaLoaiCV";   // Lưu mã loại
+                    ddlLoaiCV.DataTextField = "MaLoaiCV";
+                    ddlLoaiCV.DataValueField = "MaLoaiCV";
+                    ddlLoaiCV.DataBind();
+                }
+            }
+
+            ddlLoaiCV.Items.Insert(0, new ListItem("-- Chọn loại công văn --", ""));
+        }
+
+        protected void ddlLoaiCV_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string query = "SELECT PheDuyet FROM tblLoaiCV WHERE MaLoaiCV = @id";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Add("@id", SqlDbType.Int).Value = int.Parse(ddlLoaiCV.SelectedValue);
+                    conn.Open();
+
+                    object pheDuyet = cmd.ExecuteScalar();
+
+                    if (pheDuyet != null)
+                    {
+                        string val = pheDuyet.ToString().Trim().ToUpper();
+
+                        // Chấp nhận 1 / Y / CÓ
+                        if (val == "1" || val == "Y" || val == "CÓ")
+                        {
+                            pnlNguoiDuyet.Visible = true;
+                        }
+                        else
+                        {
+                            pnlNguoiDuyet.Visible = false;
+                            txtNguoiDuyet.Text = "";
+                        }
+                    }
+                    else
+                    {
+                        pnlNguoiDuyet.Visible = false;
+                        txtNguoiDuyet.Text = "";
+                    }
+                }
+            }
+        }
+
+
         protected void lnk_Sua_Click(object sender, EventArgs e)
         {
             LinkButton lnk = (LinkButton)sender;
@@ -148,25 +238,39 @@ namespace QLCVan
             cv1.MaLoaiCV = int.Parse(ddlLoaiCV.SelectedValue.ToString());
             cv1.CoQuanBanHanh = txtcqbh.Text;
             cv1.TrichYeuND = txttrichyeu.Text;
+            cv1.NguoiKy = txtNguoiKy.Text;
+            cv1.MaNguoiGui = Session["MaNguoiDung"].ToString();
+            // ❌ Không gán trực tiếp vì LINQ chưa nhận trường này
+            // cv1.NguoiDuyet = txtNguoiDuyet.Text.Trim();
+
+            cv1.BaoMat = RadioButtonList1.SelectedValue == "Có" ? "1" : "0";
+            cv1.GhiChu = txtGhiChu.Text;
             DateTime ngaybancv = DateTime.ParseExact(txtngaygui.Text.ToString(), "dd/MM/yyyy", null);
             cv1.NgayBanHanh = ngaybancv;
-            if ((Session["TenDN"].ToString().Equals("quyen")))
-            {
-                cv1.TrangThai = false;
-            }
-            else
-            {
-                cv1.TrangThai = true;
-            }
-            if (RadioButtonList1.SelectedIndex == 0)
-            {
-                cv1.GuiHayNhan = 1;
-            }
-            else
-                cv1.GuiHayNhan = 0;
+            cv1.TrangThai = "Đã gửi";
 
             db.tblNoiDungCVs.InsertOnSubmit(cv1);
             db.SubmitChanges();
+
+            // ✅ Sau khi Insert xong thì UPDATE thủ công phần Người Duyệt
+            //if (!string.IsNullOrEmpty(txtNguoiDuyet.Text))
+            //{
+            //    string connStr = ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString"].ConnectionString;
+            //    using (SqlConnection conn = new SqlConnection(connStr))
+            //    {
+            //        string sql = "UPDATE tblNoiDungCV SET NguoiDuyet = @NguoiDuyet WHERE MaCV = @MaCV";
+            //        using (SqlCommand cmd = new SqlCommand(sql, conn))
+            //        {
+            //            cmd.Parameters.AddWithValue("@NguoiDuyet", txtNguoiDuyet.Text.Trim());
+            //            cmd.Parameters.AddWithValue("@MaCV", cv1.MaCV);
+
+            //            conn.Open();
+            //            cmd.ExecuteNonQuery();
+            //        }
+            //    }
+            //}
+
+            // ✅ Các file đính kèm giữ nguyên
             if (ListBox1.Items.Count != 0)
             {
                 foreach (ListItem item in ListBox1.Items)
@@ -174,7 +278,6 @@ namespace QLCVan
                     tblFileDinhKem fcv = new tblFileDinhKem();
                     fcv.MaCV = cv1.MaCV;
                     fcv.FileID = Guid.NewGuid().ToString();
-
                     fcv.Size = Convert.ToInt32(item.Value);
                     fcv.DateUpload = DateTime.Now.ToShortDateString();
                     fcv.TenFile = item.Text;
@@ -182,12 +285,47 @@ namespace QLCVan
 
                     db.tblFileDinhKems.InsertOnSubmit(fcv);
                     db.SubmitChanges();
-
                 }
             }
-            Response.Redirect("NhapNDCV.aspx");
 
+            //Thêm danh sách vào đơn vị nhận
+            string maDonViNhan = ddlDonViNhan.SelectedValue; // dropdown đơn vị nhận
+            if (!string.IsNullOrEmpty(maDonViNhan))
+            {
+                // Lấy danh sách người dùng thuộc đơn vị nhận
+                var nguoiNhanList = db.tblNguoiDungs
+                    .Where(x => x.MaDonVi == maDonViNhan && x.MaNguoiDung.ToString() != Session["MaNguoiDung"].ToString())
+                    .Select(x => x.MaNguoiDung)
+                    .ToList();
+                //foreach (var maNguoiNhan in nguoiNhanList)
+                //{
+                //    tblGuiNhan guiNhan = new tblGuiNhan
+                //    {
+                //        MaCV = MaCongVan,
+                //        MaNguoiDung = Session["MaNguoiDung"].ToString(),
+                //        MaNguoiNhan = maNguoiNhan,
+                //        TrangThaiNhan = "Chưa đọc",
+                //    };
+                //    db.tblGuiNhans.InsertOnSubmit(guiNhan);
+                //}
+                //db.SubmitChanges();
+                foreach (var maNguoiNhan in nguoiNhanList)
+                {
+                    db.tblGuiNhans.InsertOnSubmit(new tblGuiNhan
+                    {
+                        MaCV = cv1.MaCV,
+                        MaNguoiDung = Session["MaNguoiDung"].ToString(),
+                        MaNguoiNhan = maNguoiNhan,
+                        TrangThaiNhan = "Chưa đọc"
+                    });
+                }
+                db.SubmitChanges();
+            }
+
+            Response.Redirect("NhapNDCV.aspx");
         }
+
+
 
         public string kttrangthai(object obj)
         {
@@ -222,7 +360,7 @@ namespace QLCVan
                 }
             else
             {
-               /* lblchuachonfile.Text = "Bạn chưa chọn file!";*/
+                /* lblchuachonfile.Text = "Bạn chưa chọn file!";*/
             }
         }
         void RemoveFile(int index)

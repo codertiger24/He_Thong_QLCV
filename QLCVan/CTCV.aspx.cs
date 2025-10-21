@@ -138,7 +138,7 @@ namespace QLCVan
             tblNoiDungCV cv1 = db.tblNoiDungCVs.SingleOrDefault(t => t.MaCV == maCongVan);
             if (cv1 != null)
             {
-                cv1.TrangThai = true;
+                cv1.TrangThai = "Đã duyệt";
                 db.SubmitChanges();
             }
         }
