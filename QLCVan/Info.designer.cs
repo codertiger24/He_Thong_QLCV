@@ -2583,6 +2583,8 @@ namespace QLCVan
 
         private string _BaoMat;
 
+        private string _NguoiDuyet;
+
         private string _MaNguoiGui;
 
         private EntitySet<tblFileDinhKem> _tblFileDinhKems;
@@ -2625,6 +2627,8 @@ namespace QLCVan
         partial void OnMaNguoiGuiChanged();
         partial void OnBaoMatChanging(string value);
         partial void OnBaoMatChanged();
+        partial void OnNguoiDuyetChanging(string value);
+        partial void OnNguoiDuyetChanged();
         #endregion
 
         public tblNoiDungCV()
@@ -2833,6 +2837,27 @@ namespace QLCVan
                 }
             }
         }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_NguoiDuyet", DbType = "NVarChar(200)")]
+        public string NguoiDuyet
+        {
+            get
+            {
+                return this._NguoiDuyet;
+            }
+            set
+            {
+                if ((this._NguoiDuyet != value))
+                {
+                    this.OnNguoiDuyetChanging(value);
+                    this.SendPropertyChanging();
+                    this._NguoiDuyet = value;
+                    this.SendPropertyChanged("NguoiDuyet");
+                    this.OnNguoiDuyetChanged();
+                }
+            }
+        }
+
 
         [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_TuKhoa", DbType = "NVarChar(255)")]
         public string TuKhoa
