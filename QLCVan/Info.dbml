@@ -137,7 +137,8 @@
       <Column Name="GuiHayNhan" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="GhiChu" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="BaoMat" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
-      <Association Name="tblNoiDungCV_tblFileDinhKem" Member="tblFileDinhKems" ThisKey="MaCV" OtherKey="MaCV" Type="tblFileDinhKem" />
+		<Column Name="NguoiDuyet" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+		<Association Name="tblNoiDungCV_tblFileDinhKem" Member="tblFileDinhKems" ThisKey="MaCV" OtherKey="MaCV" Type="tblFileDinhKem" />
       <Association Name="tblNoiDungCV_tblGuiNhan" Member="tblGuiNhans" ThisKey="MaCV" OtherKey="MaCV" Type="tblGuiNhan" />
     </Type>
   </Table>
