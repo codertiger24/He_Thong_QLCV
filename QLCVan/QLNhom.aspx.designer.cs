@@ -69,6 +69,15 @@ namespace QLCVan
         protected global::System.Web.UI.WebControls.GridView gvQLNhom;
 
         /// <summary>
+        /// txtMaDonVi control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMaDonVi;
+
+        /// <summary>
         /// txtTenDonVi control.
         /// </summary>
         /// <remarks>
@@ -76,15 +85,6 @@ namespace QLCVan
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTenDonVi;
-
-        /// <summary>
-        /// txtMoTaDonVi control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMoTaDonVi;
 
         /// <summary>
         /// btnSave control.

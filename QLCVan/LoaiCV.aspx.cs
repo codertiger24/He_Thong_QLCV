@@ -9,7 +9,7 @@ namespace QLCVan
     public partial class LoaiCV : System.Web.UI.Page
     {
         InfoDataContext db;
-
+        String maQuyenYeuCau = "Q006";
         protected void Page_Load(object sender, EventArgs e)
         {
             db = new InfoDataContext(
@@ -20,17 +20,11 @@ namespace QLCVan
             {
                 Response.Redirect("Dangnhap.aspx");
             }
-            //CheckQuyen
-            if (!PermissionHelper.HasPermission("Q006"))
-            {
-                Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
-                Response.End();
-            }
-            if (Session["QuyenHan"] != null && Session["QuyenHan"].ToString().Trim() == "User")
-            {
-                Response.Write("<script>alert('Bạn không có quyền truy cập trang này!');document.location.href='Trangchu.aspx';</script>");
-            }
-
+            //if (!PermissionHelper.HasPermission(maQuyenYeuCau))
+            //{
+            //    Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
+            //    Response.End();
+            //}
             if (!IsPostBack)
             {
                 ViewState["SearchMaLoai"] = "";

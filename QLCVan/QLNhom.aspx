@@ -197,8 +197,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
           </div>
           <div class="modal-body">
-            <div class="mb-3"><asp:TextBox ID="txtTenDonVi" runat="server" CssClass="form-control" placeholder="Nhập mã đơn vị..." /></div>
-            <div class="mb-3"><asp:TextBox ID="txtMoTaDonVi" runat="server" CssClass="form-control" placeholder="Nhập tên đơn vị..." /></div>
+            <div class="mb-3"><asp:TextBox ID="txtMaDonVi" runat="server" CssClass="form-control" placeholder="Nhập mã đơn vị..." /></div>
+            <div class="mb-3"><asp:TextBox ID="txtTenDonVi" runat="server" CssClass="form-control" placeholder="Nhập tên đơn vị..." /></div>
           </div>
           <div class="modal-footer">
             <asp:Button ID="btnSave" runat="server" CssClass="btn btn-success" Text="Thêm" OnClick="btnSave_Click" />
@@ -236,26 +236,26 @@
       </div>
     </div>
 
-    <!-- Modal Xác nhận xoá -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa đơn vị</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-          </div>
-          <div class="modal-body">
-            Bạn có chắc muốn xóa đơn vị này không?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-            <asp:Button ID="btnConfirmDelete" runat="server" Text="Xóa" CssClass="btn btn-danger"
-                        OnClick="btnConfirmDelete_Click" UseSubmitBehavior="false" />
-          </div>
-        </div>
-      </>
+   <!-- Modal Xác nhận xoá -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa đơn vị</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc muốn xóa đơn vị này không?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <asp:Button ID="btnConfirmDelete" runat="server" Text="Xóa" CssClass="btn btn-danger"
+                    OnClick="btnConfirmDelete_Click" UseSubmitBehavior="false" />
+      </div>
     </div>
+  </div>
+</div>
+
 
     <!-- Bootstrap + script mở modal -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

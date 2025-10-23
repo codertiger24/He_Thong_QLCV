@@ -77,7 +77,6 @@
     <Content Include="DaDuyetCTCV_Duyet.aspx" />
     <Content Include="Dangnhap.aspx" />
     <Content Include="DanhBaEmail.aspx" />
-    <Content Include="file1.aspx" />
     <Content Include="GanNhomQuyen.aspx" />
     <Content Include="GanQuyen.aspx" />
     <Content Include="GanQuyenTruongKhoa.aspx" />
@@ -196,13 +195,6 @@
     </Compile>
     <Compile Include="DanhBaEmail.aspx.designer.cs">
       <DependentUpon>DanhBaEmail.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="file1.aspx.cs">
-      <DependentUpon>file1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="file1.aspx.designer.cs">
-      <DependentUpon>file1.aspx</DependentUpon>
     </Compile>
     <Compile Include="GanNhomQuyen.aspx.cs">
       <DependentUpon>GanNhomQuyen.aspx</DependentUpon>
@@ -373,7 +365,7 @@
       <LastGenOutput>Info.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="NewQuanLyCongVan.bak" />
+    <Content Include="NewQuanLyCongVan_18_10.bak" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

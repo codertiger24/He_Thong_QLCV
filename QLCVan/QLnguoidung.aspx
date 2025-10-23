@@ -11,11 +11,33 @@
     .content-header { background:transparent; padding:0; border-bottom:none; margin:0 auto 6px; }
     .content-header-title{ text-transform:uppercase; font-weight:700; font-size:20px; color:#444; margin:0 0 6px; }
 
-    .welcome-bar{ background:#c00;color:#fff;border-radius:4px;padding:6px 0;margin:0 auto 20px;
-      font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;height:20px;overflow:hidden}
-    .welcome-bar marquee{ font-size:14px; font-weight:700; color:#fff }
+        .welcome-bar {
+            background: #c00; /* nền đỏ đậm */
+            color: #fff;
+            border-radius: 4px; /* bo góc mềm */
+            padding: 8px 0; /* cao vừa để chữ nằm giữa */
+            margin: 0 auto 26px auto;
+            font-weight: bold; /* in đậm */
+            text-align: center;
+            display: flex;
+            align-items: center; /* căn giữa theo chiều cao */
+            justify-content: center;
+            height: 30px; /* chiều cao cố định để đều */
+            overflow: hidden; /* ẩn phần chữ thừa */
+        }
 
-    .page-title{ font-weight:700; font-size:22px; text-align:center; color:#111827; margin:18px 0 12px; }
+            .welcome-bar marquee {
+                font-size: 16px; /* chữ lớn hơn chút */
+                font-weight: bold;
+                color: #fff;
+            }
+
+    .page-title{             
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #111;
+            margin: 25px 0 20px 0; }
 
     .btn-add{ background:#0d6efd; color:#fff; border:none; padding:8px 18px; font-weight:600; border-radius:6px;
       text-decoration:none; transition:.2s }
@@ -46,6 +68,37 @@
     .grid-pager{ text-align:center; padding:10px 0 }
     .grid-pager a,.grid-pager span{ display:inline-block; margin:0 4px; padding:6px 10px; border:1px solid #e5e7eb; border-radius:6px; background:#fff; text-decoration:none }
     .grid-pager span{ background:#0d6efd; color:#fff; border-color:#0d6efd }
+
+ /* ===== BẢNG NGƯỜI DÙNG ===== */
+body { background:#f3f4f6; font-family:"Segoe UI",Arial,sans-serif; }
+.table { width:100%; border-collapse:collapse; background:#fff; }
+.table th,.table td { border:1px solid #ddd; text-align:center; vertical-align:middle; padding:8px 10px; font-size:14px; }
+.table thead th { background:#C62828; color:#fff; text-transform:uppercase; font-weight:600; }
+.badge-status { display:inline-flex; justify-content:center; align-items:center; width:120px; padding:6px 10px; border-radius:12px; color:#fff; font-weight:600; font-size:13px; }
+.badge-locked{ background:#dc3545; }
+
+/* ===== NÚT SỬA / XÓA ===== */
+.table td:last-child { text-align:center; white-space:nowrap; }
+.actions { display:flex; justify-content:center; align-items:center; gap:8px; border:none; }
+
+/* Nút chung */
+.btn-action,.btn-delete{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:38px; height:38px; background:#fff; border:1px solid #e5e7eb;
+  border-radius:10px; text-decoration:none; transition:.2s;
+}
+.btn-action i{ color:#0B57D0; font-size:16px; }
+.btn-delete i{ color:#DC2626; font-size:16px; }
+
+.btn-action:hover{ background:#F3F6FF; border-color:#BCD3FF; }
+.btn-delete:hover{ background:#FFF5F5; border-color:#F3B6B6; }
+
+.table td:last-child span,
+.table td:last-child,
+.actions *{ border:none!important; outline:none!important; }
+
+
+
   </style>
 </asp:Content>
 
@@ -138,9 +191,9 @@
     </div>
 
     <!-- Modal xác nhận xoá -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content border-danger">
           <div class="modal-header">
             <h5 class="modal-title">Xác nhận xóa người dùng</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

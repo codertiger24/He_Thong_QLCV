@@ -15,8 +15,44 @@
     .form-row{display:flex;align-items:center;margin-bottom:18px;min-height:40px;}
     .form-row label{width:160px;text-align:right;font-weight:700;color:#333;font-size:15px;margin:0 10px 0 0;white-space:nowrap;}
     .form-row .form-control,.form-row .form-select{flex:1;font-size:14px;height:38px;padding:6px 10px;border:1px solid #ccc;border-radius:6px;background:#fff;}
-    .status-group{flex:1;display:flex;align-items:center;height:38px;}
-    .status-group label{margin:0;font-weight:500;display:flex;align-items:center;gap:5px;}
+
+/* === Hiển thị đúng 1 mũi tên cho tất cả DropDownList === */
+select.form-select {
+  /* tắt caret native để không bị trùng, giữ đúng 1 caret tùy chỉnh */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* ép Bootstrap dùng caret (nếu trước đó đã bị xoá) */
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23666' stroke-width='2' viewBox='0 0 16 16'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+
+  background-image: var(--bs-form-select-bg-img) !important;
+  background-repeat: no-repeat !important;
+  background-position: right .9rem center !important;
+  background-size: 16px 12px !important;
+
+  padding-right: 2.4rem !important;   /* chừa chỗ cho mũi tên */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  height: 38px;
+  font-size: 14px;
+}
+
+/* Ẩn caret IE/Edge cũ nếu có */
+select::-ms-expand { display: none; }
+
+/* Nếu bạn từng thêm rule xoá caret, hãy vô hiệu nó */
+.form-select::after { display: none !important; }
+
+/* Tránh dropdown bị cắt / xổ ngược */
+.page, .row, .col-md-6 { overflow: visible !important; }
+.col-md-6 { position: relative; z-index: 1; }
+
+
+
+    .status-group{flex:1;display:flex;align-items:center;height:38px;gap:18px;}
+    .status-group label{margin:0;font-weight:500;display:flex;align-items:center;gap:6px;}
     .status-group input[type="radio"]{transform:scale(1.1);margin:0;}
     .btn-primary{background:#0d6efd;border:none;padding:10px 22px;font-weight:600;border-radius:6px;}
     .btn-primary:hover{background:#0948a0;}
@@ -39,6 +75,7 @@
     <h3 class="page-title">THÊM TÀI KHOẢN NGƯỜI DÙNG</h3>
 
     <div class="row">
+      <!-- Cột trái -->
       <div class="col-md-6">
         <div class="form-row">
           <label>Mã người dùng:</label>
@@ -63,13 +100,13 @@
         <div class="form-row">
           <label>Trạng thái:</label>
           <div class="status-group">
-            <!-- Đổi ID thành rdoKichHoat / rdoKhongKichHoat để trùng code-behind -->
             <label><asp:RadioButton ID="rdoKichHoat" runat="server" GroupName="TrangThai" Text="Kích hoạt" Checked="true" /></label>
             <label><asp:RadioButton ID="rdoKhongKichHoat" runat="server" GroupName="TrangThai" Text="Chưa kích hoạt" /></label>
           </div>
         </div>
       </div>
 
+      <!-- Cột phải -->
       <div class="col-md-6">
         <div class="form-row">
           <label>Tên đăng nhập:</label>
@@ -91,21 +128,19 @@
           <asp:DropDownList ID="ddlChucVu" runat="server" CssClass="form-select" />
         </div>
 
-        <div class="form-row">
+         <!--<div class="form-row">
           <label>Quyền hạn:</label>
-          <!-- Thêm combobox quyền với ID ddlQuyenHan -->
           <asp:DropDownList ID="ddlQuyenHan" runat="server" CssClass="form-select">
             <asp:ListItem Text="Admin"  Value="Admin" />
             <asp:ListItem Text="User"   Value="User" />
             <asp:ListItem Text="QuanLy" Value="QuanLy" />
           </asp:DropDownList>
-        </div>
+        </div> -->
       </div>
     </div>
 
     <div class="text-end mt-4">
       <a href="QLNguoiDung.aspx" class="btn btn-secondary me-2">Quay lại</a>
-      <!-- Đổi ID thành btnThem để trùng handler -->
       <asp:Button ID="btnThem" runat="server" CssClass="btn btn-primary" Text="Thêm người dùng" OnClick="btnThem_Click" />
     </div>
   </div>
