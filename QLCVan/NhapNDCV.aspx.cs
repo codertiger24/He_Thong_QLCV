@@ -15,6 +15,8 @@ namespace QLCVan
     {
         InfoDataContext db = new InfoDataContext();
         private string ConnStr = ConfigurationManager.ConnectionStrings["QuanLyCongVanConnectionString"].ConnectionString;
+        string maQuyenYeuCau = "Q002";
+        string maQuyenPheDuyetCV = "Q005";
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,13 +25,17 @@ namespace QLCVan
                 Response.Redirect("Dangnhap.aspx");
             }
 
-            /// check quyền bằng mã nhá , nếu user ko có mã quyền thì ko vào dc
-       /*     if (!PermissionHelper.HasPermission("Q002"))
+            /// check quyền bằng mã user , nếu user ko có mã quyền thì ko vào dc
+            if (!PermissionHelper.HasPermission(maQuyenYeuCau))
             {
                 Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
                 Response.End();
             }
-*/
+            if (!PermissionHelper.HasPermission(maQuyenPheDuyetCV))
+            {
+                Response.Redirect("~/ThemCVKoDuyet.aspx");
+            }
+
             if (!Page.IsPostBack)
             {
                 LoadLoaiCV();

@@ -158,5 +158,10 @@ namespace QLCVan
         {
             Response.Redirect("Dangnhap.aspx");
         }
+
+        protected void rptMenu_ItemCommand(object source, System.Web.UI.WebControls.RepeaterCommandEventArgs e)
+        {
+
+        }
     }
 }
