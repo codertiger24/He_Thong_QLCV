@@ -44,7 +44,7 @@
       <Column Name="TrangThaiNhan" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
       <Association Name="tblNoiDungCV_tblGuiNhan" Member="tblNoiDungCV" ThisKey="MaCV" OtherKey="MaCV" Type="tblNoiDungCV" IsForeignKey="true" />
     </Type>
-  </Table>-
+  </Table>
   <Table Name="dbo.tblLoaiCV" Member="tblLoaiCVs">
     <Type Name="tblLoaiCV">
       <Column Name="MaLoaiCV" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

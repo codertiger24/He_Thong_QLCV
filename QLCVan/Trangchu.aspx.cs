@@ -208,7 +208,7 @@ namespace QLCVan
             string loai = ddlLoai.SelectedValue;
             DateTime fromDate, toDate;
 
-           
+
             IQueryable<CVLoaiCV> q;
 
             if (PermissionHelper.HasPermission("Q016"))
@@ -346,6 +346,21 @@ namespace QLCVan
 
             switch (e.CommandName)
             {
+                case "ViewCV":
+                    var cv = (from c in db.tblNoiDungCVs
+                              where c.MaCV == maCV
+                              select c).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(cv.NguoiDuyet))
+                    {
+                        // Nếu đã có người duyệt
+                        Response.Redirect($"CTCVDuyet.aspx?id={maCV}");
+                    }
+                    else
+                    {
+                        // Nếu chưa có người duyệt
+                        Response.Redirect($"CTCVKhongDuyetDaGui.aspx?id={maCV}");
+                    }
+                    break;
                 case "EditCV":
                     if (coQuyenSua)
                     {
