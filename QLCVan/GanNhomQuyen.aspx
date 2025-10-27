@@ -5,7 +5,9 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+         .toaster-wrap { position: fixed; top: 1rem; right: 1rem; z-index: 1080; }
         /* Giữ nguyên toàn bộ style gốc */
         body { background: #fff; font-family: "Segoe UI", Arial, sans-serif; }
         .page { width: 100%; margin: 0; padding: 0; }
@@ -109,4 +111,33 @@
             </asp:GridView>
         </div>
     </div>
+    <div id="toaster" class="toaster-wrap"></div>
+
+<script>
+    // type: 'success' | 'error' | 'info' | 'warning'
+    window.showToast = function (message, type) {
+        var bg =
+            type === 'error' ? 'bg-danger' :
+                type === 'warning' ? 'bg-warning text-dark' :
+                    type === 'info' ? 'bg-info text-dark' :
+                        'bg-success';
+
+        var id = 't' + Date.now();
+        var html =
+            '<div id="' + id + '" class="toast align-items-center text-white ' + bg + ' border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true">' +
+            '<div class="d-flex">' +
+            '<div class="toast-body">' + message + '</div>' +
+            '<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>' +
+            '</div>' +
+            '</div>';
+
+        var wrap = document.getElementById('toaster');
+        wrap.insertAdjacentHTML('beforeend', html);
+
+        var el = document.getElementById(id);
+        var t = new bootstrap.Toast(el, { delay: 2200 });
+        t.show();
+        el.addEventListener('hidden.bs.toast', function () { el.remove(); });
+    };
+</script>
 </asp:Content>

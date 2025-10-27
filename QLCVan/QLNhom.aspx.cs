@@ -36,11 +36,11 @@ namespace QLCVan
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!PermissionHelper.HasPermission(maQuyenYeuCau))
-            {
-                Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
-                Response.End();
-            }
+            //if (!PermissionHelper.HasPermission(maQuyenYeuCau))
+            //{
+            //    Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
+            //    Response.End();
+            //}
             if (!IsPostBack)
             {
                 BindGrid(); // load tất cả
@@ -206,7 +206,8 @@ namespace QLCVan
 
             if (string.IsNullOrEmpty(ma) || string.IsNullOrEmpty(ten))
             {
-                Alert("Vui lòng nhập đầy đủ MÃ và TÊN đơn vị!");
+                ScriptManager.RegisterStartupScript(this, GetType(), "addEmpty",
+                       "showToast('Mã và Tên chức vụ không được để trống!', 'text-bg-danger');", true);
                 return;
             }
 
@@ -219,7 +220,8 @@ namespace QLCVan
 
             if (MaDonViExists(ma))
             {
-                Alert("Mã đơn vị đã tồn tại!");
+                ScriptManager.RegisterStartupScript(this, GetType(), "addcheckma",
+                 "showToast('Mã chức vụ đã tồn tại!','text-bg-danger');", true);
                 return;
             }
             if (TenDonViExists(ten))
@@ -236,8 +238,28 @@ namespace QLCVan
                 BindGrid();
 
                 // Đóng modal Thêm
-                ScriptManager.RegisterStartupScript(this, GetType(), "hideAddModal",
-                    "var el=document.getElementById('addModal');if(el){var m=bootstrap.Modal.getInstance(el)||new bootstrap.Modal(el);m.hide();}", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "addOk",
+ @"
+    (function(){
+      var el = document.getElementById('addModal');
+      if (el) {
+        var md = (bootstrap.Modal.getInstance ? bootstrap.Modal.getInstance(el) : null);
+        try {
+          if (!md && bootstrap.Modal.getOrCreateInstance) {
+            md = bootstrap.Modal.getOrCreateInstance(el);
+          } else if (!md) {
+            md = new bootstrap.Modal(el);
+          }
+          md && md.hide();
+        } catch(e) {}
+      }
+      if (typeof showToast === 'function') {
+        showToast('Thêm thành công', 'text-bg-success');
+      } else {
+        console.log('Toast: Thêm thành công'); // fallback
+      }
+    })();
+    ", true);
             }
             catch (Exception ex)
             {
@@ -281,17 +303,21 @@ namespace QLCVan
 
             if (string.IsNullOrEmpty(ma))
             {
-                Alert("Thiếu mã đơn vị!");
+                ScriptManager.RegisterStartupScript(this, GetType(), "updEmpty",
+                    "showToast('Thiếu mã đơn vị!', 'text-bg-danger');", true);
+
                 return;
             }
             if (string.IsNullOrEmpty(tenMoi))
             {
-                Alert("Vui lòng nhập tên đơn vị!");
+                ScriptManager.RegisterStartupScript(this, GetType(), "updEmpty",
+                   "showToast('Vui lòng nhập tên đơn vị!', 'text-bg-danger');", true);
                 return;
             }
             if (TenDonViExists(tenMoi, exceptMa: ma))
             {
-                Alert("Tên đơn vị đã tồn tại!");
+                ScriptManager.RegisterStartupScript(this, GetType(), "updEmpty",
+                  "showToast('Tên đơn vị đã tồn tại!', 'text-bg-danger');", true);
                 return;
             }
 
@@ -299,18 +325,41 @@ namespace QLCVan
             {
                 if (!UpdateDonVi(ma, tenMoi))
                 {
-                    Alert("Không tìm thấy đơn vị để cập nhật!");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "updEmpty",
+                 "showToast('Không tìm thấy đơn vị để cập nhật!', 'text-bg-danger');", true);
                     return;
                 }
 
                 BindGrid();
 
-                // Đóng modal Sửa
-                ScriptManager.RegisterStartupScript(this, GetType(), "hideEditModal", "hideEditModal();", true);
+                /// Đóng modal Sửa + hiện toast thành công
+                ScriptManager.RegisterStartupScript(this, GetType(), "updOk",
+                @"
+        (function(){
+          var el = document.getElementById('editModal');
+          if (el) {
+            var md = (bootstrap.Modal.getInstance ? bootstrap.Modal.getInstance(el) : null);
+            try {
+              if (!md && bootstrap.Modal.getOrCreateInstance) {
+                md = bootstrap.Modal.getOrCreateInstance(el);
+              } else if (!md) {
+                md = new bootstrap.Modal(el);
+              }
+              md && md.hide();
+            } catch(e) {}
+          }
+          if (typeof showToast === 'function') {
+            showToast('Cập nhật thành công', 'text-bg-success');
+          } else {
+            console.log('Toast: Cập nhật thành công');
+          }
+        })();
+        ", true);
             }
             catch (Exception ex)
             {
-                Alert("Lỗi cập nhật: " + ex.Message);
+                ScriptManager.RegisterStartupScript(this, GetType(), "updEmpty",
+                   "showToast('Lỗi cập nhật!', 'text-bg-danger');", true);
             }
         }
 
@@ -320,7 +369,8 @@ namespace QLCVan
             var ma = hdfDeleteKey.Value?.Trim();
             if (string.IsNullOrWhiteSpace(ma))
             {
-                Alert("Thiếu mã đơn vị cần xoá!");
+                ScriptManager.RegisterStartupScript(this, GetType(), "delFailChild",
+                    "showToast('Thiếu mã đơn vị cần xoá!', 'text-bg-danger');", true);
                 return;
             }
 
@@ -329,15 +379,28 @@ namespace QLCVan
                 if (DeleteDonVi(ma))
                 {
                     BindGrid();
+                    // Đóng modal + hiện toast thành công
+                    ScriptManager.RegisterStartupScript(this, GetType(), "delOk",
+                        @"
+                    (function(){
+                      var el = document.getElementById('deleteModal');
+                      var md = bootstrap.Modal.getInstance(el);
+                      if(md){ md.hide(); }
+                      showToast('Đã xoá thành công', 'text-bg-success');
+                    })();
+                    ", true);
                 }
                 else
                 {
-                    Alert("Không tìm thấy đơn vị để xoá!");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "delFailChild",
+                    "showToast('Không tìm thấy đơn vị để xoá!', 'text-bg-danger');", true);
                 }
             }
             catch (Exception ex)
             {
-                Alert("Lỗi xoá: " + ex.Message);
+                ScriptManager.RegisterStartupScript(this, GetType(), "delFailChild",
+                    "showToast('Lỗi xóa!', 'text-bg-danger');", true);
+
             }
         }
 
