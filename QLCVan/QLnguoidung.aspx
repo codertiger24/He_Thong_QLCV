@@ -211,6 +211,38 @@ body { background:#f3f4f6; font-family:"Segoe UI",Arial,sans-serif; }
       </div>
     </div>
   </div>
+    <!-- Toast container -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index:1080">
+  <div id="appToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div id="appToastBody" class="toast-body">
+        <!-- message sẽ được inject -->
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<div class="position-fixed top-0 end-0 p-3" style="z-index:1080">
+  <div id="appToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div id="appToastBody" class="toast-body"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showToast(type, message) {
+        const el = document.getElementById('appToast');
+        const body = document.getElementById('appToastBody');
+        el.className = 'toast align-items-center text-white border-0';
+        el.classList.add({ success: 'bg-success', info: 'bg-info', warning: 'bg-warning', danger: 'bg-danger' }[type] || 'bg-secondary');
+        body.textContent = message;
+        new bootstrap.Toast(el, { delay: 2500 }).show();
+    }
+</script>
 
   <script>
     function setDeleteUser(id) {

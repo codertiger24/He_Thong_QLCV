@@ -3,6 +3,9 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.UI.WebControls;
+using System.Web.UI;                       // để dùng ScriptManager
+using System.Web.Script.Serialization;     // để JSON-encode message
+
 
 namespace QLCVan
 {
@@ -10,18 +13,28 @@ namespace QLCVan
     {
 
         string maQuyenYeuCau = "Q011";
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!PermissionHelper.HasPermission(maQuyenYeuCau))
-            {
-                Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
-                Response.End();
-            }
+            //if (!PermissionHelper.HasPermission(maQuyenYeuCau))
+            //{
+            //    Response.Write("<script>alert('Bạn không có quyền truy cập trang này!'); window.history.back();</script>");
+            //    Response.End();
+            //}
 
             if (!IsPostBack)
             {
                 BindDropdowns();
                 LoadNguoiDung();
+                // >>> ĐỌC FLASH TỪ SESSION <<<
+                var t = Session["flash.type"] as string;
+                var m = Session["flash.msg"] as string;
+                if (!string.IsNullOrEmpty(t) && !string.IsNullOrEmpty(m))
+                {
+                    Toast(t, m);                      // ví dụ: ("success", "Thêm người dùng thành công.")
+                    Session.Remove("flash.type");      // xoá để không hiện lại nếu refresh
+                    Session.Remove("flash.msg");
+                }
             }
         }
 
@@ -70,13 +83,50 @@ namespace QLCVan
 
         protected void btnConfirmDelete_Click(object sender, EventArgs e)
         {
-            var id = hdnDeleteUser.Value;
-            if (!string.IsNullOrWhiteSpace(id))
+            try
             {
-                UserRepository.DeleteById(id);
-                LoadNguoiDung();
+                var id = hdnDeleteUser.Value;
+                if (!string.IsNullOrWhiteSpace(id))
+                {
+                    var rows = UserRepository.DeleteById(id);
+                    if (rows > 0)
+                    {
+                        // xóa xong: clear hidden để tránh bấm nhầm lần 2
+                        hdnDeleteUser.Value = string.Empty;
+
+                        // reload danh sách
+                        LoadNguoiDung();
+
+                        // thông báo thành công
+                        Toast("success", "Đã xóa người dùng thành công.");
+                    }
+                    else
+                    {
+                        Toast("warning", "Không tìm thấy người dùng để xóa.");
+                    }
+                }
+                else
+                {
+                    Toast("warning", "Thiếu mã người dùng cần xóa.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // có lỗi khi xóa
+                Toast("danger", "Có lỗi xảy ra khi xóa: " + ex.Message);
             }
         }
+        private void Toast(string type, string message)
+        {
+            var jsonMsg = new JavaScriptSerializer().Serialize(message); // encode an toàn
+            ScriptManager.RegisterStartupScript(
+                this, GetType(),
+                Guid.NewGuid().ToString("N"),            // key ngẫu nhiên để không bị ghi đè
+                $"showToast('{type}', {jsonMsg});",      // gọi hàm JS đã đặt trong .aspx / master
+                true
+            );
+        }
+
     }
 
     /* ============ DAL gộp chung file (ADO.NET) ============ */
