@@ -11,6 +11,7 @@ namespace QLCVan
     {
         InfoDataContext db = new InfoDataContext();
         string maQuyenYeuCau = "RAll";
+        string maQuyenXemToanBoCongVan = "Q016";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -68,7 +69,26 @@ namespace QLCVan
                 Response.Redirect("Dangnhap.aspx");
                 return;
             }
-
+            if (PermissionHelper.HasPermission(maQuyenXemToanBoCongVan))
+            {
+                var allCv = from cv in db.tblNoiDungCVs
+                            join loai in db.tblLoaiCVs on cv.MaLoaiCV equals loai.MaLoaiCV
+                            orderby cv.NgayGui descending
+                            select new
+                            {
+                                cv.MaCV,
+                                cv.SoCV,
+                                cv.NgayGui,
+                                TieuDeCV = cv.TieuDeCV.Length > 50 ? cv.TieuDeCV.Substring(0, 50) + "..." : cv.TieuDeCV,
+                                TrichYeuND = cv.TrichYeuND.Length > 200 ? cv.TrichYeuND.Substring(0, 200) + "..." : cv.TrichYeuND,
+                                loai.TenLoaiCV,
+                                cv.TrangThai,
+                                VaiTro = "Toàn hệ thống"
+                            };
+                GridView1.DataSource = allCv.ToList();
+                GridView1.DataBind();
+                return;
+            }
             var congVanGui = from cv in db.tblNoiDungCVs
                              join loai in db.tblLoaiCVs on cv.MaLoaiCV equals loai.MaLoaiCV
                              where cv.MaNguoiGui == maNguoiDung.ToString()
@@ -121,24 +141,24 @@ namespace QLCVan
         }
         protected void lnk_Xoa_Click(object sender, EventArgs e)
         {
-            string permisson = (Session["QuyenHan"] as string)?.Trim();
+            //string permisson = (Session["QuyenHan"] as string)?.Trim();
 
-            if (string.Equals(permisson, "Admin", StringComparison.OrdinalIgnoreCase))
-            {
-                LinkButton lnk = sender as LinkButton;
-                string maCv = lnk.CommandArgument;
+            //if (string.Equals(permisson, "Admin", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    LinkButton lnk = sender as LinkButton;
+            //    string maCv = lnk.CommandArgument;
 
-                foreach (tblFileDinhKem item in db.tblFileDinhKems.Where(f => f.MaCV == maCv))
-                    db.tblFileDinhKems.DeleteOnSubmit(item);
+            //    foreach (tblFileDinhKem item in db.tblFileDinhKems.Where(f => f.MaCV == maCv))
+            //        db.tblFileDinhKems.DeleteOnSubmit(item);
 
-                tblNoiDungCV cv = db.tblNoiDungCVs.SingleOrDefault(t => t.MaCV == maCv);
-                if (cv != null)
-                {
-                    db.tblNoiDungCVs.DeleteOnSubmit(cv);
-                    db.SubmitChanges();
-                    LoadData();
-                }
-            }
+            //    tblNoiDungCV cv = db.tblNoiDungCVs.SingleOrDefault(t => t.MaCV == maCv);
+            //    if (cv != null)
+            //    {
+            //        db.tblNoiDungCVs.DeleteOnSubmit(cv);
+            //        db.SubmitChanges();
+            //        LoadData();
+            //    }
+            //}
         }
 
         protected void GridView1_PageIndexChanging1(object sender, GridViewPageEventArgs e)
@@ -176,91 +196,43 @@ namespace QLCVan
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            //string keyword = TextBox1.Text.Trim();
-            //string tieuDe = txtTieuDe.Text.Trim();
-            //string loai = ddlLoai.SelectedValue;
-            //DateTime fromDate, toDate;
-
-            //var q = from g in db.tblNoiDungCVs
-            //        join h in db.tblLoaiCVs on g.MaLoaiCV equals h.MaLoaiCV
-            //        select new { g, h };
-
-            //if (!string.IsNullOrEmpty(keyword))
-            //    q = q.Where(x => x.g.SoCV.Contains(keyword));
-
-            //if (!string.IsNullOrEmpty(tieuDe))
-            //    q = q.Where(x => x.g.TieuDeCV.Contains(tieuDe));
-
-            //if (!string.IsNullOrEmpty(loai))
-            //{
-            //    if (loai == "2")
-            //    {
-            //        //q = q.Where(x => x.g.TrangThai == false); // Dự thảo
-            //    }
-            //    else if (loai == "3")
-            //    {
-            //        // Nội bộ -> không lọc thêm
-            //    }
-            //    else
-            //    {
-            //        int loaiCV = int.Parse(loai); // 1: đến, 0: đi
-            //        q = q.Where(x => x.g.GuiHayNhan == loaiCV);
-            //    }
-            //}
-
-            //if (DateTime.TryParse(txtFromDate.Text.Trim(), out fromDate))
-            //    q = q.Where(x => x.g.NgayGui >= fromDate);
-
-            //if (DateTime.TryParse(txtToDate.Text.Trim(), out toDate))
-            //    q = q.Where(x => x.g.NgayGui <= toDate);
-
-            //var data = q
-            //    .OrderByDescending(x => x.g.NgayGui)
-            //    .Select(x => new
-            //    {
-            //        x.g.MaCV,
-            //        x.g.SoCV,
-            //        TenLoaiCV = x.h.TenLoaiCV,
-            //        x.g.NgayGui,
-            //        TieuDeCV = x.g.TieuDeCV.Length > 50 ? x.g.TieuDeCV.Substring(0, 50) + "..." : x.g.TieuDeCV,
-            //        x.g.CoQuanBanHanh,
-            //        x.g.GhiChu,
-            //        x.g.NgayBanHanh,
-            //        x.g.NguoiKy,
-            //        x.g.NoiNhan,
-            //        TrichYeuND = x.g.TrichYeuND.Length > 200 ? x.g.TrichYeuND.Substring(0, 200) + "..." : x.g.TrichYeuND,
-            //        x.g.TrangThai,
-            //        x.g.GuiHayNhan
-            //    });
-
-            //GridView1.DataSource = data;
-            //GridView1.DataBind();
-
-            //test tìm kiếm theo 
-
-            string tenDN = Session["TenDN"]?.ToString();
-            string quyenHan = Session["QuyenHan"]?.ToString();
             string maNguoiDung = Session["MaNguoiDung"]?.ToString();
+            if (string.IsNullOrWhiteSpace(maNguoiDung))
+            {
+                Response.Redirect("Dangnhap.aspx");
+                return;
+            }
 
             string keyword = TextBox1.Text.Trim();
             string tieuDe = txtTieuDe.Text.Trim();
             string loai = ddlLoai.SelectedValue;
             DateTime fromDate, toDate;
 
-            var congVanGui = from cv in db.tblNoiDungCVs
-                             join loaiCV in db.tblLoaiCVs on cv.MaLoaiCV equals loaiCV.MaLoaiCV
-                             where cv.MaNguoiGui == maNguoiDung
-                             select new { cv, loaiCV };
 
-            var congVanNhan = from gn in db.tblGuiNhans
-                              join cv in db.tblNoiDungCVs on gn.MaCV equals cv.MaCV
-                              join loaiCV in db.tblLoaiCVs on cv.MaLoaiCV equals loaiCV.MaLoaiCV
-                              where gn.MaNguoiNhan == maNguoiDung
-                              select new { cv, loaiCV };
+            IQueryable<CVLoaiCV> q;
 
-            var q = congVanGui.Concat(congVanNhan);
+            if (PermissionHelper.HasPermission("Q016"))
+            {
+                q = from cv in db.tblNoiDungCVs
+                    join loaiCV in db.tblLoaiCVs on cv.MaLoaiCV equals loaiCV.MaLoaiCV
+                    select new CVLoaiCV { cv = cv, loaiCV = loaiCV };
+            }
+            else
+            {
+                var congVanGui = from cv in db.tblNoiDungCVs
+                                 join loaiCV in db.tblLoaiCVs on cv.MaLoaiCV equals loaiCV.MaLoaiCV
+                                 where cv.MaNguoiGui == maNguoiDung
+                                 select new CVLoaiCV { cv = cv, loaiCV = loaiCV };
 
-            // Áp dụng các bộ lọc tìm kiếm
+                var congVanNhan = from gn in db.tblGuiNhans
+                                  join cv in db.tblNoiDungCVs on gn.MaCV equals cv.MaCV
+                                  join loaiCV in db.tblLoaiCVs on cv.MaLoaiCV equals loaiCV.MaLoaiCV
+                                  where gn.MaNguoiNhan == maNguoiDung
+                                  select new CVLoaiCV { cv = cv, loaiCV = loaiCV };
+
+                q = congVanGui.Concat(congVanNhan);
+            }
+
             if (!string.IsNullOrEmpty(keyword))
                 q = q.Where(x => x.cv.SoCV.Contains(keyword));
 
@@ -300,6 +272,134 @@ namespace QLCVan
             GridView1.DataSource = data.ToList();
             GridView1.DataBind();
         }
+        private void XoaCongVan(string maCv)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(maCv))
+                {
+                    ScriptManager.RegisterStartupScript(
+                        this,
+                        this.GetType(),
+                        "invalidId",
+                        "alert('Mã công văn không hợp lệ!');",
+                        true
+                    );
+                    return;
+                }
 
+                // Xóa file đính kèm trước
+                var fileDinhKemList = db.tblFileDinhKems.Where(f => f.MaCV == maCv).ToList();
+                foreach (var file in fileDinhKemList)
+                {
+                    db.tblFileDinhKems.DeleteOnSubmit(file);
+                }
+
+                // Xóa nội dung công văn chính
+                var cv = db.tblNoiDungCVs.SingleOrDefault(t => t.MaCV == maCv);
+                if (cv != null)
+                {
+                    db.tblNoiDungCVs.DeleteOnSubmit(cv);
+                    db.SubmitChanges();
+
+                    ScriptManager.RegisterStartupScript(
+                        this,
+                        this.GetType(),
+                        "deleteSuccess",
+                        "alert('Đã xóa công văn thành công!');",
+                        true
+                    );
+
+                    LoadData();
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(
+                        this,
+                        this.GetType(),
+                        "notFound",
+                        "alert(' Không tìm thấy công văn cần xóa!');",
+                        true
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                // Ghi log (nếu cần)
+                System.Diagnostics.Debug.WriteLine("Lỗi khi xóa công văn: " + ex.Message);
+
+                ScriptManager.RegisterStartupScript(
+                    this,
+                    this.GetType(),
+                    "deleteError",
+                    "alert(' Có lỗi xảy ra khi xóa công văn!');",
+                    true
+                );
+            }
+        }
+
+        protected void lnk_Command(object sender, CommandEventArgs e)
+        {
+            string maCV = e.CommandArgument.ToString();
+            bool coQuyenSua = PermissionHelper.HasPermission("Q003");
+            bool coQuyenXoa = PermissionHelper.HasPermission("Q004");
+
+            switch (e.CommandName)
+            {
+                case "ViewCV":
+                    var cv = (from c in db.tblNoiDungCVs
+                              where c.MaCV == maCV
+                              select c).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(cv.NguoiDuyet))
+                    {
+                        // Nếu đã có người duyệt
+                        Response.Redirect($"CTCVDuyet.aspx?id={maCV}");
+                    }
+                    else
+                    {
+                        // Nếu chưa có người duyệt
+                        Response.Redirect($"CTCVKhongDuyetDaGui.aspx?id={maCV}");
+                    }
+                    break;
+                case "EditCV":
+                    if (coQuyenSua)
+                    {
+                        Response.Redirect("~/SuaCV.aspx?id=" + maCV);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(
+                            this,
+                            this.GetType(),
+                            "noPermissionEdit",
+                            "alert('Bạn không có quyền sửa công văn!');",
+                            true
+                        );
+                    }
+                    break;
+                case "DeleteCV":
+                    if (coQuyenXoa)
+                    {
+                        XoaCongVan(maCV);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(
+                            this,
+                            this.GetType(),
+                            "noPermissionEdit",
+                            "alert('Bạn không có quyền xoá công văn!');",
+                            true
+                        );
+                    }
+                    break;
+            }
+        }
+
+    }
+    public class CVLoaiCV
+    {
+        public tblNoiDungCV cv { get; set; }
+        public tblLoaiCV loaiCV { get; set; }
     }
 }

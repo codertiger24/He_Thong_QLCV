@@ -28,8 +28,6 @@ namespace QLCVan
 
             tblNoiDungCV tk = db.tblNoiDungCVs.SingleOrDefault(n => n.MaCV == maCongVan);
             tblGuiNhan gn = db.tblGuiNhans.SingleOrDefault(g => g.MaCV == maCongVan);
-     
-
             if (tk != null)
             {
                 txtTieuDe.Text = tk.TieuDeCV;
