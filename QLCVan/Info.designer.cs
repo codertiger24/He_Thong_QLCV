@@ -1061,7 +1061,7 @@ namespace QLCVan
             }
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_TrangThaiNhan", DbType = "NVarChar(50) NOT NULL", CanBeNull = false, IsPrimaryKey = true)]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_TrangThaiNhan", DbType = "NVarChar(50) NOT NULL", CanBeNull = false, IsPrimaryKey = false)]
         public string TrangThaiNhan
         {
             get
@@ -3050,4 +3050,4 @@ namespace QLCVan
         }
     }
 }
-#pragma warning restore 1591
+

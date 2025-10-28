@@ -42,7 +42,7 @@
 			<Column Name="MaCV" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
 			<Column Name="MaNguoiDung" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
 			<Column Name="MaNguoiNhan" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
-			<Column Name="TrangThaiNhan" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="false" CanBeNull="false" />
+			<Column Name="TrangThaiNhan" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
 			<Association Name="tblNoiDungCV_tblGuiNhan" Member="tblNoiDungCV" ThisKey="MaCV" OtherKey="MaCV" Type="tblNoiDungCV" IsForeignKey="true" />
 		</Type>
 	</Table>-
