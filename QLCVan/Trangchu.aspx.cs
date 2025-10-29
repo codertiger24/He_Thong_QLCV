@@ -364,7 +364,43 @@ namespace QLCVan
                 case "EditCV":
                     if (coQuyenSua)
                     {
-                        Response.Redirect("~/SuaCV.aspx?id=" + maCV);
+                        var cv1 = (from c in db.tblNoiDungCVs
+                                   where c.MaCV == maCV
+                                   select c).FirstOrDefault();
+                        if (cv1.MaNguoiGui == Session["MaNguoiDung"].ToString())
+                        {
+                            if (!string.IsNullOrEmpty(cv1.NguoiDuyet))
+                            {
+                                if (cv1.TrangThai == "Đã được duyệt")
+                                {
+                                    ScriptManager.RegisterStartupScript(
+                                       this,
+                                       this.GetType(),
+                                       "noPermissionEdit",
+                                       "alert('Công văn đã được duyệt không thể sửa!');",
+                                       true);
+                                }
+                                else
+                                {
+                                    Response.Redirect("~/SuaCongVan.aspx?id=" + maCV);
+                                }
+                            }
+                            else
+                            {
+                                Response.Redirect("~/SuaCV.aspx?id=" + maCV);
+                            }
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(
+                            this,
+                            this.GetType(),
+                            "noPermissionEdit",
+                            "alert('Bạn không có quyền sửa công văn!');",
+                            true
+                        );
+                        }
+
                     }
                     else
                     {

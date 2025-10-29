@@ -351,24 +351,6 @@ namespace QLCVan
                 //    }
                 //}
 
-                // ✅ Các file đính kèm giữ nguyên
-                if (ListBox1.Items.Count != 0)
-                {
-                    foreach (ListItem item in ListBox1.Items)
-                    {
-                        tblFileDinhKem fcv = new tblFileDinhKem();
-                        fcv.MaCV = cv1.MaCV;
-                        fcv.FileID = Guid.NewGuid().ToString();
-                        fcv.Size = Convert.ToInt32(item.Value);
-                        fcv.DateUpload = DateTime.Now.ToShortDateString();
-                        fcv.TenFile = item.Text;
-                        fcv.Url = "~/Upload/" + item.Text;
-
-                        db.tblFileDinhKems.InsertOnSubmit(fcv);
-                        db.SubmitChanges();
-                    }
-                }
-
                 //Thêm danh sách vào đơn vị nhận
                 string maDonViNhan = ddlDonViNhan.SelectedValue; // dropdown đơn vị nhận
                 if (!string.IsNullOrEmpty(maDonViNhan))
@@ -402,7 +384,23 @@ namespace QLCVan
                     }
                     db.SubmitChanges();
                 }
+                // ✅ Các file đính kèm giữ nguyên
+                if (ListBox1.Items.Count != 0)
+                {
+                    foreach (ListItem item in ListBox1.Items)
+                    {
+                        tblFileDinhKem fcv = new tblFileDinhKem();
+                        fcv.MaCV = cv1.MaCV;
+                        fcv.FileID = Guid.NewGuid().ToString();
+                        fcv.Size = Convert.ToInt32(item.Value);
+                        fcv.DateUpload = DateTime.Now.ToShortDateString();
+                        fcv.TenFile = item.Text;
+                        fcv.Url = "~/Upload/" + item.Text;
 
+                        db.tblFileDinhKems.InsertOnSubmit(fcv);
+                        db.SubmitChanges();
+                    }
+                }
                 Response.Redirect("NhapNDCV.aspx");
             }
 
