@@ -280,4 +280,29 @@
         }
     </script>
   </div>
+        <!-- Toast container (fixed ở góc trên bên phải) -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index:1080">
+  <div id="liveToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div id="toastBody" class="toast-body">Đã xoá thành công</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+    // Hàm hiển thị toast với message + màu
+    function showToast(message, bsBgClass) {
+        var toastEl = document.getElementById('liveToast');
+        var bodyEl = document.getElementById('toastBody');
+
+        // đổi nội dung + màu nền (success / danger / info ...)
+        bodyEl.textContent = message || 'Thành công';
+        toastEl.classList.remove('text-bg-success', 'text-bg-danger', 'text-bg-info', 'text-bg-warning');
+        toastEl.classList.add(bsBgClass || 'text-bg-success');
+
+        var toast = new bootstrap.Toast(toastEl, { delay: 2000 });
+        toast.show();
+    }
+</script>
 </asp:Content>

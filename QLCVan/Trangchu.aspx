@@ -461,7 +461,15 @@
                         <asp:TemplateField HeaderText="Thao tác">
                             <ItemTemplate>
                                 <div class="actions">
-                                    <a href='CTCV.aspx?id=<%# Eval("MaCV") %>' class="action-pill action-view">Xem</a>
+                                    <!--<a href='CTCV.aspx?id=<%# Eval("MaCV") %>' class="action-pill action-view">Xem</a>-->
+                                     <asp:LinkButton
+                                        ID="lnk_Xem"
+                                        runat="server"
+                                        CssClass="action-pill action-view"
+                                        Text="Xem"
+                                        CommandName="ViewCV"
+                                        CommandArgument='<%# Eval("MaCV") %>'
+                                        OnCommand="lnk_Command" />
                                     <asp:LinkButton
                                         ID="lnk_Sua"
                                         runat="server"

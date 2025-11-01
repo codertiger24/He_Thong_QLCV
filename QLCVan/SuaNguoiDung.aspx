@@ -124,4 +124,29 @@
       <asp:Button ID="btnLuu" runat="server" CssClass="btn btn-primary" Text="Hoàn tất" OnClick="btnLuu_Click" />
     </div>
   </div>
+        <!-- Toast container -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index:1080">
+  <div id="appToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div id="appToastBody" class="toast-body"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+    <!-- Bootstrap 5 JS (chỉ 1 bản toàn site) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // type: success | info | warning | danger
+  function showToast(type, message) {
+    const el   = document.getElementById('appToast');
+    const body = document.getElementById('appToastBody');
+
+    el.className = 'toast align-items-center text-white border-0';
+    el.classList.add({success:'bg-success',info:'bg-info',warning:'bg-warning',danger:'bg-danger'}[type] || 'bg-secondary');
+    body.textContent = message;
+
+    new bootstrap.Toast(el, { delay: 2500 }).show();
+  }
+</script>
 </asp:Content>

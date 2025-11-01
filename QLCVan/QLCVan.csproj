@@ -74,6 +74,7 @@
     <Content Include="ChinhSuaCTCV_Duyet.aspx" />
     <Content Include="Counter.txt" />
     <Content Include="CTCV.aspx" />
+    <Content Include="CTCVDuyet.aspx" />
     <Content Include="DaDuyetCTCV_Duyet.aspx" />
     <Content Include="Dangnhap.aspx" />
     <Content Include="DanhBaEmail.aspx" />
@@ -182,6 +183,20 @@
     </Compile>
     <Content Include="CTCVKhongDuyetDaGui.aspx" />
     <Content Include="CTCVKhongDuyet.aspx" />
+    <Compile Include="CTCVDuyet.aspx.cs">
+      <DependentUpon>CTCVDuyet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CTCVDuyet.aspx.designer.cs">
+      <DependentUpon>CTCVDuyet.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CTCVKhongDuyetDaGui.aspx.cs">
+      <DependentUpon>CTCVKhongDuyetDaGui.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CTCVKhongDuyetDaGui.aspx.designer.cs">
+      <DependentUpon>CTCVKhongDuyetDaGui.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Dangnhap.aspx.cs">
       <DependentUpon>Dangnhap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
