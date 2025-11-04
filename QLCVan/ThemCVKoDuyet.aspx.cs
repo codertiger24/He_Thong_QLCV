@@ -17,11 +17,6 @@ namespace QLCVan
                 Response.Redirect("Gioithieu.aspx");
                 return;
             }
-            if ((Session["QuyenHan"] + "").Trim().Equals("User", StringComparison.OrdinalIgnoreCase))
-            {
-                Response.Write("<script>alert('Bạn không có quyền truy cập trang này !');document.location.href='Trangchu.aspx';</script>");
-                return;
-            }
 
             if (!IsPostBack)
             {
@@ -35,6 +30,11 @@ namespace QLCVan
                 // Đơn vị nhận: nếu có bảng nguồn riêng thì bind; tạm để rỗng để bạn nối sau
                 // ddlDonViNhan.DataSource = ...
                 // ddlDonViNhan.DataBind();
+                // 🔹 Nạp danh sách đơn vị nhận
+                lstDonViNhan.DataSource = db.tblDonVis.OrderBy(x => x.TenDonVi).ToList();
+                lstDonViNhan.DataTextField = "TenDonVi";
+                lstDonViNhan.DataValueField = "MaDonVi";
+                lstDonViNhan.DataBind();
 
                 txtNgayBanHanh.Attributes["placeholder"] = "dd/mm/yyyy";
                 txtNgayGui.Attributes["placeholder"] = "dd/mm/yyyy";
@@ -140,6 +140,22 @@ namespace QLCVan
             };
 
             db.tblNoiDungCVs.InsertOnSubmit(cv);
+            // 🔹 Lưu các đơn vị nhận đã chọn
+            if (lstDonViNhan.Items.Cast<System.Web.UI.WebControls.ListItem>().Any(i => i.Selected))
+            {
+                foreach (System.Web.UI.WebControls.ListItem item in lstDonViNhan.Items)
+                {
+                    if (item.Selected)
+                    {
+                        var dvNhan = new tblNoiDungCV_DonViNhan
+                        {
+                            MaCV = maCV,
+                            MaDonViNhan = item.Value
+                        };
+                        db.tblNoiDungCV_DonViNhans.InsertOnSubmit(dvNhan);
+                    }
+                }
+            }
 
             // File đính kèm: chèn các item trong ListBox vào bảng file
             if (ListBox1.Items.Count > 0)
