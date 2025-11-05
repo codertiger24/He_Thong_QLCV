@@ -78,7 +78,18 @@ namespace QLCVan
                 txtngaybanhanh.Attributes["placeholder"] = "dd/mm/yyyy";
                 txtngaygui.Attributes["placeholder"] = "dd/mm/yyyy";
 
+                // ✅ Hiển thị Toast nếu có thông báo lưu trong Session
+                if (Session["toastMsg"] != null)
+                {
+                    string msg = Session["toastMsg"].ToString().Replace("'", "\\'");
+                    string type = (Session["toastType"] ?? "success").ToString();
 
+                    ScriptManager.RegisterStartupScript(this, GetType(), "toastMsg",
+                        $"showToast('{msg}', '{type}');", true);
+
+                    Session.Remove("toastMsg");
+                    Session.Remove("toastType");
+                }
 
                 if (Request.QueryString["macv"] != null)
                 {
@@ -427,7 +438,8 @@ namespace QLCVan
                         db.SubmitChanges();
                     }
                 }
-
+                Session["toastMsg"] = "Thêm công văn thành công";   // hoặc "Thêm công văn thành công"
+                Session["toastType"] = "success";
                 Response.Redirect("NhapNDCV.aspx");
             }
 
