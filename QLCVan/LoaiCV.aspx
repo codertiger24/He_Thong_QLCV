@@ -123,48 +123,43 @@
         .pagination-source { display: none !important; }
 
        /* === Pager ngoài bảng: to hơn, vuông, bo ít góc === */
-.pager-out { 
-  width: 70%;
-  margin: 16px auto 0 auto;           /* cách bảng rõ hơn một chút */
-  text-align: center;
+/* === PHÂN TRANG NGOÀI BẢNG — KIỂU Ô VUÔNG, CÁCH NHƯ CSS CŨ === */
+/* === PHÂN TRANG NGOÀI BẢNG – KHOẢNG CÁCH CHUẨN NHƯ HÌNH THỨ 2 === */
+.pager-out {
+    width: 70%;
+    margin: 22px auto 0 auto;
+    text-align: center;
 }
 
-.pager-out a, .pager-out span {
-  /* Kích thước vuông */
-  min-width: 48px;                    /* đủ cho 1 chữ số; 2 chữ số sẽ rộng hơn 1 chút để không cắt chữ */
-  height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  /* Hình dáng & chữ */
-  padding: 0 10px;                    /* vẫn cho phép 2 chữ số không bị chật */
-  border: 1px solid #ddd;
-  border-radius: 6px;                 /* bo ít góc */
-  background: #fff;
-  color: #333;
-  text-decoration: none;
-  font-size: 16px;                    /* to hơn */
-  font-weight: 700;                   /* đậm hơn để rõ số trang */
-  line-height: 1;
-  margin: 0 3px;                      /* khoảng cách vừa phải giữa các nút */
-  transition: background .2s, border-color .2s, transform .02s;
+.pager-out a,
+.pager-out span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;                /* vuông đẹp */
+    height: 42px;
+    border: 1px solid #d1d5db;  /* viền xám nhạt */
+    border-radius: 4px;         /* bo nhẹ góc */
+    background: #fff;
+    color: #4b5563;             /* chữ xám */
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 0 12px;              /* 👈 khoảng cách giữa các ô – chuẩn hình thứ 2 */
 }
 
+/* Trang hiện tại – không tô màu */
+.pager-out span {
+    background: #fff;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+/* Không đổi màu khi hover */
 .pager-out a:hover {
-  background: #f5f5f5;
-  border-color: #cfcfcf;
+    border-color: #d1d5db;
 }
 
-.pager-out span {                      /* trang hiện tại */
-  background: #e74c3c;
-  color: #fff;
-  border-color: #e74c3c;
-}
-
-.pager-out a:active {
-  transform: translateY(1px);
-}
 
 /* Hỗ trợ bàn phím */
 .pager-out a:focus-visible {

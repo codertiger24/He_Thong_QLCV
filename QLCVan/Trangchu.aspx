@@ -2,6 +2,8 @@
     CodeBehind="Trangchu.aspx.cs" Inherits="QLCVan.Trangchu" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
     <style>
         :root {
             --red: #c00;
@@ -87,26 +89,26 @@
         }
 
         /* ===== Thanh chạy chữ ===== */
-        .welcome-bar {
-            background: #c00;
-            color: #fff;
-            border-radius: 4px;
-            padding: 8px 0;
-            margin: 0 auto 26px auto;
-            font-weight: bold;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 13px;
-            overflow: hidden;
-        }
+       .welcome-bar {
+    background: #c00; /* nền đỏ đậm */
+    color: #fff;
+    border-radius: 4px; /* bo góc mềm */
+    padding: 8px 0; /* cao vừa để chữ nằm giữa */
+    margin: 0 auto 26px auto;
+    font-weight: bold; /* in đậm */
+    text-align: center;
+    display: flex;
+    align-items: center; /* căn giữa theo chiều cao */
+    justify-content: center;
+    height: 30px; /* chiều cao cố định để đều */
+    overflow: hidden; /* ẩn phần chữ thừa */
+}
 
-            .welcome-bar marquee {
-                font-size: 16px;
-                font-weight: bold;
-                color: #fff;
-            }
+    .welcome-bar marquee {
+        font-size: 16px; /* chữ lớn hơn chút */
+        font-weight: bold;
+        color: #fff;
+    }
 
         /* TÌM KIẾM */
         .cv-box {
@@ -357,6 +359,63 @@
                 color: #fff;
                 font-weight: bold
             }
+       /* ===== PHÂN TRANG MÀU & FONT GIỐNG 100% TRANG QLNGUOIDUNG ===== */
+.gridview .pager {
+    text-align: center;
+    padding: 10px 0 0 0 !important;
+    margin-top: 0 !important;
+    background: #fff;
+}
+
+.gridview .pager table {
+    margin: 0 auto !important;
+    border-collapse: separate !important;
+    border-spacing: 8px !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.gridview .pager tr,
+.gridview .pager td {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+}
+
+/* Nút số trang */
+.gridview .pager a,
+.gridview .pager span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: #fff;
+    color: #6b7280;          /* 👈 màu xám giống hệt QLNgườiDùng */
+    font-size: 15px;
+    font-weight: 400;        /* 👈 nhẹ hơn một chút cho đúng tông */
+    text-decoration: none;
+    margin: 0 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Trang hiện tại (được chọn) */
+.gridview .pager span {
+    background: #fff;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+}
+
+/* Hover: chỉ sáng viền, không đổi màu chữ */
+.gridview .pager a:hover {
+    border-color: #9ca3af;
+    background: #f9fafb;
+    color: #6b7280;
+}
+
     </style>
 </asp:Content>
 
