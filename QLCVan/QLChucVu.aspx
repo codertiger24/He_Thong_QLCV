@@ -3,7 +3,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         body {
             background: #fff;
@@ -283,16 +285,16 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="page">
-        <div class="content-header">
-            <h2 class="content-header-title">QUẢN LÝ CHỨC VỤ</h2>
-        </div>
+<div class="page">
+  <div class="content-header">
+    <h2 class="content-header-title">QUẢN LÝ CHỨC VỤ</h2>
+  </div>
 
-        <div class="welcome-bar">
-            <marquee behavior="scroll" direction="left" scrollamount="6">
-                Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.
-            </marquee>
-        </div>
+  <div class="welcome-bar">
+    <marquee behavior="scroll" direction="left" scrollamount="6">
+      Chào mừng bạn đến với hệ thống Quản lý Công văn điện tử.
+    </marquee>
+  </div>
 
         <h3 class="page-title">DANH SÁCH CHỨC VỤ</h3>
 
@@ -311,7 +313,42 @@
                 <i class="fa fa-plus"></i> Thêm chức vụ
             </button>
 
-        </div>
+  <!-- Bảng danh sách -->
+  <div class="table-wrapper">
+    <asp:GridView ID="gvChucVu" runat="server" AutoGenerateColumns="False"
+      CssClass="table table-bordered gridview"
+      AllowPaging="True" PageSize="5"
+      OnPageIndexChanging="gvChucVu_PageIndexChanging"
+      PagerStyle-CssClass="pagination pagination-source"
+      BorderStyle="None">
+
+      <Columns>
+        <asp:BoundField DataField="MaChucVu" HeaderText="Mã chức vụ" />
+        <asp:BoundField DataField="TenChucVu" HeaderText="Tên chức vụ" />
+        <asp:TemplateField HeaderText="Thao tác">
+          <ItemTemplate>
+            <a type="button" class="btn btn-primary btn-sm"
+               href='<%# "GanNhomQuyen.aspx?ma=" + Eval("MaChucVu") + "&ten=" + Eval("TenChucVu") %>'>
+               Gán quyền
+            </a>
+
+            <button type="button" class="btn btn-warning btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#editModal"
+                    data-ma='<%# Eval("MaChucVu") %>'
+                    data-ten="<%# Eval("TenChucVu") %>">
+              <i class="fa fa-pen"></i>
+            </button>
+
+            <button type="button" class="btn btn-danger btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#deleteModal"
+                    data-id='<%# Eval("MaChucVu") %>'>
+              <i class="fa fa-trash"></i>
+            </button>
+          </ItemTemplate>
+        </asp:TemplateField>
+      </Columns>
+    </asp:GridView>
+  </div>
 
         <!-- ✅ Bảng danh sách -->
         <div class="table-wrapper">
@@ -356,98 +393,74 @@
             </asp:GridView>
         </div>
 
-        <!-- Modal thêm chức vụ -->
-        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Thêm mới chức vụ</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <asp:TextBox ID="txtMdMaChucVu" runat="server" CssClass="form-control" placeholder="Nhập mã chức vụ..." />
-                        </div>
-                        <div class="mb-3">
-                            <asp:TextBox ID="txtMdTenChucVu" runat="server" CssClass="form-control" placeholder="Nhập tên chức vụ..." />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="btnSave" runat="server" Text="Thêm" CssClass="btn btn-success" OnClick="btnSave_Click" />
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    </div>
-                </div>
-            </div>
+  <!-- Modal thêm -->
+  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addModalLabel">Thêm mới chức vụ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
-        <!-- Modal xoá chức vụ -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content border-danger">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Xác nhận xoá</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Bạn có chắc muốn xoá chức vụ này không?</p>
-                        <asp:HiddenField ID="hdDeleteId" runat="server" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
-                        <asp:Button ID="btnConfirmDelete" runat="server" CssClass="btn btn-danger" Text="Xoá" OnClick="btnConfirmDelete_Click" />
-                    </div>
-                </div>
-            </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <asp:TextBox ID="txtMdMaChucVu" runat="server" CssClass="form-control" placeholder="Nhập mã chức vụ..." />
+          </div>
+          <div class="mb-3">
+            <asp:TextBox ID="txtMdTenChucVu" runat="server" CssClass="form-control" placeholder="Nhập tên chức vụ..." />
+          </div>
         </div>
-
-        <!-- Modal sửa chức vụ -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Sửa chức vụ</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                    </div>
-                    <div class="modal-body">
-                        <asp:HiddenField ID="hdfMaChucVu" runat="server" />
-                        <div class="mb-3">
-                            <label class="form-label">Mã chức vụ</label>
-                            <asp:TextBox ID="txtEditMa" runat="server" CssClass="form-control" ReadOnly="true" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tên chức vụ</label>
-                            <asp:TextBox ID="txtEditTen" runat="server" CssClass="form-control" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="btnUpdate" runat="server" Text="Cập nhật" CssClass="btn btn-success" OnClick="btnUpdate_Click" />
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    </div>
-                </div>
-            </div>
+        <div class="modal-footer">
+          <asp:Button ID="btnSave" runat="server" Text="Thêm" CssClass="btn btn-success" OnClick="btnSave_Click" />
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var deleteModal = document.getElementById('deleteModal');
-                deleteModal.addEventListener('show.bs.modal', function (event) {
-                    var button = event.relatedTarget;
-                    var id = button.getAttribute('data-id');
-                    var hidden = document.getElementById('<%= hdDeleteId.ClientID %>');
-                    hidden.value = id;
-                });
-            });
+  <!-- Modal xóa -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-danger">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Xác nhận xoá</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc muốn xoá chức vụ này không?</p>
+          <asp:HiddenField ID="hdDeleteId" runat="server" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+          <asp:Button ID="btnConfirmDelete" runat="server" CssClass="btn btn-danger" Text="Xoá" OnClick="btnConfirmDelete_Click" />
+        </div>
+      </div>
+    </div>
+  </div>
 
-            var editModal = document.getElementById('editModal');
-            editModal.addEventListener('show.bs.modal', function (event) {
-                var button = event.relatedTarget;
-                var ma = button.getAttribute('data-ma');
-                var ten = button.getAttribute('data-ten');
-                document.getElementById('<%= txtEditMa.ClientID %>').value = ma;
-                document.getElementById('<%= txtEditTen.ClientID %>').value = ten;
-                document.getElementById('<%= hdfMaChucVu.ClientID %>').value = ma;
-            });
-        </script>
+  <!-- Modal sửa -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sửa chức vụ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <asp:HiddenField ID="hdfMaChucVu" runat="server" />
+          <div class="mb-3">
+            <label class="form-label">Mã chức vụ</label>
+            <asp:TextBox ID="txtEditMa" runat="server" CssClass="form-control" ReadOnly="true" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Tên chức vụ</label>
+            <asp:TextBox ID="txtEditTen" runat="server" CssClass="form-control" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <asp:Button ID="btnUpdate" runat="server" Text="Cập nhật" CssClass="btn btn-success" OnClick="btnUpdate_Click" />
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
     </div>
     <!-- Toast container (fixed ở góc trên bên phải) -->
     <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
@@ -475,4 +488,25 @@
         }
     </script>
 
+    // Clone phân trang giống QLNgườiDùng
+    (function () {
+      function clonePager() {
+        var grid = document.getElementById('<%= gvChucVu.ClientID %>');
+              if (!grid) return;
+              var src = grid.querySelector('.pagination');
+              var out = document.getElementById('pagerOutside');
+              if (!src || !out) return;
+              out.innerHTML = '';
+              src.querySelectorAll('a, span').forEach(function (el) {
+                  out.appendChild(el.cloneNode(true));
+              });
+              src.style.display = 'none';
+          }
+          if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', clonePager);
+          else clonePager();
+          if (typeof (Sys) !== 'undefined' && Sys.WebForms && Sys.WebForms.PageRequestManager)
+              Sys.WebForms.PageRequestManager.getInstance().add_endRequest(clonePager);
+      })();
+  </script>
+</div>
 </asp:Content>

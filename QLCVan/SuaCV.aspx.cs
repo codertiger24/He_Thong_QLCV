@@ -30,27 +30,22 @@ namespace QLCVan
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["TenDN"] == null)
-            {
-                Response.Redirect("Gioithieu.aspx");
-                return;
-            }
-           /* if (Session["QuyenHan"] != null && Session["QuyenHan"].ToString().Trim() == "User")
-            {
-                ClientScript.RegisterStartupScript(GetType(), "noauth",
-                    "alert('Bạn không có quyền truy cập trang này !'); location.href='Trangchu.aspx';", true);
-                return;
-            }*/
+            /* if (Session["QuyenHan"] != null && Session["QuyenHan"].ToString().Trim() == "User")
+ {
+     ClientScript.RegisterStartupScript(GetType(), "noauth",
+         "alert('Bạn không có quyền truy cập trang này !'); location.href='Trangchu.aspx';", true);
+     return;
+ }*/
 
-           /* try
-            {
-                EnsureTableNames();
-            }
-            catch (Exception ex)
-            {
-                Alert(ex.Message);
-                return;
-            }*/
+            /* try
+             {
+                 EnsureTableNames();
+             }
+             catch (Exception ex)
+             {
+                 Alert(ex.Message);
+                 return;
+             }*/
             if (!IsPostBack)
             {
                 string maCv = GetMaCVFromRequest();
@@ -491,12 +486,6 @@ namespace QLCVan
             else
                 Alert("Không có tệp nào được xóa.");
         }
-
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Trangchu.aspx");
-        }
-        // ================== BIND FILE ĐÍNH KÈM ==================
         private void BindFileDinhKem(string maCv)
         {
             ListBox1.Items.Clear();
@@ -530,5 +519,10 @@ namespace QLCVan
             }
         }
 
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Trangchu.aspx");
+        }
     }
 }
