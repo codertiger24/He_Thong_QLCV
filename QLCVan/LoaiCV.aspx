@@ -233,35 +233,60 @@
             display: none !important;
         }
         /* ẩn pager trong GridView (nguồn để clone) */
+       /* === Pager ngoài bảng: to hơn, vuông, bo ít góc === */
+/* === PHÂN TRANG NGOÀI BẢNG — KIỂU Ô VUÔNG, CÁCH NHƯ CSS CŨ === */
+/* === PHÂN TRANG NGOÀI BẢNG – KHOẢNG CÁCH CHUẨN NHƯ HÌNH THỨ 2 === */
+/* ===== Pager ngoài bảng: Hover & Active màu đỏ, có transition ===== */
+.pager-out {
+  width:70%;
+  margin:22px auto 0 auto;
+  text-align:center;
+}
 
-        .pager-out {
-            width: 70%;
-            margin: 25px auto 0 auto;
-            text-align: center;
-        }
+.pager-out a,
+.pager-out span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:42px; height:42px;
+  border:1px solid #d1d5db;
+  border-radius:4px;
+  background:#fff;
+  color:#4b5563;
+  font-size:16px;
+  font-weight:500;
+  text-decoration:none;
+  margin:0 5px;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease, transform .06s ease;
+}
 
-            .pager-out a, .pager-out span {
-                border: none;
-                background: none;
-                padding: 6px 12px;
-                border-radius: 4px;
-                font-weight: 500;
-                color: #111;
-                text-decoration: none;
-                transition: all .2s ease;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-            }
+/* Trang hiện tại: tô đỏ */
+.pager-out span{
+  background: var(--red);
+  color:#fff;
+  border-color: var(--red);
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+}
 
-                .pager-out a:hover {
-                    color: var(--red);
-                }
+/* Hover: chuyển đỏ nhẹ, nhô lên 1px */
+.pager-out a:hover{
+  background: var(--red);
+  color:#fff;
+  border-color: var(--red);
+  transform: translateY(-1px);
+}
 
-            .pager-out span {
-                background: var(--red);
-                color: #fff;
-            }
+/* Active (nhấn giữ) */
+.pager-out a:active{
+  transform: translateY(0);
+}
+
+/* Focus bàn phím */
+.pager-out a:focus-visible{
+  outline: 2px solid rgba(13,110,253,.35);
+  outline-offset: 2px;
+}
+
 
         /* ===== Modal (giữ nguyên HTML, đồng bộ bo góc/khung) ===== */
         .modalBackground {

@@ -366,6 +366,129 @@
     font-weight: 540 !important;
     color: #222;
 }
+       /* ===== PHÂN TRANG MÀU & FONT GIỐNG 100% TRANG QLNGUOIDUNG ===== */
+.gridview .pager {
+    text-align: center;
+    padding: 10px 0 0 0 !important;
+    margin-top: 0 !important;
+    background: #fff;
+}
+
+.gridview .pager table {
+    margin: 0 auto !important;
+    border-collapse: separate !important;
+    border-spacing: 8px !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.gridview .pager tr,
+.gridview .pager td {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+}
+
+/* Nút số trang */
+.gridview .pager a,
+.gridview .pager span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: #fff;
+    color: #6b7280;          /* 👈 màu xám giống hệt QLNgườiDùng */
+    font-size: 15px;
+    font-weight: 400;        /* 👈 nhẹ hơn một chút cho đúng tông */
+    text-decoration: none;
+    margin: 0 2px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Trang hiện tại (được chọn) */
+.gridview .pager span {
+    background: #fff;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+}
+
+/* Hover: chỉ sáng viền, không đổi màu chữ */
+.gridview .pager a:hover {
+    border-color: #9ca3af;
+    background: #f9fafb;
+    color: #6b7280;
+}
+/* ===== Hiệu ứng phân trang: hover đỏ + trang hiện tại đỏ ===== */
+.gridview .pager a,
+.gridview .pager span{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:42px; height:42px;
+  border:1px solid #d1d5db; border-radius:4px;
+  background:#fff; color:#6b7280;
+  font-size:15px; font-weight:500; text-decoration:none;
+  transition:background-color .18s ease, color .18s ease, border-color .18s ease, transform .06s ease;
+}
+
+/* Trang hiện tại */
+.gridview .pager span{
+  background:#c00 !important;     /* đỏ chủ đạo */
+  color:#fff !important;
+  border-color:#c00 !important;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);
+}
+
+/* Hover số trang */
+.gridview .pager a:hover{
+  background:#c00 !important;
+  color:#fff !important;
+  border-color:#c00 !important;
+  transform:translateY(-1px);
+}
+
+/* Active (nhấn giữ) */
+.gridview .pager a:active{ transform:translateY(0); }
+
+/* Hỗ trợ focus bằng bàn phím */
+.gridview .pager a:focus-visible{
+  outline:2px solid rgba(13,110,253,.35);
+  outline-offset:2px;
+}
+/* ===== Tạo khoảng cách giữa bảng và phân trang mà KHÔNG co bảng ===== */
+
+/* Không đụng vào width bảng; chỉ tăng khoảng trống phía trên pager */
+.gridview .pager {
+  background:#fff !important;
+  padding:0 !important;               /* không thêm padding tổng */
+}
+
+.gridview .pager td{
+  border:none !important;
+  padding:16px 0 0 0 !important;      /* 👈 khoảng cách mong muốn (sửa số tùy ý) */
+}
+
+/* Giữ nguyên kích thước nội dung pager, tránh làm co bảng */
+.gridview .pager table{
+  margin:0 !important;                 /* bỏ margin-top gây cảm giác co bảng */
+  width:auto !important;               /* chắc chắn không chiếm rộng bất thường */
+}
+/* Căn giữa pager của GridView */
+.gridview .pager { 
+  text-align: center !important;           /* td chứa pager */
+}
+
+.gridview .pager td {
+  text-align: center !important;           /* đề phòng inline style của GridView */
+}
+
+.gridview .pager table {
+  display: inline-table !important;        /* để chịu tác dụng text-align:center */
+  margin-left: auto !important;
+  margin-right: auto !important;           /* đảm bảo luôn giữa */
+}
 
 
     </style>
