@@ -51,7 +51,14 @@ namespace QLCVan
                 string maCv = GetMaCVFromRequest();
                 if (string.IsNullOrEmpty(maCv))
                 {
-                    Alert("Thiếu mã công văn.");
+                    ScriptManager.RegisterStartupScript(
+     this,
+     this.GetType(),
+     "missingMaCV",
+     "showToast('Thiếu mã công văn!', 'text-bg-warning');",
+     true
+ );
+
                     return;
                 }
 
@@ -375,7 +382,14 @@ namespace QLCVan
                 cmd.ExecuteNonQuery();
             }
 
-            Alert("Đã lưu công văn.");
+            ScriptManager.RegisterStartupScript(
+     this,
+     this.GetType(),
+     "saveSuccess",
+     "showToast('Đã lưu công văn!', 'text-bg-success');",
+     true
+ );
+
         }
 
         private bool TryParseDate(string input, out DateTime? result)
