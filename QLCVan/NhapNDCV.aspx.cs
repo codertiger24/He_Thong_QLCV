@@ -392,6 +392,12 @@ namespace QLCVan
                 DateTime ngaybancv = DateTime.ParseExact(txtngaygui.Text.ToString(), "dd/MM/yyyy", null);
                 cv1.NgayBanHanh = ngaybancv;
                 cv1.TrangThai = "Đã gửi";
+                // Lưu danh sách mã đơn vị nhận (cách nhau bằng dấu phẩy)
+               /* cv1.NoiNhan = string.Join(",", lstDonViNhan.Items
+                    .Cast<ListItem>()
+                    .Where(it => it.Selected)
+                    .Select(it => it.Value));*/
+
 
                 db.tblNoiDungCVs.InsertOnSubmit(cv1);
                 db.SubmitChanges();

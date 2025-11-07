@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/QLCV.Master" AutoEventWireup="true"
-    CodeBehind="Trangchu.aspx.cs" Inherits="QLCVan.Trangchu" %>
+    CodeBehind="AllCongVan.aspx.cs" Inherits="QLCVan.AllCongVan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <!-- COPY CSS TRANG CHỦ + BỔ SUNG TOPBAR & NÚT SEARCH -->
     <style type="text/css">
         :root {
             --red: #c00;
@@ -52,23 +53,17 @@
             background: #fff !important; border: 1px solid #d1d5db !important; border-radius: 8px !important; padding: 8px 12px !important; min-height: 10px; font-size: 14px;
         }
 
+        /* Nút chung trong form */
         .cv-box .cv-form .btn, .cv-box .cv-form input.btn {
             background: var(--red) !important; color: #fff !important; border: none !important; border-radius: 6px !important;
             padding: 6px 12px !important; font-size: 13px !important; font-weight: 500 !important; justify-self: start; cursor: pointer; transition: all .2s ease-in-out;
         }
-        .cv-box .cv-form .btn:hover, .cv-box .cv-form input.btn:hover { transform: scale(1.03); }
+        .cv-box .cv-form .btn:hover, .cv-box .cv-form input.btn:hover { transform: translateY(-1px); }
 
         .btn-outline { background:#fff !important; color:var(--red) !important; border:1px solid var(--red) !important; }
         .btn-gray { background:#fff !important; color:#111 !important; border:1px solid #d1d5db !important; }
 
-   .cv-box .cv-form .actions {
-    display: flex;
-    justify-content: center; /* Căn giữa */
-    align-items: center;
-    gap: 10px;
-    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
-}
-
+        .cv-box .cv-form .actions { display:flex; gap:10px; align-items:center; justify-content:flex-end; }
 
         @media (max-width:700px) {
             .cv-box .cv-form {
@@ -110,97 +105,82 @@
         .pager a:hover { border: 1px solid var(--red); color: var(--red) }
         .pager span { border: 1px solid var(--red); background: var(--red); color: #fff; font-weight: bold }
 
-        /* ===== PHƯƠNG ÁN 1: Style riêng cho nút trong .cv-actions ===== */
-        .cv-actions{
-          width:100%;
+        /* ===== TOPBAR: Nút + tiêu đề trên cùng 1 hàng (giống Trangchu) ===== */
+        .cv-topbar{
+          position: relative;
+          width: 100%;
           max-width: var(--content-w);
-          margin: 10px auto 16px auto;
-          padding: 0 18px;
+          margin: 10px auto 12px auto;
+          padding: 12px 18px;
           box-sizing: border-box;
         }
-        .cv-actions a.btn,
-        .cv-actions a.btn:link,
-        .cv-actions a.btn:visited{
-          display: inline-flex !important;
-          align-items: center !important;
-          gap: 6px !important;
+        .cv-topbar a.btn,
+        .cv-topbar a.btn:link,
+        .cv-topbar a.btn:visited{
+          position: absolute;
+          left: 18px;
+          top: 50%;
+          transform: translateY(-50%);
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
           text-decoration: none !important;
-          background: #fff !important;
-          border: 1px solid var(--red) !important;
-          color: var(--red) !important;
-          padding: 8px 14px !important;
-          border-radius: 8px !important;
-          font-size: 13px !important;
-          font-weight: 600 !important;
-          line-height: 1 !important;
-        }
-        .cv-actions a.btn:hover,
-        .cv-actions a.btn:focus{
-          background: var(--red) !important;
+          background: var(--red) !important;   /* nút đỏ – chữ trắng */
           color: #fff !important;
-          outline: none !important;
-          text-decoration: none !important;
+          border: 1px solid var(--red) !important;
+          padding: 8px 14px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 700;
+          line-height: 1;
         }
-        /* Thanh top chung: nút + tiêu đề trên cùng một hàng */
-.cv-topbar{
-  position: relative;
-  width: 100%;
-  max-width: var(--content-w);
-  margin: 10px auto 12px auto;
-  padding: 12px 18px;
-  box-sizing: border-box;
+        .cv-topbar a.btn:hover{ background: var(--red-600) !important; border-color: var(--red-600) !important; }
+        .cv-topbar-title{
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+          margin: 0;
+          text-align: center;
+          font-weight: 700;
+          font-size: 20px;
+          color: #0f172a;
+          letter-spacing: .6px;
+        }
+
+        /* Nút Tìm kiếm nhỏ gọn như bản bạn gửi */
+        .cv-box .cv-form input.btn-search{
+          background: var(--red) !important;
+          color:#fff !important;
+          border: 1px solid var(--red) !important;
+          border-radius: 6px !important;
+          padding: 8px 16px !important;
+          height: 36px !important;
+          line-height: 1 !important;
+          font-size: 13px !important;
+          font-weight: 700 !important;
+          box-shadow: 0 1px 0 rgba(0,0,0,.06);
+        }
+        .cv-box .cv-form input.btn-search:hover{
+          background: var(--red-600) !important;
+          border-color: var(--red-600) !important;
+          transform: translateY(-1px);
+        }
+        .cv-box .cv-form .actions {
+    display: flex;
+    justify-content: center; /* Căn giữa */
+    align-items: center;
+    gap: 10px;
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
 }
 
-/* Nút đỏ chữ trắng */
-.cv-topbar a.btn,
-.cv-topbar a.btn:link,
-.cv-topbar a.btn:visited{
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none !important;
-  background: var(--red) !important;
-  border: 1px solid var(--red) !important;
-  color: #fff !important;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1;
-}
 
-.cv-topbar a.btn:hover,
-.cv-topbar a.btn:focus{
-  background: #a60d0d !important; /* hơi đậm hơn */
-  border-color: #a60d0d !important;
-  color: #fff !important;
-  text-decoration: none !important;
-}
-
-/* Tiêu đề căn giữa */
-.cv-topbar-title{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  margin: 0;
-  text-align: center;
-  font-weight: 700;
-  font-size: 20px;
-  color: #0f172a;
-  letter-spacing: .6px;
-}
-
-@media (max-width: 520px){
-  .cv-topbar{ padding: 10px 12px; }
-  .cv-topbar a.btn{ left: 12px; padding: 7px 12px; font-size: 12px; }
-  .cv-topbar-title{ font-size: 18px; }
-}
-       /* ===== PHÂN TRANG MÀU & FONT GIỐNG 100% TRANG QLNGUOIDUNG ===== */
+        @media (max-width: 520px){
+          .cv-topbar{ padding: 10px 12px; }
+          .cv-topbar a.btn{ left: 12px; padding: 7px 12px; font-size: 12px; }
+          .cv-topbar-title{ font-size: 18px; }
+        }
+               /* ===== PHÂN TRANG MÀU & FONT GIỐNG 100% TRANG QLNGUOIDUNG ===== */
 .gridview .pager {
     text-align: center;
     padding: 10px 0 0 0 !important;
@@ -324,13 +304,12 @@
   margin-right: auto !important;           /* đảm bảo luôn giữa */
 }
 
-
     </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="content-header">
-        <h2 class="content-header-title">XEM CÔNG VĂN</h2>
+        <h2 class="content-header-title">XEM TOÀN BỘ CÔNG VĂN</h2>
     </div>
 
     <div class="welcome-bar">
@@ -339,6 +318,7 @@
         </marquee>
     </div>
 
+    <!-- HỘP TÌM KIẾM -->
     <div class="cv-box">
         <div class="cv-box-title">TÌM KIẾM VĂN BẢN</div>
         <div class="cv-form">
@@ -366,151 +346,106 @@
                 <asp:TextBox ID="txtToDate" runat="server" CssClass="input" TextMode="Date" placeholder="mm/dd/yyyy" />
             </div>
 
-            <!-- Hai nút ẩn + Tìm kiếm (giữ nguyên) -->
-            <div class="field" style="display:flex;align-items:end;">
-                <label></label>
-                <div class="actions">
-                    <asp:Button ID="btnViewAll"
-                        runat="server"
-                        Text="↺ Xem toàn bộ công văn"
-                        CssClass="btn btn-outline"
-                        OnClick="btnViewAll_Click" 
-                        Style="display:none"/>
-                    <asp:Button ID="btnMyOnly"
-                        runat="server"
-                        Text="↩ Xem công văn của tôi"
-                        CssClass="btn btn-gray"
-                        OnClick="btnMyOnly_Click" 
-                        Style="display:none"/>
-                    <asp:Button ID="Button1"
-                        runat="server"
-                        Text="Tìm kiếm"
-                        CssClass="btn"
-                        OnClick="btnSearch_Click" />
-                </div>
-            </div>
+           <div class="field" style="display: flex; align-items: center;">
+    <label></label>
+    <div class="actions">
+        <asp:Button ID="btnSearchAll"
+            runat="server"
+            Text="Tìm kiếm"
+            CssClass="btn-search"
+            OnClick="btnSearchAll_Click" />
+    </div>
+</div>
+
         </div>
     </div>
 
-<div class="cv-topbar">
-    <asp:HyperLink ID="lnkGoAll"
-        runat="server"
-        NavigateUrl="~/AllCongVan.aspx"
-        CssClass="btn"
-        Text="↺ Xem toàn bộ công văn" />
-    <div class="cv-topbar-title">DANH SÁCH CÔNG VĂN</div>
-</div>
+    <!-- TOPBAR: Nút "Xem công văn của tài khoản" + tiêu đề ở giữa (giống Trangchu) -->
+    <div class="cv-topbar">
+        <asp:HyperLink ID="lnkBackHome"
+            runat="server"
+            NavigateUrl="~/Trangchu.aspx"
+            CssClass="btn"
+            Text="↩ Xem công văn của tài khoản" />
+        <div class="cv-topbar-title">DANH SÁCH CÔNG VĂN</div>
+    </div>
 
-
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true">
+    <asp:UpdatePanel ID="UpdatePanelAll" runat="server" ChildrenAsTriggers="true">
         <ContentTemplate>
             <div class="gridwrap">
-                <asp:GridView ID="GridView1" runat="server" CssClass="gridview" AutoGenerateColumns="False"
+                <asp:GridView ID="GridViewAll" runat="server" CssClass="gridview" AutoGenerateColumns="False"
                     Width="100%" AllowPaging="True" PageSize="5"
-                    OnPageIndexChanging="GridView1_PageIndexChanging1"
+                    OnPageIndexChanging="GridViewAll_PageIndexChanging"
                     ShowFooter="False" GridLines="None">
+
                     <Columns>
-                        <%-- Số công văn (190px) --%>
                         <asp:TemplateField SortExpression="SoCV" HeaderText="Số công văn">
-                            <ItemTemplate>
-                                <%# Eval("SoCV") %>
-                            </ItemTemplate>
-                            <HeaderStyle Width="190px" />
-                            <ItemStyle Width="190px" />
-                        </asp:TemplateField>
+     <ItemTemplate>
+         <%# Eval("SoCV") %>
+     </ItemTemplate>
+     <HeaderStyle Width="190px" />
+     <ItemStyle Width="190px" />
+ </asp:TemplateField>
 
-                        <%-- Tiêu đề (260px) - mới thêm --%>
-                        <asp:TemplateField SortExpression="TieuDeCV" HeaderText="Tiêu đề">
-                            <ItemTemplate>
-                                <%# Eval("TieuDeCV") %>
-                            </ItemTemplate>
-                            <HeaderStyle Width="260px" />
-                            <ItemStyle Width="260px" />
-                        </asp:TemplateField>
+ <%-- Tiêu đề (260px) - mới thêm --%>
+ <asp:TemplateField SortExpression="TieuDeCV" HeaderText="Tiêu đề">
+     <ItemTemplate>
+         <%# Eval("TieuDeCV") %>
+     </ItemTemplate>
+     <HeaderStyle Width="260px" />
+     <ItemStyle Width="260px" />
+ </asp:TemplateField>
 
-                        <%-- Ngày gửi (110px) --%>
-                        <asp:BoundField DataField="NgayGui" HeaderText="Ngày gửi" SortExpression="Ngaygui" DataFormatString="{0:dd/MM/yyyy}">
-                            <HeaderStyle Width="110px" />
-                            <ItemStyle Width="110px" />
-                        </asp:BoundField>
+ <%-- Ngày gửi (110px) --%>
+ <asp:BoundField DataField="NgayGui" HeaderText="Ngày gửi" SortExpression="Ngaygui" DataFormatString="{0:dd/MM/yyyy}">
+     <HeaderStyle Width="110px" />
+     <ItemStyle Width="110px" />
+ </asp:BoundField>
 
-                        <%-- Trích yếu: tự giãn + ellipsis 2 dòng --%>
-                        <asp:TemplateField SortExpression="TrichYeuND" HeaderText="Trích yếu nội dung">
-                            <ItemTemplate>
-                                <%# Eval("TrichYeuND") %>
-                            </ItemTemplate>
-                            <ItemStyle CssClass="cell-trichyeu" />
-                        </asp:TemplateField>
+ <%-- Trích yếu: tự giãn + ellipsis 2 dòng --%>
+ <asp:TemplateField SortExpression="TrichYeuND" HeaderText="Trích yếu nội dung">
+     <ItemTemplate>
+         <%# Eval("TrichYeuND") %>
+     </ItemTemplate>
+     <ItemStyle CssClass="cell-trichyeu" />
+ </asp:TemplateField>
 
-                        <%-- TRẠNG THÁI (120px – cố định) --%>
-                        <asp:TemplateField HeaderText="Trạng thái">
-                            <ItemTemplate>
-                                <%# Eval("TrangThai") %>
-                            </ItemTemplate>
-                            <HeaderStyle Width="120px" />
-                            <ItemStyle CssClass="status-cell" Width="120px" HorizontalAlign="Center" />
-                        </asp:TemplateField>
+ <%-- TRẠNG THÁI (120px – cố định) --%>
+ <asp:TemplateField HeaderText="Trạng thái">
+     <ItemTemplate>
+         <%# Eval("TrangThai") %>
+     </ItemTemplate>
+     <HeaderStyle Width="120px" />
+     <ItemStyle CssClass="status-cell" Width="120px" HorizontalAlign="Center" />
+ </asp:TemplateField>
 
-                        <%-- Thao tác (200px) --%>
                         <asp:TemplateField HeaderText="Thao tác">
                             <ItemTemplate>
-                                <div class="actions">
-                                    <asp:LinkButton
-                                        ID="lnk_Xem"
-                                        runat="server"
-                                        CssClass="action-pill action-view"
-                                        Text="Xem"
-                                        CommandName="ViewCV"
-                                        CommandArgument='<%# Eval("MaCV") %>'
-                                        OnCommand="lnk_Command" />
-                                    <asp:LinkButton
-                                        ID="lnk_Sua"
-                                        runat="server"
-                                        CssClass="action-pill action-edit"
-                                        Text="Sửa"
-                                        CommandName="EditCV"
-                                        CommandArgument='<%# Eval("MaCV") %>'
-                                        OnCommand="lnk_Command" />
-                                   <asp:LinkButton ID="lnk_Xoa" runat="server"
-    CssClass="action-pill action-del"
-    Text="Xóa"
-    CommandName="DeleteCV"
-    CommandArgument='<%# Eval("MaCV") %>'
-    OnCommand="lnk_Command"
-    data-bs-toggle="modal"
-    data-bs-target="#confirmDeleteModal"
-    OnClientClick='<%# "setDeleteId(\"" + Eval("MaCV") + "\"); return false;" %>'>
-</asp:LinkButton>
-
+                                <div class="actions-row">
+                                    <asp:LinkButton ID="lnk_Xem" runat="server" CssClass="action-pill action-view"
+                                        Text="Xem" CommandName="ViewCV" CommandArgument='<%# Eval("MaCV") %>'
+                                        OnCommand="lnkAll_Command" />
+                                    <asp:LinkButton ID="lnk_Sua" runat="server" CssClass="action-pill action-edit"
+                                        Text="Sửa" CommandName="EditCV" CommandArgument='<%# Eval("MaCV") %>'
+                                        OnCommand="lnkAll_Command" />
+                                    <asp:LinkButton ID="lnk_Xoa" runat="server" CssClass="action-pill action-del"
+                                        Text="Xóa" CommandName="DeleteCV" CommandArgument='<%# Eval("MaCV") %>'
+                                        OnCommand="lnkAll_Command"
+                                        OnClientClick="return confirm('Bạn có chắc chắn muốn xóa công văn này không?')" />
                                 </div>
                             </ItemTemplate>
                             <HeaderStyle Width="200px" />
                             <ItemStyle Width="200px" HorizontalAlign="Center" />
                         </asp:TemplateField>
                     </Columns>
+
                     <PagerStyle CssClass="pager" />
                 </asp:GridView>
             </div>
         </ContentTemplate>
         <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="GridView1" />
+            <asp:AsyncPostBackTrigger ControlID="GridViewAll" EventName="PageIndexChanging" />
+            <asp:AsyncPostBackTrigger ControlID="btnSearchAll" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
-
-
-<script>
-    // Hàm hiển thị toast với message + màu
-    function showToast(message, bsBgClass) {
-        var toastEl = document.getElementById('liveToast');
-        var bodyEl = document.getElementById('toastBody');
-
-        // đổi nội dung + màu nền (success / danger / info ...)
-        bodyEl.textContent = message || 'Thành công';
-        toastEl.classList.remove('text-bg-success', 'text-bg-danger', 'text-bg-info', 'text-bg-warning');
-        toastEl.classList.add(bsBgClass || 'text-bg-success');
-
-        var toast = new bootstrap.Toast(toastEl, { delay: 2000 });
-        toast.show();
-    }
-</script>
 </asp:Content>

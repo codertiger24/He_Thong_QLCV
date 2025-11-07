@@ -4,290 +4,74 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <style type="text/css">
-        :root {
-            --ink: #0f172a;
-            --red: #c00000;
-            --blue: #0d6efd;
-            --line: #e5e7eb
-        }
+        :root { --ink:#0f172a; --red:#c00000; --blue:#0d6efd; --line:#e5e7eb; }
+        .content-header{background:transparent;padding:0;border-bottom:none;margin:0 auto 6px}
+        .content-header-title{text-transform:uppercase;font-weight:700;font-size:20px;color:#444;margin:0 0 6px}
+        .welcome-bar{background:#c00;color:#fff;border-radius:4px;padding:8px 0;margin:0 auto 26px;font-weight:bold;text-align:center;display:flex;align-items:center;justify-content:center;height:15px;overflow:hidden}
+        .welcome-bar marquee{font-size:16px;font-weight:bold;color:#fff}
+        .form-container{margin:40px auto;padding:30px;max-width:900px;border-radius:12px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+        .form-title{text-align:center;font-weight:700;font-size:24px;margin-bottom:25px;color:#222}
+    
 
-        .content-header {
-            background: transparent;
-            padding: 0;
-            border-bottom: none;
-            margin: 0 auto 6px
-        }
 
-        .content-header-title {
-            text-transform: uppercase;
-            font-weight: 700;
-            font-size: 20px;
-            color: #444;
-            margin: 0 0 6px
-        }
+        .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 30px}
+        .form-field{display:flex;align-items:center;gap:15px}
+        .form-field-full-width{grid-column:1/-1}
+        .form-field-full-width .form-field-inner{display:flex;align-items:center;width:100%;gap:15px}
+        .form-label{font-weight:600;color:#555;flex-shrink:0;width:120px;text-align:right}
+        .form-input-control{flex-grow:1;display:flex;flex-direction:column;width:100%}
+        .form-input,.form-select,.form-textarea{width:100%;padding:12px 14px;border:1px solid #dcdcdc;border-radius:8px;box-sizing:border-box;background:#f9f9f9;transition:all .2s}
+        .form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:#0b57d0;box-shadow:0 0 0 2px rgba(11,87,208,.2);background:#fff}
+        .form-textarea{resize:vertical;min-height:100px}
+        .form-select{-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23333" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');background-repeat:no-repeat;background-position:right 14px center}
+        .radio-group{display:flex;align-items:center;gap:20px}
+        .radio-list td{padding:0;white-space:nowrap}
+        .radio-list label{margin-right:20px}
+        .file-upload-row{display:flex;align-items:center;width:100%;gap:15px}
+        .file-upload-main-container{display:flex;align-items:center;gap:10px}
+        .file-upload-custom{display:flex;align-items:center;border:1px solid #dcdcdc;border-radius:8px;background:#f9f9f9}
+        .file-upload-custom input[type="file"]{display:none}
+        .file-upload-label{background:#e8e8e8;color:#202124;border-right:1px solid #dcdcdc;padding:8px 16px;border-radius:8px 0 0 8px;cursor:pointer;font-weight:600}
+        .file-list-row{display:flex;align-items:flex-start;width:100%;gap:15px}
+        .file-list-control-container{display:flex;flex-grow:1;align-items:flex-end;gap:10px}
+ .form-static {
+    background: #f9f9f9;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 8px;
+    color: #555;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    height: 23px;
+    justify-content: flex-start;
+}
 
-        .welcome-bar {
-            background: #c00;
-            color: #fff;
-            border-radius: 4px;
-            padding: 8px 0;
-            margin: 0 auto 26px;
-            font-weight: bold;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 15px;
-            overflow: hidden
-        }
 
-            .welcome-bar marquee {
-                font-size: 16px;
-                font-weight: bold;
-                color: #fff
-            }
-
-        .form-container {
-            margin: 40px auto;
-            padding: 30px;
-            max-width: 900px;
-            border-radius: 12px;
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,.08)
-        }
-
-        .form-title {
-            text-align: center;
-            font-weight: 700;
-            font-size: 22px;
-            margin-bottom: 22px;
-            color: #222
-        }
-
-        /* Lưới 2 cột: 120px (label) + phần còn lại (input) */
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2,1fr);
-            gap: 20px 30px
-        }
-
-        .form-field {
-            display: grid;
-            grid-template-columns: 120px minmax(0,1fr);
-            align-items: center;
-            gap: 15px
-        }
-
-        .form-field-full-width {
-            grid-column: 1/-1
-        }
-
-            .form-field-full-width .form-field-inner {
-                display: grid;
-                grid-template-columns: 120px minmax(0,1fr);
-                align-items: center;
-                gap: 15px
-            }
-
-        /* Label luôn cùng bề rộng, căn phải trên desktop */
-        .form-label {
-            font-weight: 600;
-            color: #555;
-            text-align: right
-        }
-
-        /* Ô nhập chiếm phần còn lại, không tràn */
-        .form-input-control {
-            min-width: 0
-        }
-
-        /* Input/Select/Textarea đồng bộ chiều cao – không chồng chéo */
-        .form-input, .form-select, .form-textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #dcdcdc;
-            border-radius: 8px;
-            box-sizing: border-box;
-            background: #f9f9f9;
-            transition: all .2s;
-            line-height: 1.4
-        }
-
-            .form-input:focus, .form-select:focus, .form-textarea:focus {
-                outline: none;
-                border-color: #0b57d0;
-                box-shadow: 0 0 0 2px rgba(11,87,208,.2);
-                background: #fff
-            }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px
-        }
-
-        /* Select có mũi tên, chừa padding phải để không đè chữ */
-        .form-select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23333" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 36px
-        }
-
-        /* Radio cùng hàng, không vỡ layout */
-        .radio-group {
-            display: flex;
-            align-items: center;
-            gap: 20px
-        }
-
-        .radio-list td {
-            padding: 0;
-            white-space: nowrap
-        }
-
-        .radio-list label {
-            margin-right: 20px
-        }
-
-        /* Hàng upload/file list cũng theo 2 cột 120px + 1fr */
-        .file-upload-row, .file-list-row {
-            display: grid;
-            grid-template-columns: 120px minmax(0,1fr);
-            align-items: center;
-            gap: 15px
-        }
-
-        .file-upload-main-container {
-            display: flex;
-            align-items: center;
-            gap: 10px
-        }
-
-        .file-upload-custom {
-            display: flex;
-            align-items: center;
-            border: 1px solid #dcdcdc;
-            border-radius: 8px;
-            background: #f9f9f9;
-            height: 40px
-        }
-
-        .file-input-hidden {
-            position: absolute;
-            left: -9999px
-        }
-
-        .file-upload-label {
-            display: inline-flex;
-            align-items: center;
-            height: 40px;
-            padding: 0 16px;
-            background: #e8e8e8;
-            border-right: 1px solid #dcdcdc;
-            border-radius: 8px 0 0 8px;
-            font-weight: 600;
-            cursor: pointer
-        }
-
-        .file-chosen-text {
-            display: inline-flex;
-            align-items: center;
-            height: 40px;
-            padding: 0 12px;
-            color: #777
-        }
-
-        .file-list-control-container {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start
-        }
-
-        .form-listbox {
-            width: 100%;
-            height: 100px
-        }
-
-        /* Nút */
-        .btn {
-            display: inline-block;
-            padding: 10px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all .2s;
-            border: none
-        }
-
-        .btn-primary {
-            background-color: #0b57d0;
-            color: #fff
-        }
-
-            .btn-primary:hover {
-                background: #0949ae
-            }
-
-        .btn-quaylai {
-            background: #dadce0;
-            color: #202124
-        }
-
-            .btn-quaylai:hover {
-                background: #c0c4c8
-            }
-
-        .form-buttons {
-            grid-column: 1/-1;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 25px
-        }
-
-        .note-red {
-            color: #d32f2f;
-            font-size: 12px;
-            margin-top: 5px
-        }
-
-        /* Mobile: 1 cột, label căn trái để tránh chồng */
-        @media (max-width:768px) {
-            .form-grid {
-                grid-template-columns: 1fr
-            }
-
-            .form-field, .form-field-full-width .form-field-inner,
-            .file-upload-row, .file-list-row {
-                grid-template-columns: 1fr
-            }
-
-            .form-label {
-                text-align: left
-            }
+        .btn{display:inline-block;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:16px;font-weight:600;text-decoration:none;transition:all .2s;border:none}
+        .btn-primary{background:#0b57d0;color:#fff}.btn-primary:hover{background:#0949ae}
+        .btn-quaylai{background:#dadce0;color:#202124}.btn-quaylai:hover{background:#c0c4c8}
+        .form-buttons{grid-column:1/-1;display:flex;justify-content:flex-end;gap:10px;margin-top:25px}
+        .note-red{color:#d32f2f;font-size:12px;margin-top:5px}
+        @media (max-width:768px){
+            .form-grid{grid-template-columns:1fr}
+            .form-field,.form-field-full-width .form-field-inner,.file-upload-row,.file-list-row{flex-direction:column;align-items:stretch}
+            .form-label{text-align:left;width:auto}
         }
     </style>
 
-    <!-- jQuery UI datepicker (giống NhậpNDCV) -->
+    <!-- Datepicker -->
     <script src="Scripts/datepicker/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="Scripts/datepicker/jquery-ui.js" type="text/javascript"></script>
     <link href="Scripts/datepicker/jquery-ui.css" rel="stylesheet" type="text/css" />
-
     <script type="text/javascript">
         jQuery(function ($) {
             $.datepicker.regional['vi'] = {
                 closeText: 'Đóng', prevText: '&#x3c;Trước', nextText: 'Tiếp&#x3e;', currentText: 'Hôm nay',
                 monthNames: ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu', 'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Th.Mười Một', 'Th.Mười Hai'],
                 monthNamesShort: ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
-                dayNames: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
+                dayNames: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
                 dayNamesShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
                 dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
                 weekHeader: 'Tu', dateFormat: 'dd/mm/yy', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: ''
@@ -321,8 +105,7 @@
                     <asp:Label ID="lblTieuDe" runat="server" Text="Tiêu đề:" CssClass="form-label"></asp:Label>
                     <div class="form-input-control">
                         <asp:TextBox ID="txttieude" CssClass="form-input" runat="server" placeholder="Nhập vào tiêu đề" />
-                        <asp:RequiredFieldValidator ID="rfvTieuDe" runat="server"
-                            ControlToValidate="txttieude" ErrorMessage="* Nhập tiêu đề" CssClass="note-red" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txttieude" ErrorMessage="* Nhập tiêu đề" CssClass="note-red" />
                     </div>
                 </div>
             </div>
@@ -332,23 +115,20 @@
                 <asp:Label ID="lblSoCV" runat="server" Text="Số CV:" CssClass="form-label"></asp:Label>
                 <div class="form-input-control">
                     <asp:TextBox ID="txtsocv" CssClass="form-input" runat="server" placeholder="Nhập vào số công văn" />
-                    <asp:RequiredFieldValidator ID="rfvSoCV" runat="server"
-                        ControlToValidate="txtsocv" ErrorMessage="* Nhập số công văn" CssClass="note-red" />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtsocv" ErrorMessage="* Nhập số công văn" CssClass="note-red" />
                 </div>
             </div>
 
-            <!-- Loại công văn -->
+            <!-- Loại công văn (readonly) -->
             <div class="form-field">
                 <asp:Label ID="lblLoaiCV" runat="server" Text="Loại công văn:" CssClass="form-label"></asp:Label>
                 <div class="form-input-control">
                     <asp:DropDownList ID="ddlLoaiCV" runat="server" CssClass="form-select" Enabled="false">
                         <asp:ListItem Text="-- Chọn loại công văn  --" Value="" />
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="rfvLoaiCV" runat="server"
-                        ControlToValidate="ddlLoaiCV" InitialValue=""
-                        ErrorMessage="* Chọn công văn" CssClass="note-red" />
                 </div>
             </div>
+
             <!-- Ngày ban hành -->
             <div class="form-field">
                 <asp:Label ID="lblNgayBanHanh" runat="server" Text="Ngày ban hành:" CssClass="form-label"></asp:Label>
@@ -373,16 +153,13 @@
                 </div>
             </div>
 
-
-            <!-- Đơn vị nhận -->
-            <div class="form-field">
-                <asp:Label ID="lblDonViNhan" runat="server" Text="Đơn vị nhận:" CssClass="form-label"></asp:Label>
-                <div class="form-input-control">
-                    <asp:DropDownList ID="ddlDonViNhan" runat="server" CssClass="form-select">
-                        <asp:ListItem Text="-- Chọn đơn vị nhận --" Value="" />
-                    </asp:DropDownList>
-                </div>
-            </div>
+<!-- Đơn vị nhận -->
+<div class="form-field">
+    <asp:Label runat="server" Text="Đơn vị nhận:" CssClass="form-label" />
+    <div class="form-input-control">
+        <asp:Label ID="lblDonViNhan" runat="server" CssClass="form-static" />
+    </div>
+</div>
 
 
             <!-- Người ký -->
@@ -395,27 +172,16 @@
 
             <!-- Bảo mật -->
             <div class="form-field">
-                <asp:Label ID="lblGuiNhan" runat="server" Text="Bảo mật:" CssClass="form-label"></asp:Label>
+                <asp:Label ID="lblBaoMat" runat="server" Text="Bảo mật:" CssClass="form-label"></asp:Label>
                 <div class="form-input-control">
                     <div class="radio-group">
                         <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal" CssClass="radio-list" CellSpacing="20">
-                            <asp:ListItem Selected="True" Value="Gui">Gửi</asp:ListItem>
-                            <asp:ListItem Value="Nhan">Nhận</asp:ListItem>
+                            <asp:ListItem Selected="True" Value="Có">Có</asp:ListItem>
+                            <asp:ListItem Value="Không">Không</asp:ListItem>
                         </asp:RadioButtonList>
                     </div>
                 </div>
             </div>
-           <asp:Panel ID="pnlNguoiDuyet" runat="server" CssClass="form-field" Visible="false">
-    <asp:Label ID="lblNguoiDuyet" runat="server" Text="Người duyệt:" CssClass="form-label"></asp:Label>
-    <div class="form-input-control">
-        <asp:DropDownList ID="ddlNguoiDuyet" runat="server" CssClass="form-input">
-            <asp:ListItem Text="-- Chọn người duyệt --" Value="0" />
-        </asp:DropDownList>
-        <!-- hiển thị tên lấy từ DB, kể cả khi dropdown không có -->
-        <asp:Label ID="lblTenNguoiDuyet" runat="server" CssClass="note-red" />
-    </div>
-</asp:Panel>
-
 
             <!-- Trích yếu -->
             <div class="form-field-full-width">
@@ -423,8 +189,7 @@
                     <asp:Label ID="lblTrichYeu" runat="server" Text="Trích yếu:" CssClass="form-label"></asp:Label>
                     <div class="form-input-control">
                         <asp:TextBox ID="txttrichyeu" CssClass="form-textarea" runat="server" TextMode="MultiLine" Rows="4" placeholder="Nhập nội dung trích yếu"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvTrichYeu" runat="server"
-                            ControlToValidate="txttrichyeu" ErrorMessage="* Nhập trích yếu" CssClass="note-red" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="txttrichyeu" ErrorMessage="* Nhập trích yếu" CssClass="note-red" />
                     </div>
                 </div>
             </div>
@@ -439,19 +204,17 @@
                 </div>
             </div>
 
-            <!-- File upload -->
+            <!-- Upload (giống NhapNDCV) -->
             <div class="form-field-full-width">
                 <div class="file-upload-row">
                     <asp:Label ID="lblFile" runat="server" Text="File (nếu có):" CssClass="form-label"></asp:Label>
-
                     <div class="file-upload-main-container">
                         <div class="file-upload-custom">
-                            <asp:FileUpload ID="FileUpload1" runat="server" CssClass="file-input-hidden" />
+                            <asp:FileUpload ID="FileUpload1" runat="server" />
                             <label for="<%= FileUpload1.ClientID %>" class="file-upload-label">Choose File</label>
-                            <span id="chosen_<%= FileUpload1.ClientID %>" class="file-chosen-text">No file chosen</span>
+                            <span class="file-chosen-text">No file chosen</span>
                         </div>
-
-                        <asp:Button ID="btnUp" runat="server"
+                        <asp:Button ID="Button1" runat="server"
                             CssClass="btn btn-primary"
                             Text="Upload"
                             OnClick="btnUp_Click"
@@ -460,22 +223,20 @@
                 </div>
             </div>
 
-
-
-            <!-- Danh sách tệp -->
+            <!-- Danh sách tệp (giống NhapNDCV) -->
             <div class="form-field-full-width">
                 <div class="file-list-row">
                     <asp:Label ID="lblTapDinhKem" runat="server" Text="Tệp đính kèm:" CssClass="form-label"></asp:Label>
                     <div class="file-list-control-container">
-                        <asp:ListBox ID="ListBox1" runat="server" CssClass="form-listbox" SelectionMode="Multiple" />
-                        <asp:Button ID="btnDelete" runat="server"
-                            CssClass="btn btn-primary" Text="Xóa"
-                            OnClick="btnDelete_Click"
-                            OnClientClick="return confirm('Xóa mục đã chọn (nếu không chọn sẽ xóa tất cả)?');"
+                        <asp:ListBox ID="ListBox1" runat="server" Width="100%" Height="100px" CssClass="form-listbox" />
+                        <asp:Button ID="btnRemove" runat="server"
+                            CssClass="btn btn-primary"
+                            Text="Xóa"
+                            OnClick="btnRemove_Click"
                             CausesValidation="False" />
-
                     </div>
                 </div>
+                <asp:Label ID="lblloi" runat="server" Text="" CssClass="note-red" Style="display:block;margin-left:135px;margin-top:6px;"></asp:Label>
             </div>
 
             <!-- Buttons -->
@@ -485,29 +246,4 @@
             </div>
         </div>
     </div>
-            <!-- Toast container (fixed ở góc trên bên phải) -->
-<div class="position-fixed top-0 end-0 p-3" style="z-index:1080">
-  <div id="liveToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div id="toastBody" class="toast-body">Đã xoá thành công</div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-  </div>
-</div>
-
-<script>
-    // Hàm hiển thị toast với message + màu
-    function showToast(message, bsBgClass) {
-        var toastEl = document.getElementById('liveToast');
-        var bodyEl = document.getElementById('toastBody');
-
-        // đổi nội dung + màu nền (success / danger / info ...)
-        bodyEl.textContent = message || 'Thành công';
-        toastEl.classList.remove('text-bg-success', 'text-bg-danger', 'text-bg-info', 'text-bg-warning');
-        toastEl.classList.add(bsBgClass || 'text-bg-success');
-
-        var toast = new bootstrap.Toast(toastEl, { delay: 2000 });
-        toast.show();
-    }
-</script>
 </asp:Content>

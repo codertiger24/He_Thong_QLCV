@@ -121,6 +121,7 @@
 			<Association Name="tblQuyen_tblNhomQuyen_tblQuyen" Member="tblNhomQuyen_tblQuyens" ThisKey="MaQuyen" OtherKey="MaQuyen" Type="tblNhomQuyen_tblQuyen" />
 		</Type>
 	</Table>
+	
 	<Table Name="dbo.tblNoiDungCV" Member="tblNoiDungCVs">
 		<Type Name="tblNoiDungCV">
 			<Column Name="MaCV" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
