@@ -70,6 +70,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AllCongVan.aspx" />
     <Content Include="App_Data\SQLQuery1.sql" />
     <Content Include="ChinhSuaCTCV_Duyet.aspx" />
     <Content Include="Counter.txt" />
@@ -174,6 +175,13 @@
     <Content Include="XemCTCV_Duyet.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllCongVan.aspx.cs">
+      <DependentUpon>AllCongVan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllCongVan.aspx.designer.cs">
+      <DependentUpon>AllCongVan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CTCV.aspx.cs">
       <DependentUpon>CTCV.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
