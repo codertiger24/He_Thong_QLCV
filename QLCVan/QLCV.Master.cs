@@ -64,31 +64,41 @@ namespace QLCVan
         {
             using (var db = new InfoDataContext())
             {
-                // Tập menu cơ bản (bỏ "Danh bạ email" & "Tìm kiếm công văn")
-                var baseQuery = db.tblMenus
+                var list = db.tblMenus
                     .Where(c =>
                            c.MenuID == 1 || c.MenuID == 7 ||
                            c.MenuID == 6 || c.MenuID == 4 ||
                            c.MenuID == 5 || c.MenuID == 2 ||
                            c.MenuID == 3 || c.MenuID == 10)
                     .Where(c => c.MenuName != "Danh bạ email"
-                             && c.MenuName != "Tìm kiếm công văn");
+                             && c.MenuName != "Tìm kiếm công văn")
+                    .ToList();
 
-                var list = baseQuery.ToList();
+                // Ánh xạ giữa URL và mã quyền tương ứng
+                var permissionMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        { "Trangchu.aspx", "Q001" },      // Xem công văn
+                        { "NhapNDCV.aspx", "Q002" },      // Thêm công văn
+                        { "LoaiCV.aspx", "Q006" },        // Quản lý loại công văn
+                        { "QLnguoidung.aspx", "Q011" },   // Quản lý người dùng
+                        { "QLNhom.aspx", "Q007" },        // Quản lý nhóm đơn vị
+                        { "QLChucVu.aspx", "Q010" },      // Quản lý chức vụ
+                        { "QLNhomQuyen.aspx", "Q009" },   // Quản lý nhóm quyền
+                    };
 
-                if (role.Equals("User", StringComparison.OrdinalIgnoreCase))
-                {
-                    var allowedNames = new[] { "GIỚI THIỆU", "XEM CÔNG VĂN" };
-                    list = list
-                        .Where(m =>
-                            allowedNames.Any(n =>
-                                string.Equals(
-                                    n,
-                                    (m.MenuName ?? string.Empty).Trim(),
-                                    StringComparison.OrdinalIgnoreCase)))
-                        .ToList();
-                }
+                // lọc menu 
+                list = list
+                    .Where(m =>
+                    {
+                        string url = (m.MenuURL ?? "").Trim();
 
+                        // Nếu menu có ánh xạ mã quyền → kiểm tra
+                        if (permissionMap.TryGetValue(url, out string code))
+                            return PermissionHelper.HasPermission(code);
+
+                        // Nếu menu không có mã quyền thì cho phép hiển thị
+                        return true;
+                    }).ToList();
                 rptMenu.DataSource = list;
                 rptMenu.DataBind();
             }
