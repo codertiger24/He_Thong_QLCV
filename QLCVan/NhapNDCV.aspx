@@ -400,7 +400,7 @@
                     <!-- MỚI: cho phép chọn nhiều đơn vị -->
 <asp:ListBox ID="lstDonViNhan" runat="server"
     SelectionMode="Multiple"
-    CssClass="form-control"
+    CssClass="form-listbox"
     Height="150px">
 </asp:ListBox>
                 </div>
